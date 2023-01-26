@@ -4,6 +4,7 @@ Feel free to modify and/or add functions to this file.
 """
 import random
 import timeit
+import matplotlib.pyplot as plot
 
 # Create a random list length "length" containing whole numbers between 0 and max_value inclusive
 def create_random_list(length, max_value):
@@ -119,10 +120,23 @@ def selection_sort_timing(n, m):
     for i in range(n):
         list = create_random_list(m, m)
         start = timeit.default_timer()
-        print("before:" + list)
         selection_sort(list)
-        print("after:" + list)
         total += timeit.default_timer() - start
     return total/n
 
+<<<<<<< HEAD
 # print(selection_sort_timing(10, 10))
+=======
+def selection_sort_timing_graph(n, m):
+    total = []
+    for i in range(n):
+        list = create_random_list(m, m)
+        start = timeit.default_timer()
+        selection_sort(list)
+        total.append(timeit.default_timer() - start)
+    return total
+
+times = selection_sort_timing_graph(30, 30)
+plot.plot(times)
+plot.show()
+>>>>>>> 20cc62553b215a5785352d3f381546cfbe34f149
