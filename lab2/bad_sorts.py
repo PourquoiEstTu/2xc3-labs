@@ -88,9 +88,9 @@ def bubble_sort1(l,n):
         total = end-start
         return total/n
 
-print("Test 1:" + str(bubble_sort1(100,100)))
-print("Test 2:" + str(bubble_sort1(1000,1000)))
-print("Test 3:" + str(bubble_sort1(10000,10000)))
+#print("Test 1:" + str(bubble_sort1(100,100)))
+#print("Test 2:" + str(bubble_sort1(1000,1000)))
+#print("Test 3:" + str(bubble_sort1(10000,10000)))
 
 # ******************* Selection sort code *******************
 
@@ -126,6 +126,6 @@ def selection_sort_timing_graph(n, m):
         total.append(timeit.default_timer() - start)
     return total
 
-#times = selection_sort_timing_graph(30, 30)
-#plot.plot(times)
-#plot.show()
+times = selection_sort_timing_graph(30, 30)
+plot.plot(times)
+plot.show()
