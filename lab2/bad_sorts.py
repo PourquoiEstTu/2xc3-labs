@@ -72,7 +72,7 @@ def bubble_sort(L):
 
 def bubble_sort1(L,n):
     for _ in range(n):
-
+        
         L = create_random_list(1000, 1000)
        
 
