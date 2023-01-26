@@ -45,12 +45,16 @@ def insert(L, i):
 
 def insert_sort_experiment(n, m) : 
     for _ in range(n) :
+        times = []
         L = create_random_list(m, m)
         start = timeit.default_timer()
         insertion_sort(L)
         end = timeit.default_timer()
         total = end - start
     return total/n
+
+#print("Test 1: " + str(insert_sort_experiment(1000, 1000)))
+#print("Test 2: " + str(insert_sort_experiment(100000, 100000)))
 
 # This is the optimization/improvement we saw in lecture
 def insertion_sort2(L):
@@ -80,17 +84,19 @@ def bubble_sort(L):
                 swap(L, j, j+1)
 
 def bubble_sort1(l,n):
+    times = []
     for _ in range(n):
         L = create_random_list(l, l)
         start = timeit.default_timer()
         bubble_sort(L)
         end = timeit.default_timer() 
         total = end-start
-        return total/n
+        times.append(total)
+    return (total/n, times)
 
-#print("Test 1:" + str(bubble_sort1(100,100)))
-#print("Test 2:" + str(bubble_sort1(1000,1000)))
-#print("Test 3:" + str(bubble_sort1(10000,10000)))
+#print("Test 1:" + str(bubble_sort1(100,100)[0]))
+#print("Test 2:" + str(bubble_sort1(1000,1000)[0]))
+#print("Test 3:" + str(bubble_sort1(10000,10000)[0]))
 
 # ******************* Selection sort code *******************
 
@@ -126,6 +132,15 @@ def selection_sort_timing_graph(n, m):
         total.append(timeit.default_timer() - start)
     return total
 
-times = selection_sort_timing_graph(30, 30)
-plot.plot(times)
+#times = selection_sort_timing_graph(30, 30)
+#plot.plot(times)
+#plot.show()
+
+#bubblesort tests plot
+bbsort_times1 = bubble_sort1(100,100)[1]
+bbsort_times2 = bubble_sort1(500,500)[1]
+#bbsort_times3 = bubble_sort1(10000,10000)[1]
+
+plot.plot(bbsort_times1)
+plot.plot(bbsort_times2)
 plot.show()
