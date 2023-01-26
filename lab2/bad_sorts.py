@@ -92,7 +92,7 @@ def bubble_sort1(l,n):
         end = timeit.default_timer() 
         total = end-start
         times.append(total)
-        return (total/n, times)
+    return (total/n, times)
 
 #print("Test 1:" + str(bubble_sort1(100,100)[0]))
 #print("Test 2:" + str(bubble_sort1(1000,1000)[0]))
@@ -136,3 +136,14 @@ def selection_sort_timing_graph(n, m):
 #plot.plot(times)
 #plot.show()
 
+<<<<<<< HEAD
+=======
+#bubblesort tests plot
+bbsort_times1 = bubble_sort1(100,100)[1]
+bbsort_times2 = bubble_sort1(500,500)[1]
+#bbsort_times3 = bubble_sort1(10000,10000)[1]
+
+plot.plot(bbsort_times1)
+plot.plot(bbsort_times2)
+plot.show()
+>>>>>>> 2bc17bc16589907c1c7dfe439ca351079aca0a8f
