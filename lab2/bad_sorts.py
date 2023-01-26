@@ -54,7 +54,7 @@ def insert_sort_experiment(n, m) :
     return total/n
 
 #print("Test 1: " + str(insert_sort_experiment(1000, 1000)))
-print("Test 2: " + str(insert_sort_experiment(100000, 100000)))
+#print("Test 2: " + str(insert_sort_experiment(100000, 100000)))
 
 # This is the optimization/improvement we saw in lecture
 def insertion_sort2(L):
@@ -124,9 +124,6 @@ def selection_sort_timing(n, m):
         total += timeit.default_timer() - start
     return total/n
 
-<<<<<<< HEAD
-# print(selection_sort_timing(10, 10))
-=======
 def selection_sort_timing_graph(n, m):
     total = []
     for i in range(n):
@@ -136,7 +133,6 @@ def selection_sort_timing_graph(n, m):
         total.append(timeit.default_timer() - start)
     return total
 
-times = selection_sort_timing_graph(30, 30)
-plot.plot(times)
-plot.show()
->>>>>>> 20cc62553b215a5785352d3f381546cfbe34f149
+#times = selection_sort_timing_graph(30, 30)
+#plot.plot(times)
+#plot.show()
