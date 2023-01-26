@@ -79,6 +79,21 @@ def bubble_sort(L):
             if L[j] > L[j+1]:
                 swap(L, j, j+1)
 
+def bubble_sort1(L,n):
+    for _ in range(n):
+        
+        L = create_random_list(1000, 1000)
+       
+
+        start = timeit.default_timer()
+        bubble_sort(L)
+        end = timeit.default_timer() 
+        total = end-start
+        return total/n
+
+print("Test 1:" + str(bubble_sort1(1000,1000)))
+print("Test 2:" + str(bubble_sort1(100000,100000)))
+print("Test 3:" + str(bubble_sort1(10000000,10000000)))
 
 # ******************* Selection sort code *******************
 
