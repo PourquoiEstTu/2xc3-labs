@@ -42,6 +42,14 @@ def insert(L, i):
         else:
             return
 
+def insert_sort_experiment(n, m) : 
+    for _ in range(n) :
+        L = create_random_list(m, m)
+        start = timeit.default_timer()
+        insertion_sort(L)
+        end = timeit.default_timer()
+        total = end - start
+    return total/n
 
 # This is the optimization/improvement we saw in lecture
 def insertion_sort2(L):
@@ -101,3 +109,16 @@ def find_min_index(L, n):
         if L[i] < L[min_index]:
             min_index = i
     return min_index
+
+def selection_sort_timing(n, m):
+    total = 0
+    for i in range(n):
+        list = create_random_list(m, m)
+        start = timeit.default_timer()
+        print("before:" + list)
+        selection_sort(list)
+        print("after:" + list)
+        total += timeit.default_timer() - start
+    return total/n
+
+print(selection_sort_timing(10, 10))
