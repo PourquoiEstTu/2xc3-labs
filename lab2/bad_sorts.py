@@ -44,12 +44,16 @@ def insert(L, i):
 
 def insert_sort_experiment(n, m) : 
     for _ in range(n) :
+        times = []
         L = create_random_list(m, m)
         start = timeit.default_timer()
         insertion_sort(L)
         end = timeit.default_timer()
         total = end - start
     return total/n
+
+#print("Test 1: " + str(insert_sort_experiment(1000, 1000)))
+print("Test 2: " + str(insert_sort_experiment(100000, 100000)))
 
 # This is the optimization/improvement we saw in lecture
 def insertion_sort2(L):
@@ -106,4 +110,4 @@ def selection_sort_timing(n, m):
         total += timeit.default_timer() - start
     return total/n
 
-print(selection_sort_timing(10, 10))
+# print(selection_sort_timing(10, 10))
