@@ -79,21 +79,18 @@ def bubble_sort(L):
             if L[j] > L[j+1]:
                 swap(L, j, j+1)
 
-def bubble_sort1(L,n):
+def bubble_sort1(l,n):
     for _ in range(n):
-        
-        L = create_random_list(1000, 1000)
-       
-
+        L = create_random_list(l, l)
         start = timeit.default_timer()
         bubble_sort(L)
         end = timeit.default_timer() 
         total = end-start
         return total/n
 
-print("Test 1:" + str(bubble_sort1(1000,1000)))
-print("Test 2:" + str(bubble_sort1(100000,100000)))
-print("Test 3:" + str(bubble_sort1(10000000,10000000)))
+print("Test 1:" + str(bubble_sort1(100,100)))
+print("Test 2:" + str(bubble_sort1(1000,1000)))
+print("Test 3:" + str(bubble_sort1(10000,10000)))
 
 # ******************* Selection sort code *******************
 
@@ -129,6 +126,6 @@ def selection_sort_timing_graph(n, m):
         total.append(timeit.default_timer() - start)
     return total
 
-times = selection_sort_timing_graph(30, 30)
-plot.plot(times)
-plot.show()
+#times = selection_sort_timing_graph(30, 30)
+#plot.plot(times)
+#plot.show()
