@@ -132,15 +132,44 @@ def selection_sort_timing_graph(n, m):
         total.append(timeit.default_timer() - start)
     return total
 
-#times = selection_sort_timing_graph(30, 30)
+def sortingAlgoTiming(n, m, func):
+    times = []
+    total = 0
+    for i in range(n):
+        list = create_random_list(m, m)
+        start = timeit.default_timer()
+        func(list)
+        end = timeit.default_timer() 
+        total += end - start
+        times.append(end - start)
+    return (total, times)
+
+def sortingAlgoTimingNearSorted(n, m, func):
+    times = []
+    total = 0
+    for i in range(n):
+        list = create_near_sorted_list(m, m)
+        start = timeit.default_timer()
+        func(list)
+        end = timeit.default_timer() 
+        total += end - start
+        times.append(end - start)
+    return (total, times)
+
+test = sortingAlgoTiming(30, 30, selection_sort)
+test2 = sortingAlgoTiming(30, 30, insertion_sort)
+test3 = sortingAlgoTiming(30, 30, bubble_sort)
+plot.plot(test[1])
+plot.plot(test2[1])
+plot.plot(test3[1])
 #plot.plot(times)
 #plot.show()
 
 #bubblesort tests plot
-bbsort_times1 = bubble_sort1(100,100)[1]
-bbsort_times2 = bubble_sort1(500,500)[1]
+#bbsort_times1 = bubble_sort1(100,100)[1]
+#bbsort_times2 = bubble_sort1(500,500)[1]
 #bbsort_times3 = bubble_sort1(10000,10000)[1]
 
-plot.plot(bbsort_times1)
-plot.plot(bbsort_times2)
+#plot.plot(bbsort_times1)
+#plot.plot(bbsort_times2)
 plot.show()
