@@ -83,6 +83,25 @@ def bubble_sort(L):
             if L[j] > L[j+1]:
                 swap(L, j, j+1)
 
+def bubblesort2(L) :
+    value_i = L[0]
+    for i in range(len(L)) :
+        for j in range(len(L) - 1) :
+            print(L)
+            print(value_i)
+            if value_i > L[j+1] :
+                L[j] = L[j+1]
+            else :
+                L[j] = value_i
+                value_i = L[0]
+                break
+    return L
+
+rand_list = [5, 3, 2, 1, 10]
+print(rand_list)
+print(bubblesort2(rand_list))
+
+
 def bubble_sort1(l,n):
     times = []
     for _ in range(n):
