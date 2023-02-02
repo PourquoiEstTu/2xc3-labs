@@ -136,8 +136,6 @@ def selection_sort_timing_graph(n, m):
 #plot.plot(times)
 #plot.show()
 
-<<<<<<< HEAD
-=======
 #bubblesort tests plot
 bbsort_times1 = bubble_sort1(100,100)[1]
 bbsort_times2 = bubble_sort1(500,500)[1]
@@ -146,4 +144,3 @@ bbsort_times2 = bubble_sort1(500,500)[1]
 plot.plot(bbsort_times1)
 plot.plot(bbsort_times2)
 plot.show()
->>>>>>> 2bc17bc16589907c1c7dfe439ca351079aca0a8f
