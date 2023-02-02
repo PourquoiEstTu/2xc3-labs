@@ -86,20 +86,28 @@ def bubble_sort(L):
 def bubblesort2(L) :
     value_i = L[0]
     for i in range(len(L)) :
+        value_i = L[0]
         for j in range(len(L) - 1) :
             print(L)
             print(value_i)
+            print(value_i > L[j+1])
+            print(j == len(L) - 2)
+            print(j == len(L) - 1)
             if value_i > L[j+1] :
                 L[j] = L[j+1]
             else :
                 L[j] = value_i
-                value_i = L[0]
-                break
-    return L
+                value_i = L[j+1]
+            if j == len(L) - 2 :
+                L[len(L) - 1] = value_i
 
-rand_list = [5, 3, 2, 1, 10]
-print(rand_list)
-print(bubblesort2(rand_list))
+rand_list_original = create_random_list(20, 30)
+rand_list_to_be_sorted = rand_list_original.copy()
+bubblesort2(rand_list_to_be_sorted)
+print("Sorted rand list:")
+print(rand_list_to_be_sorted)
+print("Original rand list:")
+print(rand_list_original)
 
 
 def bubble_sort1(l,n):
