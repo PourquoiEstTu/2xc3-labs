@@ -43,22 +43,6 @@ def insert(L, i):
         else:
             return
 
-# same as above except put the aux
-#  function into the original function
-#  for only one function
-# easier to count sorts this way (at least 
-# for me)
-def insertion_sort_2(L) :
-    swaps = 0
-    for i in range(1, len(L)):
-        while i > 0:
-            if L[i] < L[i-1]:
-                swap(L, i-1, i)
-                swaps += 1
-                i -= 1
-            else:
-                break
-
 def insert_sort_experiment(n, m) : 
     for _ in range(n) :
         times = []
@@ -99,8 +83,6 @@ def bubble_sort(L):
         for j in range(len(L) - 1):
             if L[j] > L[j+1]:
                 swap(L, j, j+1)
-                swaps += 1
-    return swaps
 
 # improved bubble sort
 def bubblesort2(L) :
@@ -154,8 +136,6 @@ def selection_sort(L):
     for i in range(len(L)):
         min_index = find_min_index(L, i)
         swap(L, i, min_index)
-        swaps += 1
-    return swaps
 
 # helper/auxilliary function for selection_sort
 def find_min_index(L, n):
@@ -205,29 +185,32 @@ def sortingAlgoTiming(n, m, func):
 
 # generic testing function using a near sorted
 #  list instead 
-def sortingAlgoTimingNearSorted(n, m, func):
+def sortingAlgoTimingNearSorted(n, m, func, numOfSwaps):
     times = []
+    swaps = []
     total = 0
     for i in range(n):
-        list = create_near_sorted_list(m, m)
+        list = create_near_sorted_list(m, m, numOfSwaps)
         start = timeit.default_timer()
         func(list)
         end = timeit.default_timer() 
         total += end - start
         times.append(end - start)
-    return (total, times)
+        swaps.append(swap)
+    return (total, times, swaps)
 
-test2 = sortingAlgoTiming(100, 1000, insertion_sort)
-print(test2[0])
-test4 = sortingAlgoTiming(100, 1000, insertion_sort_2)
-print(test4[0])
-test3 = sortingAlgoTiming(100, 1000, bubble_sort)
-print(test3[0])
-test = sortingAlgoTiming(100, 1000, selection_sort)
-print(test[0])
-plot.plot(test[1])
-plot.plot(test2[1])
-plot.plot(test3[1])
+# ------- CODE FOR EXPERIMENT 1 TESTS ----------------
+# test2 = sortingAlgoTiming(100, 1000, insertion_sort)
+# print(test2[0])
+# test4 = sortingAlgoTiming(100, 1000, insertion_sort_2)
+# print(test4[0])
+# test3 = sortingAlgoTiming(100, 1000, bubble_sort)
+# print(test3[0])
+# test = sortingAlgoTiming(100, 1000, selection_sort)
+# print(test[0])
+# plot.plot(test[1])
+# plot.plot(test2[1])
+# plot.plot(test3[1])
 #plot.plot(times)
 #plot.show()
 
@@ -238,4 +221,18 @@ plot.plot(test3[1])
 
 #plot.plot(bbsort_times1)
 #plot.plot(bbsort_times2)
+# plot.show()
+
+
+# --------------PLOT/CODE FOR EXPERIMENT 3 ------------
+swapTest0 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort_2)
+swapTest1 = sortingAlgoTimingNearSorted(100, 1000, selection_sort)
+swapTest2 = sortingAlgoTimingNearSorted(100, 1000, bubble_sort)
+fix, ax = plot.subplots()
+ax.set_ylabel("Swaps")
+ax.set_xlabel("Times")
+ax.plot(swapTest0[1], swapTest0[2])
+ax.plot(swapTest1[1], swapTest1[2])
+ax.plot(swapTest2[1], swapTest2[2])
+
 plot.show()
