@@ -83,6 +83,7 @@ def bubble_sort(L):
             if L[j] > L[j+1]:
                 swap(L, j, j+1)
 
+# improved bubble sort
 def bubblesort2(L) :
     value_i = L[0]
     for i in range(len(L)) :
@@ -110,6 +111,7 @@ print("Original rand list:")
 print(rand_list_original)
 
 
+# testing function for traditional
 def bubble_sort1(l,n):
     times = []
     for _ in range(n):
@@ -133,7 +135,7 @@ def selection_sort(L):
         min_index = find_min_index(L, i)
         swap(L, i, min_index)
 
-
+# helper/auxilliary function for selection_sort
 def find_min_index(L, n):
     min_index = n
     for i in range(n+1, len(L)):
@@ -141,6 +143,7 @@ def find_min_index(L, n):
             min_index = i
     return min_index
 
+# testing function for selection_sort
 def selection_sort_timing(n, m):
     total = 0
     for i in range(n):
@@ -150,6 +153,7 @@ def selection_sort_timing(n, m):
         total += timeit.default_timer() - start
     return total/n
 
+# testing function for selection_sort that generates a graph
 def selection_sort_timing_graph(n, m):
     total = []
     for i in range(n):
@@ -159,6 +163,12 @@ def selection_sort_timing_graph(n, m):
         total.append(timeit.default_timer() - start)
     return total
 
+# generic testing function that can test any sort and 
+#  returns a tuple with both the list needed for the graph
+#  (times) and the total time (total)
+
+# USE THIS FUNCTION FOR TESTING AND GET RID OF THE OTHER 
+#  ONES LATER
 def sortingAlgoTiming(n, m, func):
     times = []
     total = 0
@@ -171,6 +181,8 @@ def sortingAlgoTiming(n, m, func):
         times.append(end - start)
     return (total, times)
 
+# generic testing function using a near sorted
+#  list instead 
 def sortingAlgoTimingNearSorted(n, m, func):
     times = []
     total = 0
