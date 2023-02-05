@@ -88,11 +88,11 @@ def bubblesort2(L) :
     for i in range(len(L)) :
         value_i = L[0]
         for j in range(len(L) - 1) :
-            print(L)
-            print(value_i)
-            print(value_i > L[j+1])
-            print(j == len(L) - 2)
-            print(j == len(L) - 1)
+            #print(L)
+            #print(value_i)
+            # print(value_i > L[j+1])
+            # print(j == len(L) - 2)
+            # print(j == len(L) - 1)
             if value_i > L[j+1] :
                 L[j] = L[j+1]
             else :
