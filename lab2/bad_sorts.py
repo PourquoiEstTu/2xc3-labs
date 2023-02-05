@@ -225,14 +225,15 @@ def sortingAlgoTimingNearSorted(n, m, func, numOfSwaps):
 
 
 # --------------PLOT/CODE FOR EXPERIMENT 3 ------------
-swapTest0 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort_2)
-swapTest1 = sortingAlgoTimingNearSorted(100, 1000, selection_sort)
-swapTest2 = sortingAlgoTimingNearSorted(100, 1000, bubble_sort)
+swapTest0_0 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort, 100)
+swapTest0_1 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort, 500)
+swapTest0_2 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort, 1000)
+swapTest1 = sortingAlgoTimingNearSorted(100, 1000, selection_sort, 100)
+swapTest2 = sortingAlgoTimingNearSorted(100, 1000, bubble_sort, 100)
 fix, ax = plot.subplots()
 ax.set_ylabel("Swaps")
 ax.set_xlabel("Times")
-ax.plot(swapTest0[1], swapTest0[2])
-ax.plot(swapTest1[1], swapTest1[2])
-ax.plot(swapTest2[1], swapTest2[2])
-
+ax.plot([swapTest0_0[1], swapTest0_1[1], swapTest0_2[1]], [100, 500, 1000])
+# ax.plot(swapTest1[1], swapTest1[2])
+# ax.plot(swapTest2[1], swapTest2[2])
 plot.show()
