@@ -102,13 +102,13 @@ def bubblesort2(L) :
             if j == len(L) - 2 :
                 L[len(L) - 1] = value_i
 
-rand_list_original = create_random_list(20, 30)
-rand_list_to_be_sorted = rand_list_original.copy()
-bubblesort2(rand_list_to_be_sorted)
-print("Sorted rand list:")
-print(rand_list_to_be_sorted)
-print("Original rand list:")
-print(rand_list_original)
+# rand_list_original = create_random_list(20, 30)
+# rand_list_to_be_sorted = rand_list_original.copy()
+# bubblesort2(rand_list_to_be_sorted)
+# print("Sorted rand list:")
+# print(rand_list_to_be_sorted)
+# print("Original rand list:")
+# print(rand_list_original)
 
 
 # testing function for traditional
