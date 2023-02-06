@@ -192,11 +192,16 @@ def create_near_sorted_list(length, max_value, swaps):
 #  quicksort and mergesort have a lot of overhead 
 #  (according to 2c03), and then the rest for good 
 #  measure
+
+#general list for use in most experiments
 list_lengths = [1, 15, 100, 1000, 10000, 1000000]
-def sortingAlgoTiming(n, func):
+
+#for use in experiment 8
+small_list_lengths = [1, 2, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100]
+def sortingAlgoTiming(n, func, lengths):
     times = []
     total = 0
-    for i in list_lengths :
+    for i in lengths :
         for j in range(n) :
             list = create_random_list(i, i)
             start = timeit.default_timer()
@@ -224,9 +229,9 @@ def sortingAlgoTimingNearSorted(m, func):
     return (total, times, swaps)
 
 # --------------- EXPERIMENT 4 CODE ------------------
-# length_vs_time_Test0 = sortingAlgoTiming(10, quicksort)
-# length_vs_time_Test1 = sortingAlgoTiming(10, mergesort)
-# length_vs_time_Test2 = sortingAlgoTiming(10, heapsort)
+# length_vs_time_Test0 = sortingAlgoTiming(10, quicksort, list_lengths)
+# length_vs_time_Test1 = sortingAlgoTiming(10, mergesort, list_lengths)
+# length_vs_time_Test2 = sortingAlgoTiming(10, heapsort, list_lengths)
 # # fig, ax = plot.subplots()
 # plot.xlabel("List Length (Number of Elements)")
 # plot.ylabel("Time (s)")
@@ -241,33 +246,33 @@ def sortingAlgoTimingNearSorted(m, func):
 
 # --------------- EXPERIMENT 5 CODE ------------------
 
-swapTest0 = sortingAlgoTimingNearSorted(500, quicksort)
-swapTest1 = sortingAlgoTimingNearSorted(500, mergesort)
-swapTest2 = sortingAlgoTimingNearSorted(500, heapsort)
-# fig, ax = plot.subplots()
-plot.xlabel("Swaps")
-plot.ylabel("Time (s)")
-plot.plot(swapTest0[2], swapTest0[1], label = "Quicksort")
-plot.plot(swapTest1[2], swapTest1[1], label = "Mergesort")
-plot.plot(swapTest2[2], swapTest2[1], label = "Heapsort")
-legend = plot.legend(loc="upper center")
-# ax.plot(swapTest1[1], swapTest1[2])
-# ax.plot(swapTest2[1], swapTest2[2])
-plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
-plot.show()
+# swapTest0 = sortingAlgoTimingNearSorted(500, quicksort)
+# swapTest1 = sortingAlgoTimingNearSorted(500, mergesort)
+# swapTest2 = sortingAlgoTimingNearSorted(500, heapsort)
+# # fig, ax = plot.subplots()
+# plot.xlabel("Swaps")
+# plot.ylabel("Time (s)")
+# plot.plot(swapTest0[2], swapTest0[1], label = "Quicksort")
+# plot.plot(swapTest1[2], swapTest1[1], label = "Mergesort")
+# plot.plot(swapTest2[2], swapTest2[1], label = "Heapsort")
+# legend = plot.legend(loc="upper center")
+# # ax.plot(swapTest1[1], swapTest1[2])
+# # ax.plot(swapTest2[1], swapTest2[2])
+# plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
+# plot.show()
 
 # ---------------- EXPERIMENT 8 CODE -----------------
-lengthTest0 = sortingAlgoTiming(100, quicksort)
-lengthTest1 = sortingAlgoTiming(100, mergesort)
-lengthTest2 = sortingAlgoTiming(100, heapsort)
+lengthTest0 = sortingAlgoTiming(100, insertion_sort, small_list_lengths)
+lengthTest1 = sortingAlgoTiming(100, quicksort, small_list_lengths)
+lengthTest2 = sortingAlgoTiming(100, mergesort, small_list_lengths)
 # fig, ax = plot.subplots()
-plot.xlabel("Swaps")
+plot.xlabel("Length of List")
 plot.ylabel("Time (s)")
-plot.plot(swapTest0[2], swapTest0[1], label = "Quicksort")
-plot.plot(swapTest1[2], swapTest1[1], label = "Mergesort")
-plot.plot(swapTest2[2], swapTest2[1], label = "Heapsort")
+plot.plot(small_list_lengths, lengthTest0[1], label = "Insertion Sort")
+plot.plot(small_list_lengths, lengthTest1[1], label = "Quicksort")
+plot.plot(small_list_lengths, lengthTest2[1], label = "Mergesort")
 legend = plot.legend(loc="upper center")
 # ax.plot(swapTest1[1], swapTest1[2])
 # ax.plot(swapTest2[1], swapTest2[2])
-plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
+plot.title("Sorting Algorithm Time Depending on List Length")
 plot.show()
