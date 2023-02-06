@@ -164,21 +164,22 @@ def create_random_list(length, max_value):
 #  (according to 2c03), and then the rest for good 
 #  measure
 list_lengths = [1, 15, 100, 1000, 10000, 1000000]
-def sortingAlgoTiming(func):
+def sortingAlgoTiming(n, func):
     times = []
     total = 0
     for i in list_lengths :
-        list = create_random_list(i, i)
-        start = timeit.default_timer()
-        func(list)
-        end = timeit.default_timer() 
-        total += end - start
-        times.append(end - start)
-    return (total, times)
+        for j in range(n) :
+            list = create_random_list(i, i)
+            start = timeit.default_timer()
+            func(list)
+            end = timeit.default_timer() 
+            total += end - start
+        times.append(total/n)
+    return (total/n, times)
 
-length_vs_time_Test0 = sortingAlgoTiming(quicksort)
-length_vs_time_Test1 = sortingAlgoTiming(mergesort)
-length_vs_time_Test2 = sortingAlgoTiming(heapsort)
+length_vs_time_Test0 = sortingAlgoTiming(10, quicksort)
+length_vs_time_Test1 = sortingAlgoTiming(10, mergesort)
+length_vs_time_Test2 = sortingAlgoTiming(10, heapsort)
 # fig, ax = plot.subplots()
 plot.xlabel("List Length (Number of Elements)")
 plot.ylabel("Time (s)")
