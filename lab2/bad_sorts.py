@@ -43,22 +43,6 @@ def insert(L, i):
         else:
             return
 
-# same as above except put the aux
-#  function into the original function
-#  for only one function
-# easier to count sorts this way (at least 
-# for me)
-def insertion_sort_2(L) :
-    swaps = 0
-    for i in range(1, len(L)):
-        while i > 0:
-            if L[i] < L[i-1]:
-                swap(L, i-1, i)
-                swaps += 1
-                i -= 1
-            else:
-                break
-
 def insert_sort_experiment(n, m) : 
     for _ in range(n) :
         times = []
@@ -185,7 +169,7 @@ def selection_sort_timing_graph(n, m):
 
 # USE THIS FUNCTION FOR TESTING AND GET RID OF THE OTHER 
 #  ONES LATER
-list_lengths = [1, 15, 100, 1000, 10000, 1000000]
+list_lengths = [1, 15, 100, 1000, 10000]
 def sortingAlgoTiming(n, func):
     times = []
     total = 0
@@ -269,11 +253,11 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
 # plot.show()
 
-#================== EXPERIMENT 3 CODE =========================
+#================== EXPERIMENT 4 CODE =========================
 
 #------------------ BUBBLESORT GRAPH --------------------------
-lengthTest0 = sortingAlgoTiming(5000, bubble_sort)
-lengthTest1 = sortingAlgoTiming(5000, bubble_sort2)
+lengthTest0 = sortingAlgoTiming(1, bubble_sort)
+lengthTest1 = sortingAlgoTiming(1, bubble_sort2)
 # fig, ax = plot.subplots()
 plot.xlabel("Length")
 plot.ylabel("Time (s)")

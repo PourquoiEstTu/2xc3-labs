@@ -151,6 +151,21 @@ class Heap:
             whitespace = whitespace // 2
         return s
 
+
+# This is the traditional implementation of Insertion Sort.
+def insertion_sort(L):
+    for i in range(1, len(L)):
+        insert(L, i)
+
+
+def insert(L, i):
+    while i > 0:
+        if L[i] < L[i-1]:
+            swap(L, i-1, i)
+            i -= 1
+        else:
+            return
+
 # *************************************
     
 # -------- TESTING CODE ---------------
@@ -229,6 +244,22 @@ def sortingAlgoTimingNearSorted(m, func):
 swapTest0 = sortingAlgoTimingNearSorted(500, quicksort)
 swapTest1 = sortingAlgoTimingNearSorted(500, mergesort)
 swapTest2 = sortingAlgoTimingNearSorted(500, heapsort)
+# fig, ax = plot.subplots()
+plot.xlabel("Swaps")
+plot.ylabel("Time (s)")
+plot.plot(swapTest0[2], swapTest0[1], label = "Quicksort")
+plot.plot(swapTest1[2], swapTest1[1], label = "Mergesort")
+plot.plot(swapTest2[2], swapTest2[1], label = "Heapsort")
+legend = plot.legend(loc="upper center")
+# ax.plot(swapTest1[1], swapTest1[2])
+# ax.plot(swapTest2[1], swapTest2[2])
+plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
+plot.show()
+
+# ---------------- EXPERIMENT 8 CODE -----------------
+lengthTest0 = sortingAlgoTiming(100, quicksort)
+lengthTest1 = sortingAlgoTiming(100, mergesort)
+lengthTest2 = sortingAlgoTiming(100, heapsort)
 # fig, ax = plot.subplots()
 plot.xlabel("Swaps")
 plot.ylabel("Time (s)")
