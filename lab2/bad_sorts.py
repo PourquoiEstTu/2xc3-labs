@@ -150,12 +150,9 @@ def bubble_sort1(l,n):
 
 # Traditional Selection sort
 def selection_sort(L):
-    swaps = 0
     for i in range(len(L)):
         min_index = find_min_index(L, i)
         swap(L, i, min_index)
-        swaps += 1
-    return swaps
 
 # helper/auxilliary function for selection_sort
 def find_min_index(L, n):
@@ -205,18 +202,19 @@ def sortingAlgoTiming(n, m, func):
 
 # generic testing function using a near sorted
 #  list instead 
-def sortingAlgoTimingNearSorted(n, m, func, numOfSwaps):
+swapList = [100, 500, 1000, 5000, 10000]
+def sortingAlgoTimingNearSorted(m, func):
     times = []
-    swaps = []
     total = 0
-    for i in range(n):
-        list = create_near_sorted_list(m, m, numOfSwaps)
+    swaps = []
+    for i in swapList:
+        list = create_near_sorted_list(m, m, i)
         start = timeit.default_timer()
         func(list)
         end = timeit.default_timer() 
         total += end - start
         times.append(end - start)
-        swaps.append(swap)
+        swaps.append(i)
     return (total, times, swaps)
 
 # ------- CODE FOR EXPERIMENT 1 TESTS ----------------
@@ -257,15 +255,18 @@ def sortingAlgoTimingNearSorted(n, m, func, numOfSwaps):
 
 
 # --------------PLOT/CODE FOR EXPERIMENT 3 ------------
-swapTest0_0 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort, 100)
-swapTest0_1 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort, 500)
-swapTest0_2 = sortingAlgoTimingNearSorted(100, 1000, insertion_sort, 1000)
-swapTest1 = sortingAlgoTimingNearSorted(100, 1000, selection_sort, 100)
-swapTest2 = sortingAlgoTimingNearSorted(100, 1000, bubble_sort, 100)
+swapTest0_0 = sortingAlgoTimingNearSorted(5000, insertion_sort)
+swapTest1 = sortingAlgoTimingNearSorted(5000, selection_sort)
+swapTest2 = sortingAlgoTimingNearSorted(5000, bubble_sort)
 fix, ax = plot.subplots()
-ax.set_ylabel("Swaps")
-ax.set_xlabel("Times")
-ax.plot([swapTest0_0[1], swapTest0_1[1], swapTest0_2[1]], [100, 500, 1000])
+plot.rcParams["figure.figsize"] = [7.50, 3.50]
+plot.rcParams["figure.autolayout"] = True
+ax.set_xlabel("Swaps")
+ax.set_ylabel("Time")
+ax.plot(swapTest0_0[2], swapTest0_0[1], label = "Insertion Sort")
+ax.plot(swapTest1[2], swapTest1[1], label = "Selection Sort")
+ax.plot(swapTest2[2], swapTest2[1], label = "Bubble Sort")
+legend = plot.legend(loc="upper center")
 # ax.plot(swapTest1[1], swapTest1[2])
 # ax.plot(swapTest2[1], swapTest2[2])
 plot.show()
