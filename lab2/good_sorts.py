@@ -8,7 +8,13 @@ In contains traditional implementations for:
 3) Heap sort
 
 Author: Vincent Maccio
+Students: Love you Maccio~
 """
+
+import random
+import timeit
+import matplotlib.pyplot as plot
+import math
 
 # ************ Quick Sort ************
 def quicksort(L):
@@ -147,3 +153,40 @@ class Heap:
 
 # *************************************
     
+# -------- TESTING CODE ---------------
+
+# Create a random list length "length" containing whole numbers between 0 and max_value inclusive
+def create_random_list(length, max_value):
+    return [random.randint(0, max_value) for _ in range(length)]
+
+# 1 for the singleton case, 15 b/c for small arrays,
+#  quicksort and mergesort have a lot of overhead 
+#  (according to 2c03), and then the rest for good 
+#  measure
+list_lengths = [1, 15, 100, 1000, 10000, 1000000]
+def sortingAlgoTiming(func):
+    times = []
+    total = 0
+    for i in list_lengths :
+        list = create_random_list(i, i)
+        start = timeit.default_timer()
+        func(list)
+        end = timeit.default_timer() 
+        total += end - start
+        times.append(end - start)
+    return (total, times)
+
+length_vs_time_Test0 = sortingAlgoTiming(quicksort)
+length_vs_time_Test1 = sortingAlgoTiming(mergesort)
+length_vs_time_Test2 = sortingAlgoTiming(heapsort)
+# fig, ax = plot.subplots()
+plot.xlabel("List Length (Number of Elements)")
+plot.ylabel("Time (s)")
+plot.plot(list_lengths, length_vs_time_Test0[1], label = "Quicksort")
+plot.plot(list_lengths, length_vs_time_Test1[1], label = "Mergesort")
+plot.plot(list_lengths, length_vs_time_Test2[1], label = "Heapsort")
+legend = plot.legend(loc="upper center")
+# ax.plot(swapTest1[1], swapTest1[2])
+# ax.plot(swapTest2[1], swapTest2[2])
+plot.title("Sorting Algorithm Time Depending on List Length")
+plot.show()
