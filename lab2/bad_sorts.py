@@ -94,16 +94,13 @@ def insert2(L, i):
 
 # Traditional Bubble sort
 def bubble_sort(L):
-    swaps = 0
     for i in range(len(L)):
         for j in range(len(L) - 1):
             if L[j] > L[j+1]:
                 swap(L, j, j+1)
-                swaps += 1
-    return swaps
 
 # improved bubble sort
-def bubblesort2(L) :
+def bubble_sort2(L) :
     value_i = L[0]
     for i in range(len(L)) :
         value_i = L[0]
@@ -188,17 +185,19 @@ def selection_sort_timing_graph(n, m):
 
 # USE THIS FUNCTION FOR TESTING AND GET RID OF THE OTHER 
 #  ONES LATER
-def sortingAlgoTiming(n, m, func):
+list_lengths = [1, 15, 100, 1000, 10000, 1000000]
+def sortingAlgoTiming(n, func):
     times = []
     total = 0
-    for i in range(n):
-        list = create_random_list(m, m)
-        start = timeit.default_timer()
-        func(list)
-        end = timeit.default_timer() 
-        total += end - start
-        times.append(end - start)
-    return (total, times)
+    for i in list_lengths :
+        for j in range(n) :
+            list = create_random_list(i, i)
+            start = timeit.default_timer()
+            func(list)
+            end = timeit.default_timer() 
+            total += end - start
+        times.append(total/n)
+    return (total/n, times)
 
 # generic testing function using a near sorted
 #  list instead 
@@ -258,6 +257,23 @@ def sortingAlgoTimingNearSorted(m, func):
 swapTest0_0 = sortingAlgoTimingNearSorted(5000, insertion_sort)
 swapTest1 = sortingAlgoTimingNearSorted(5000, selection_sort)
 swapTest2 = sortingAlgoTimingNearSorted(5000, bubble_sort)
+# fig, ax = plot.subplots()
+plot.xlabel("Swaps")
+plot.ylabel("Time (s)")
+plot.plot(swapTest0_0[2], swapTest0_0[1], label = "Insertion Sort")
+plot.plot(swapTest1[2], swapTest1[1], label = "Selection Sort")
+plot.plot(swapTest2[2], swapTest2[1], label = "Bubble Sort")
+legend = plot.legend(loc="upper center")
+# ax.plot(swapTest1[1], swapTest1[2])
+# ax.plot(swapTest2[1], swapTest2[2])
+plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
+plot.show()
+
+#================== EXPERIMENT 3 CODE =========================
+
+#------------------ BUBBLESORT GRAPH --------------------------
+lengthTest0 = sortingAlgoTiming(5000, bubble_sort)
+lengthTest1 = sortingAlgoTiming(5000, selection_sort)
 # fig, ax = plot.subplots()
 plot.xlabel("Swaps")
 plot.ylabel("Time (s)")

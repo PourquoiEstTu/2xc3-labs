@@ -193,7 +193,7 @@ def sortingAlgoTiming(n, func):
 
 # generic testing function using a near sorted
 #  list instead 
-swapList = [100, 500, 1000, 5000, 10000, 50000]
+swapList = [0, 10, 100, 500, 1000, 2500, 5000, 7500, 10000, 50000]
 def sortingAlgoTimingNearSorted(m, func):
     times = []
     total = 0
@@ -209,17 +209,34 @@ def sortingAlgoTimingNearSorted(m, func):
     return (total, times, swaps)
 
 # --------------- EXPERIMENT 4 CODE ------------------
-length_vs_time_Test0 = sortingAlgoTiming(10, quicksort)
-length_vs_time_Test1 = sortingAlgoTiming(10, mergesort)
-length_vs_time_Test2 = sortingAlgoTiming(10, heapsort)
+# length_vs_time_Test0 = sortingAlgoTiming(10, quicksort)
+# length_vs_time_Test1 = sortingAlgoTiming(10, mergesort)
+# length_vs_time_Test2 = sortingAlgoTiming(10, heapsort)
+# # fig, ax = plot.subplots()
+# plot.xlabel("List Length (Number of Elements)")
+# plot.ylabel("Time (s)")
+# plot.plot(list_lengths, length_vs_time_Test0[1], label = "Quicksort")
+# plot.plot(list_lengths, length_vs_time_Test1[1], label = "Mergesort")
+# plot.plot(list_lengths, length_vs_time_Test2[1], label = "Heapsort")
+# legend = plot.legend(loc="upper center")
+# # ax.plot(swapTest1[1], swapTest1[2])
+# # ax.plot(swapTest2[1], swapTest2[2])
+# plot.title("Sorting Algorithm Time Depending on List Length")
+# plot.show()
+
+# --------------- EXPERIMENT 5 CODE ------------------
+
+swapTest0 = sortingAlgoTimingNearSorted(500, quicksort)
+swapTest1 = sortingAlgoTimingNearSorted(500, mergesort)
+swapTest2 = sortingAlgoTimingNearSorted(500, heapsort)
 # fig, ax = plot.subplots()
-plot.xlabel("List Length (Number of Elements)")
+plot.xlabel("Swaps")
 plot.ylabel("Time (s)")
-plot.plot(list_lengths, length_vs_time_Test0[1], label = "Quicksort")
-plot.plot(list_lengths, length_vs_time_Test1[1], label = "Mergesort")
-plot.plot(list_lengths, length_vs_time_Test2[1], label = "Heapsort")
+plot.plot(swapTest0[2], swapTest0[1], label = "Quicksort")
+plot.plot(swapTest1[2], swapTest1[1], label = "Mergesort")
+plot.plot(swapTest2[2], swapTest2[1], label = "Heapsort")
 legend = plot.legend(loc="upper center")
 # ax.plot(swapTest1[1], swapTest1[2])
 # ax.plot(swapTest2[1], swapTest2[2])
-plot.title("Sorting Algorithm Time Depending on List Length")
+plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
 plot.show()
