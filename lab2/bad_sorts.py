@@ -202,7 +202,7 @@ def sortingAlgoTiming(n, m, func):
 
 # generic testing function using a near sorted
 #  list instead 
-swapList = [100, 500, 1000, 5000, 10000]
+swapList = [100, 500, 1000, 5000, 10000, 50000]
 def sortingAlgoTimingNearSorted(m, func):
     times = []
     total = 0
@@ -258,15 +258,14 @@ def sortingAlgoTimingNearSorted(m, func):
 swapTest0_0 = sortingAlgoTimingNearSorted(5000, insertion_sort)
 swapTest1 = sortingAlgoTimingNearSorted(5000, selection_sort)
 swapTest2 = sortingAlgoTimingNearSorted(5000, bubble_sort)
-fix, ax = plot.subplots()
-plot.rcParams["figure.figsize"] = [7.50, 3.50]
-plot.rcParams["figure.autolayout"] = True
-ax.set_xlabel("Swaps")
-ax.set_ylabel("Time")
-ax.plot(swapTest0_0[2], swapTest0_0[1], label = "Insertion Sort")
-ax.plot(swapTest1[2], swapTest1[1], label = "Selection Sort")
-ax.plot(swapTest2[2], swapTest2[1], label = "Bubble Sort")
+# fig, ax = plot.subplots()
+plot.xlabel("Swaps")
+plot.ylabel("Time (s)")
+plot.plot(swapTest0_0[2], swapTest0_0[1], label = "Insertion Sort")
+plot.plot(swapTest1[2], swapTest1[1], label = "Selection Sort")
+plot.plot(swapTest2[2], swapTest2[1], label = "Bubble Sort")
 legend = plot.legend(loc="upper center")
 # ax.plot(swapTest1[1], swapTest1[2])
 # ax.plot(swapTest2[1], swapTest2[2])
+plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
 plot.show()
