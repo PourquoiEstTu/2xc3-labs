@@ -2,6 +2,7 @@
 This file corresponds to the first graded lab of 2XC3.
 Feel free to modify and/or add functions to this file.
 """
+from math import floor
 import random
 import timeit
 import matplotlib.pyplot as plot
@@ -163,6 +164,24 @@ def selection_sort_timing_graph(n, m):
         total.append(timeit.default_timer() - start)
     return total
 
+#improved selection sort code for Experiment 2 
+def improved_selection_sort(L):
+    for i in range(floor(len(L)/2)):
+        minman_index = find_max_min_index(L, i)#get min
+        if (L[i] != L[minman_index[0]]): swap(L, i, minman_index[0])#swap min value
+        if (L[i] != L[minman_index[1]]): swap(L, len(L) - i - 1, minman_index[1])#swap max value
+
+#aux function for improved select sort
+def find_max_min_index(L, n):
+    max_index = len(L) - n - 1
+    min_index = n
+    for i in range(n, len(L) - n):
+        if L[i] > L[max_index]:
+            max_index = i
+        if L[i] < L[min_index]:
+            min_index = i
+    return (min_index, max_index)
+
 # generic testing function that can test any sort and 
 #  returns a tuple with both the list needed for the graph
 #  (times) and the total time (total)
@@ -236,6 +255,19 @@ def sortingAlgoTimingNearSorted(m, func):
 #plot.plot(bbsort_times2)
 # plot.show()
 
+#================== CODE FOREXPERIMENT 2 =========================
+#improved is not faster so tinkering may be needed
+newSelection = sortingAlgoTiming(1, improved_selection_sort)[1]
+oldSelection = sortingAlgoTiming(1, selection_sort)[1]
+
+plot.xlabel("Length")
+plot.ylabel("Time (s)")
+plot.plot(list_lengths, newSelection, label = "Improved Selection Sort")
+plot.plot(list_lengths, oldSelection, label = "Traditonal Selection Sort")
+plot.title("Sorting Algorithm Time Depending on List Length")
+legend = plot.legend(loc = "upper center")
+plot.show()
+
 
 # --------------PLOT/CODE FOR EXPERIMENT 3 ------------
 # swapTest0_0 = sortingAlgoTimingNearSorted(5000, insertion_sort)
@@ -256,15 +288,15 @@ def sortingAlgoTimingNearSorted(m, func):
 #================== EXPERIMENT 4 CODE =========================
 
 #------------------ BUBBLESORT GRAPH --------------------------
-lengthTest0 = sortingAlgoTiming(1, bubble_sort)
-lengthTest1 = sortingAlgoTiming(1, bubble_sort2)
+#lengthTest0 = sortingAlgoTiming(1, bubble_sort)
+#lengthTest1 = sortingAlgoTiming(1, bubble_sort2)
 # fig, ax = plot.subplots()
-plot.xlabel("Length")
-plot.ylabel("Time (s)")
-plot.plot(list_lengths, lengthTest0[1], label = "Traditional Bubble Sort")
-plot.plot(list_lengths, lengthTest1[1], label = "Improved Bubble Sort")
-legend = plot.legend(loc="upper center")
+#plot.xlabel("Length")
+#plot.ylabel("Time (s)")
+#plot.plot(list_lengths, lengthTest0[1], label = "Traditional Bubble Sort")
+#plot.plot(list_lengths, lengthTest1[1], label = "Improved Bubble Sort")
+#legend = plot.legend(loc="upper center")
 # ax.plot(swapTest1[1], swapTest1[2])
 # ax.plot(swapTest2[1], swapTest2[2])
-plot.title("Sorting Algorithm Time Depending on List Length")
-plot.show()
+#plot.title("Sorting Algorithm Time Depending on List Length")
+#plot.show()
