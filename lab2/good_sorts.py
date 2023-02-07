@@ -74,6 +74,21 @@ def merge(left, right):
                 j += 1
     return L
 
+# bottom up mergesort
+def BU_mergesort(L) :
+    length = len(L)
+    i = 2
+    for i in range(2, length, i) :
+        for j in range(0, length - i, i) :
+            if j == 0 :
+                merge(L[j:i-1], L[:i+j])
+            else :
+                merge(L[j-i:j], L[j:i+j])
+
+L = [9,8,7,6,5,4,3,2,1]
+BU_mergesort(L)
+print(L)
+
 # *************************************
 
 # ************* Heap Sort *************
@@ -262,17 +277,17 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.show()
 
 # ---------------- EXPERIMENT 8 CODE -----------------
-lengthTest0 = sortingAlgoTiming(100, insertion_sort, small_list_lengths)
-lengthTest1 = sortingAlgoTiming(100, quicksort, small_list_lengths)
-lengthTest2 = sortingAlgoTiming(100, mergesort, small_list_lengths)
-# fig, ax = plot.subplots()
-plot.xlabel("Length of List")
-plot.ylabel("Time (s)")
-plot.plot(small_list_lengths, lengthTest0[1], label = "Insertion Sort")
-plot.plot(small_list_lengths, lengthTest1[1], label = "Quicksort")
-plot.plot(small_list_lengths, lengthTest2[1], label = "Mergesort")
-legend = plot.legend(loc="upper center")
-# ax.plot(swapTest1[1], swapTest1[2])
-# ax.plot(swapTest2[1], swapTest2[2])
-plot.title("Sorting Algorithm Time Depending on List Length")
-plot.show()
+# lengthTest0 = sortingAlgoTiming(100, insertion_sort, small_list_lengths)
+# lengthTest1 = sortingAlgoTiming(100, quicksort, small_list_lengths)
+# lengthTest2 = sortingAlgoTiming(100, mergesort, small_list_lengths)
+# # fig, ax = plot.subplots()
+# plot.xlabel("Length of List")
+# plot.ylabel("Time (s)")
+# plot.plot(small_list_lengths, lengthTest0[1], label = "Insertion Sort")
+# plot.plot(small_list_lengths, lengthTest1[1], label = "Quicksort")
+# plot.plot(small_list_lengths, lengthTest2[1], label = "Mergesort")
+# legend = plot.legend(loc="upper center")
+# # ax.plot(swapTest1[1], swapTest1[2])
+# # ax.plot(swapTest2[1], swapTest2[2])
+# plot.title("Sorting Algorithm Time Depending on List Length")
+# plot.show()
