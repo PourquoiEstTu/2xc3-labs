@@ -78,13 +78,19 @@ def merge(left, right):
 def BU_mergesort(L) :
     length = len(L)
     i = 2
-    for i in range(2, length, i) :
-        for j in range(0, length - i, i) :
-            if j == 0 :
-                merge(L[j:i-1], L[:i+j])
-            else :
-                merge(L[j-i:j], L[j:i+j])
-
+    while (i <= length) :
+        decrement = i//2
+        for j in range(0, length, i) :
+            # print("List L: ", end = " ")
+            # print(L)
+            # print("Decrement: " + str(decrement))
+            # print("i: " + str(i))
+            temp = merge(L[j:i+j-decrement], L[i+j-decrement:i+j])
+            # print("temp list: ", end = " ")
+            # print(temp)
+            for k in range(j, len(temp) + j) :
+                L[k] = temp[k-j]
+        i *= 2
 L = [9,8,7,6,5,4,3,2,1]
 BU_mergesort(L)
 print(L)
