@@ -91,9 +91,9 @@ def BU_mergesort(L) :
             for k in range(j, len(temp) + j) :
                 L[k] = temp[k-j]
         i *= 2
-L = [9,8,7,6,5,4,3,2,1]
-BU_mergesort(L)
-print(L)
+# L = [9,8,7,6,5,4,3,2,1]
+# BU_mergesort(L)
+# print(L)
 
 # *************************************
 
@@ -219,6 +219,9 @@ list_lengths = [1, 15, 100, 1000, 10000, 1000000]
 
 #for use in experiment 8
 small_list_lengths = [1, 2, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 70, 80, 90, 100]
+
+# for use in experiment 7
+powers_of_2 = [2048, 4096, 8192, 16384, 65536, 131072, 524288, 1048576,]
 def sortingAlgoTiming(n, func, lengths):
     times = []
     total = 0
@@ -281,6 +284,20 @@ def sortingAlgoTimingNearSorted(m, func):
 # # ax.plot(swapTest2[1], swapTest2[2])
 # plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
 # plot.show()
+
+#----------------- EXPERIMENT 7 CODE -----------------
+lengthTest0 = sortingAlgoTiming(1, mergesort, powers_of_2)
+lengthTest1 = sortingAlgoTiming(1, BU_mergesort, powers_of_2)
+# fig, ax = plot.subplots()
+plot.xlabel("Length of List")
+plot.ylabel("Time (s)")
+plot.plot(powers_of_2, lengthTest0[1], label = "Top Down Mergesort")
+plot.plot(powers_of_2, lengthTest1[1], label = "Bottom Up Mergesort")
+legend = plot.legend(loc="upper center")
+# ax.plot(swapTest1[1], swapTest1[2])
+# ax.plot(swapTest2[1], swapTest2[2])
+plot.title("Sorting Algorithm Time Depending on List Length")
+plot.show()
 
 # ---------------- EXPERIMENT 8 CODE -----------------
 # lengthTest0 = sortingAlgoTiming(100, insertion_sort, small_list_lengths)
