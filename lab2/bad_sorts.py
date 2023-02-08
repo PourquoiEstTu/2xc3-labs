@@ -256,7 +256,7 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.show()
 
 #================== CODE FOREXPERIMENT 2 =========================
-#improved is not faster so tinkering may be needed
+#nvm
 newSelection = sortingAlgoTiming(1, improved_selection_sort)[1]
 oldSelection = sortingAlgoTiming(1, selection_sort)[1]
 
