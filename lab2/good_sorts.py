@@ -82,7 +82,7 @@ def mergesort(L):
 
 def merge(left, right):
     L = []
-    i = j = 0
+    i, j = 0, 0
 
     while i < len(left) or j < len(right):
         if i >= len(left):
@@ -123,6 +123,7 @@ def merge(L, low, mid, high) :
 # bottom up mergesort
 def BU_mergesort(L) :
     length = len(L)
+<<<<<<< HEAD
     aux = L.copy()
     i = 1
     for i in range(1, length, i) :
@@ -149,6 +150,19 @@ def BU_mergesort(L) :
 L = [9,8,7,6,5,4,3,2,1,11,23,43,-5,0,-3,7]
 BU_mergesort(L)
 print(L)
+=======
+    i = 1
+    while (i <= length) : #at least 1 element list
+        for j in range(0, length, i*2) :
+            temp = merge(L[j: i + j], L[i + j: j + 2*i])
+            for k in range(j, len(temp) + j) :
+                L[k] = temp[k-j]
+        i *= 2
+
+#L = [9,8,7,6,5,4,3,2,1]
+
+#print(merge([3], [2, 1]))
+>>>>>>> refs/remotes/origin/main
 
 # *************************************
 
@@ -341,6 +355,7 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.show()
 
 #----------------- EXPERIMENT 6 CODE -----------------
+<<<<<<< HEAD
 # quicksortList = [100, 200, 400, 800, 1600, 3200, 6400]
 # newQuick = sortingAlgoTiming(1, dual_quicksort, quicksortList)
 # oldQuick = sortingAlgoTiming(1, quicksort, quicksortList)
@@ -351,21 +366,39 @@ def sortingAlgoTimingNearSorted(m, func):
 # legend = plot.legend(loc="upper center")
 # plot.title("Sorting Algorithm Time Depending on List Length")
 # plot.show()
+=======
+quicksortList = [100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600]
+newQuick = sortingAlgoTiming(1, dual_quicksort, quicksortList)
+oldQuick = sortingAlgoTiming(1, quicksort, quicksortList)
+plot.xlabel("Length of List")
+plot.ylabel("Time (s)")
+plot.plot(quicksortList, newQuick[1], label = "Two pivot quicksort")
+plot.plot(quicksortList, oldQuick[1], label = "One pivot quicksort")
+legend = plot.legend(loc="upper center")
+plot.title("Sorting Algorithm Time Depending on List Length")
+plot.show()
+>>>>>>> refs/remotes/origin/main
 
 
 #----------------- EXPERIMENT 7 CODE -----------------
-#lengthTest0 = sortingAlgoTiming(1, mergesort, powers_of_2)
-#lengthTest1 = sortingAlgoTiming(1, BU_mergesort, powers_of_2)
+# bottomUpTestList = [10, 20, 100, 200, 1000, 2000, 10000, 20000, 40000, 60000, 100000, 200000]
+# lengthTest0 = sortingAlgoTiming(1, mergesort, bottomUpTestList)
+# lengthTest1 = sortingAlgoTiming(1, BU_mergesort, bottomUpTestList)
 # fig, ax = plot.subplots()
-#plot.xlabel("Length of List")
-#plot.ylabel("Time (s)")
-#plot.plot(powers_of_2, lengthTest0[1], label = "Top Down Mergesort")
-#plot.plot(powers_of_2, lengthTest1[1], label = "Bottom Up Mergesort")
-#legend = plot.legend(loc="upper center")
+# plot.xlabel("Length of List")
+# plot.ylabel("Time (s)")
+# plot.plot(bottomUpTestList, lengthTest0[1], label = "Top Down Mergesort")
+# plot.plot(bottomUpTestList, lengthTest1[1], label = "Bottom Up Mergesort")
+# legend = plot.legend(loc="upper center")
 # ax.plot(swapTest1[1], swapTest1[2])
 # ax.plot(swapTest2[1], swapTest2[2])
-#plot.title("Sorting Algorithm Time Depending on List Length")
-#plot.show()
+# plot.title("Sorting Algorithm Time Depending on List Length")
+# plot.show()
+#L = create_random_list(100, 200000)
+#BU_mergesort(L)
+#print(L)
+#for x in range(1, len(L)):
+#    if L[x] < L[x - 1]: print("broken")
 
 # ---------------- EXPERIMENT 8 CODE -----------------
 # lengthTest0 = sortingAlgoTiming(100, insertion_sort, small_list_lengths)
