@@ -100,26 +100,55 @@ def merge(left, right):
                 j += 1
     return L
 
+# bottom up merge
+def merge(L, low, mid, high) :
+    leftLength = mid - low
+    rightLength = high - mid 
+    left = [0] * leftLength
+    right = [0] * rightLength
+    for i in range(leftLength) :
+        left[i] = L[low + i]
+    for j in range(rightLength) :
+        right[j] = L[mid + j - 1]
+    l = 1
+    r = 1
+    for k in range(low, high + 1) :
+        if left[l] <= right[r] :
+            L[k]  = left[i] 
+            i += 1
+        else :
+            L[k] = right[j]
+            j += 1
+
 # bottom up mergesort
 def BU_mergesort(L) :
     length = len(L)
-    i = 2
-    while (i <= length) :
-        decrement = i//2
-        for j in range(0, length, i) :
-            # print("List L: ", end = " ")
-            # print(L)
-            # print("Decrement: " + str(decrement))
-            # print("i: " + str(i))
-            temp = merge(L[j:i+j-decrement], L[i+j-decrement:i+j])
-            # print("temp list: ", end = " ")
-            # print(temp)
-            for k in range(j, len(temp) + j) :
-                L[k] = temp[k-j]
-        i *= 2
-# L = [9,8,7,6,5,4,3,2,1]
-# BU_mergesort(L)
-# print(L)
+    aux = L.copy()
+    i = 1
+    for i in range(1, length, i) :
+        for j in range(0, length-i, i) :
+            merge(L, j, i + j - 1, min(2*i + j - 1, length-1))
+
+
+    # length = len(L)
+    # i = 2
+    # while (i <= length) :
+    #     decrement = i//2
+    #     mid = i//2
+    #     for j in range(0, length, i) :
+    #         print("List L: ", end = " ")
+    #         print(L)
+    #         print("Decrement: " + str(decrement))
+    #         print("i: " + str(i))
+    #         temp = merge(L[j:mid+j], L[mid+j:i+j])
+    #         print("temp list: ", end = " ")
+    #         print(temp)
+    #         for k in range(j, len(temp) + j) :
+    #             L[k] = temp[k-j]
+    #     i *= 2
+L = [9,8,7,6,5,4,3,2,1,11,23,43,-5,0,-3,7]
+BU_mergesort(L)
+print(L)
 
 # *************************************
 
@@ -312,16 +341,16 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.show()
 
 #----------------- EXPERIMENT 6 CODE -----------------
-quicksortList = [100, 200, 400, 800, 1600, 3200, 6400]
-newQuick = sortingAlgoTiming(1, dual_quicksort, quicksortList)
-oldQuick = sortingAlgoTiming(1, quicksort, quicksortList)
-plot.xlabel("Length of List")
-plot.ylabel("Time (s)")
-plot.plot(quicksortList, newQuick[1], label = "Two pivot quicksort")
-plot.plot(quicksortList, oldQuick[1], label = "One pivot quicksort")
-legend = plot.legend(loc="upper center")
-plot.title("Sorting Algorithm Time Depending on List Length")
-plot.show()
+# quicksortList = [100, 200, 400, 800, 1600, 3200, 6400]
+# newQuick = sortingAlgoTiming(1, dual_quicksort, quicksortList)
+# oldQuick = sortingAlgoTiming(1, quicksort, quicksortList)
+# plot.xlabel("Length of List")
+# plot.ylabel("Time (s)")
+# plot.plot(quicksortList, newQuick[1], label = "Two pivot quicksort")
+# plot.plot(quicksortList, oldQuick[1], label = "One pivot quicksort")
+# legend = plot.legend(loc="upper center")
+# plot.title("Sorting Algorithm Time Depending on List Length")
+# plot.show()
 
 
 #----------------- EXPERIMENT 7 CODE -----------------
