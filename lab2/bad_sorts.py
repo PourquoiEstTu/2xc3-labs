@@ -215,8 +215,8 @@ def sortingAlgoTimingNearSorted(m, func):
 
 #================== CODE FOREXPERIMENT 2 =========================
 # ---------------- SELECTION SORT GRAPH
-# newSelection = sortingAlgoTiming(1, improved_selection_sort)[1]
-# oldSelection = sortingAlgoTiming(1, selection_sort)[1]
+# newSelection = sortingAlgoTiming(10, improved_selection_sort)[1]
+# oldSelection = sortingAlgoTiming(10, selection_sort)[1]
 
 # plot.xlabel("Length")
 # plot.ylabel("Time (s)")
@@ -227,31 +227,26 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.show()
 
 #------------------ BUBBLESORT GRAPH --------------------------
-lengthTest0 = sortingAlgoTiming(1, bubble_sort)
-lengthTest1 = sortingAlgoTiming(1, bubble_sort2)
-fig, ax = plot.subplots()
-plot.xlabel("Length")
-plot.ylabel("Time (s)")
-plot.plot(list_lengths, lengthTest0[1], label = "Traditional Bubble Sort")
-plot.plot(list_lengths, lengthTest1[1], label = "Improved Bubble Sort")
-legend = plot.legend(loc="upper center")
-plot.title("Sorting Algorithm Time Depending on List Length")
-plot.show()
+# lengthTest0 = sortingAlgoTiming(1, bubble_sort)
+# lengthTest1 = sortingAlgoTiming(1, bubble_sort2)
+# fig, ax = plot.subplots()
+# plot.xlabel("Length")
+# plot.ylabel("Time (s)")
+# plot.plot(list_lengths, lengthTest0[1], label = "Traditional Bubble Sort")
+# plot.plot(list_lengths, lengthTest1[1], label = "Improved Bubble Sort")
+# legend = plot.legend(loc="upper center")
+# plot.title("Sorting Algorithm Time Depending on List Length")
+# plot.show()
 
 # --------------PLOT/CODE FOR EXPERIMENT 3 ------------
 # swapTest0_0 = sortingAlgoTimingNearSorted(5000, insertion_sort)
 # swapTest1 = sortingAlgoTimingNearSorted(5000, selection_sort)
 # swapTest2 = sortingAlgoTimingNearSorted(5000, bubble_sort)
-# # fig, ax = plot.subplots()
 # plot.xlabel("Swaps")
 # plot.ylabel("Time (s)")
 # plot.plot(swapTest0_0[2], swapTest0_0[1], label = "Insertion Sort")
 # plot.plot(swapTest1[2], swapTest1[1], label = "Selection Sort")
 # plot.plot(swapTest2[2], swapTest2[1], label = "Bubble Sort")
 # legend = plot.legend(loc="upper center")
-# # ax.plot(swapTest1[1], swapTest1[2])
-# # ax.plot(swapTest2[1], swapTest2[2])
 # plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
 # plot.show()
-
-#================== EXPERIMENT 2 CODE =========================
