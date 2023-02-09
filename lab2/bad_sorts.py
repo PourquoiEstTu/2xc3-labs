@@ -144,26 +144,6 @@ def find_min_index(L, n):
             min_index = i
     return min_index
 
-# testing function for selection_sort
-def selection_sort_timing(n, m):
-    total = 0
-    for i in range(n):
-        list = create_random_list(m, m)
-        start = timeit.default_timer()
-        selection_sort(list)
-        total += timeit.default_timer() - start
-    return total/n
-
-# testing function for selection_sort that generates a graph
-def selection_sort_timing_graph(n, m):
-    total = []
-    for i in range(n):
-        list = create_random_list(m, m)
-        start = timeit.default_timer()
-        selection_sort(list)
-        total.append(timeit.default_timer() - start)
-    return total
-
 #improved selection sort code for Experiment 2 
 def improved_selection_sort(L):
     for i in range(floor(len(L)/2)):
@@ -188,7 +168,7 @@ def find_max_min_index(L, n):
 
 # USE THIS FUNCTION FOR TESTING AND GET RID OF THE OTHER 
 #  ONES LATER
-list_lengths = [1, 15, 100, 1000, 10000]
+list_lengths = [1, 15, 100, 500, 1000, 2500, 5000, 7500, 10000]
 def sortingAlgoTiming(n, func):
     times = []
     total = 0
@@ -220,54 +200,43 @@ def sortingAlgoTimingNearSorted(m, func):
     return (total, times, swaps)
 
 # ------- CODE FOR EXPERIMENT 1 TESTS ----------------
-# test2 = sortingAlgoTiming(100, 1000, insertion_sort)
-# print(test2[0])
-# test4 = sortingAlgoTiming(100, 1000, insertion_sort_2)
-# print(test4[0])
-# test3 = sortingAlgoTiming(100, 1000, bubble_sort)
-# print(test3[0])
-# test = sortingAlgoTiming(100, 1000, selection_sort)
-# print(test[0])
-# plot.plot(test[1])
-# plot.plot(test2[1])
-# plot.plot(test3[1])
-
-# test2 = sortingAlgoTiming(100, 1000, insertion_sort)
-# print(test2[0])
-# test4 = sortingAlgoTiming(100, 1000, insertion_sort_2)
-# print(test4[0])
-# test3 = sortingAlgoTiming(100, 1000, bubble_sort)
-# print(test3[0])
-# test = sortingAlgoTiming(100, 1000, selection_sort)
-# print(test[0])
-# plot.plot(test[1])
-# plot.plot(test2[1])
-# plot.plot(test3[1])
-#plot.plot(times)
-#plot.show()
-
-#bubblesort tests plot
-#bbsort_times1 = bubble_sort1(100,100)[1]
-#bbsort_times2 = bubble_sort1(500,500)[1]
-#bbsort_times3 = bubble_sort1(10000,10000)[1]
-
-#plot.plot(bbsort_times1)
-#plot.plot(bbsort_times2)
+# lengthTest0 = sortingAlgoTiming(1, bubble_sort)
+# lengthTest1 = sortingAlgoTiming(1, selection_sort)
+# lengthTest2 = sortingAlgoTiming(1, insertion_sort)
+# fig, ax = plot.subplots()
+# plot.xlabel("Length")
+# plot.ylabel("Time (s)")
+# plot.plot(list_lengths, lengthTest0[1], label = "Bubble Sort")
+# plot.plot(list_lengths, lengthTest1[1], label = "Selection Sort")
+# plot.plot(list_lengths, lengthTest2[1], label = "Insertion Sort")
+# legend = plot.legend(loc="upper center")
+# plot.title("Sorting Algorithm Time Depending on List Length")
 # plot.show()
 
 #================== CODE FOREXPERIMENT 2 =========================
-#nvm
-newSelection = sortingAlgoTiming(1, improved_selection_sort)[1]
-oldSelection = sortingAlgoTiming(1, selection_sort)[1]
+# ---------------- SELECTION SORT GRAPH
+# newSelection = sortingAlgoTiming(1, improved_selection_sort)[1]
+# oldSelection = sortingAlgoTiming(1, selection_sort)[1]
 
+# plot.xlabel("Length")
+# plot.ylabel("Time (s)")
+# plot.plot(list_lengths, newSelection, label = "Improved Selection Sort")
+# plot.plot(list_lengths, oldSelection, label = "Traditonal Selection Sort")
+# plot.title("Sorting Algorithm Time Depending on List Length")
+# legend = plot.legend(loc = "upper center")
+# plot.show()
+
+#------------------ BUBBLESORT GRAPH --------------------------
+lengthTest0 = sortingAlgoTiming(1, bubble_sort)
+lengthTest1 = sortingAlgoTiming(1, bubble_sort2)
+fig, ax = plot.subplots()
 plot.xlabel("Length")
 plot.ylabel("Time (s)")
-plot.plot(list_lengths, newSelection, label = "Improved Selection Sort")
-plot.plot(list_lengths, oldSelection, label = "Traditonal Selection Sort")
+plot.plot(list_lengths, lengthTest0[1], label = "Traditional Bubble Sort")
+plot.plot(list_lengths, lengthTest1[1], label = "Improved Bubble Sort")
+legend = plot.legend(loc="upper center")
 plot.title("Sorting Algorithm Time Depending on List Length")
-legend = plot.legend(loc = "upper center")
 plot.show()
-
 
 # --------------PLOT/CODE FOR EXPERIMENT 3 ------------
 # swapTest0_0 = sortingAlgoTimingNearSorted(5000, insertion_sort)
@@ -285,18 +254,4 @@ plot.show()
 # plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
 # plot.show()
 
-#================== EXPERIMENT 4 CODE =========================
-
-#------------------ BUBBLESORT GRAPH --------------------------
-#lengthTest0 = sortingAlgoTiming(1, bubble_sort)
-#lengthTest1 = sortingAlgoTiming(1, bubble_sort2)
-# fig, ax = plot.subplots()
-#plot.xlabel("Length")
-#plot.ylabel("Time (s)")
-#plot.plot(list_lengths, lengthTest0[1], label = "Traditional Bubble Sort")
-#plot.plot(list_lengths, lengthTest1[1], label = "Improved Bubble Sort")
-#legend = plot.legend(loc="upper center")
-# ax.plot(swapTest1[1], swapTest1[2])
-# ax.plot(swapTest2[1], swapTest2[2])
-#plot.title("Sorting Algorithm Time Depending on List Length")
-#plot.show()
+#================== EXPERIMENT 2 CODE =========================

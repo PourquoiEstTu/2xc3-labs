@@ -123,34 +123,6 @@ def merge(L, low, mid, high) :
 # bottom up mergesort
 def BU_mergesort(L) :
     length = len(L)
-<<<<<<< HEAD
-    aux = L.copy()
-    i = 1
-    for i in range(1, length, i) :
-        for j in range(0, length-i, i) :
-            merge(L, j, i + j - 1, min(2*i + j - 1, length-1))
-
-
-    # length = len(L)
-    # i = 2
-    # while (i <= length) :
-    #     decrement = i//2
-    #     mid = i//2
-    #     for j in range(0, length, i) :
-    #         print("List L: ", end = " ")
-    #         print(L)
-    #         print("Decrement: " + str(decrement))
-    #         print("i: " + str(i))
-    #         temp = merge(L[j:mid+j], L[mid+j:i+j])
-    #         print("temp list: ", end = " ")
-    #         print(temp)
-    #         for k in range(j, len(temp) + j) :
-    #             L[k] = temp[k-j]
-    #     i *= 2
-L = [9,8,7,6,5,4,3,2,1,11,23,43,-5,0,-3,7]
-BU_mergesort(L)
-print(L)
-=======
     i = 1
     while (i <= length) : #at least 1 element list
         for j in range(0, length, i*2) :
@@ -162,7 +134,6 @@ print(L)
 #L = [9,8,7,6,5,4,3,2,1]
 
 #print(merge([3], [2, 1]))
->>>>>>> refs/remotes/origin/main
 
 # *************************************
 
@@ -355,8 +326,7 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.show()
 
 #----------------- EXPERIMENT 6 CODE -----------------
-<<<<<<< HEAD
-# quicksortList = [100, 200, 400, 800, 1600, 3200, 6400]
+# quicksortList = [100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600]
 # newQuick = sortingAlgoTiming(1, dual_quicksort, quicksortList)
 # oldQuick = sortingAlgoTiming(1, quicksort, quicksortList)
 # plot.xlabel("Length of List")
@@ -366,18 +336,6 @@ def sortingAlgoTimingNearSorted(m, func):
 # legend = plot.legend(loc="upper center")
 # plot.title("Sorting Algorithm Time Depending on List Length")
 # plot.show()
-=======
-quicksortList = [100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600]
-newQuick = sortingAlgoTiming(1, dual_quicksort, quicksortList)
-oldQuick = sortingAlgoTiming(1, quicksort, quicksortList)
-plot.xlabel("Length of List")
-plot.ylabel("Time (s)")
-plot.plot(quicksortList, newQuick[1], label = "Two pivot quicksort")
-plot.plot(quicksortList, oldQuick[1], label = "One pivot quicksort")
-legend = plot.legend(loc="upper center")
-plot.title("Sorting Algorithm Time Depending on List Length")
-plot.show()
->>>>>>> refs/remotes/origin/main
 
 
 #----------------- EXPERIMENT 7 CODE -----------------
