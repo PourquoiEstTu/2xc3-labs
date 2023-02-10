@@ -56,9 +56,6 @@ def dual_quicksort_copy(L):
             middle.append(num)
         else:
             right.append(num)
-    #print(left)
-    #print(middle)
-    #print(right)
     return dual_quicksort_copy(left) + [pivot1] + dual_quicksort_copy(middle) + [pivot2] + dual_quicksort_copy(right)
 
 # *************************************
@@ -100,26 +97,6 @@ def merge(left, right):
                 j += 1
     return L
 
-# bottom up merge
-def merge(L, low, mid, high) :
-    leftLength = mid - low
-    rightLength = high - mid 
-    left = [0] * leftLength
-    right = [0] * rightLength
-    for i in range(leftLength) :
-        left[i] = L[low + i]
-    for j in range(rightLength) :
-        right[j] = L[mid + j - 1]
-    l = 1
-    r = 1
-    for k in range(low, high + 1) :
-        if left[l] <= right[r] :
-            L[k]  = left[i] 
-            i += 1
-        else :
-            L[k] = right[j]
-            j += 1
-
 # bottom up mergesort
 def BU_mergesort(L) :
     length = len(L)
@@ -130,10 +107,6 @@ def BU_mergesort(L) :
             for k in range(j, len(temp) + j) :
                 L[k] = temp[k-j]
         i *= 2
-
-#L = [9,8,7,6,5,4,3,2,1]
-
-#print(merge([3], [2, 1]))
 
 # *************************************
 
@@ -313,15 +286,13 @@ def sortingAlgoTimingNearSorted(m, func):
 # swapTest0 = sortingAlgoTimingNearSorted(500, quicksort)
 # swapTest1 = sortingAlgoTimingNearSorted(500, mergesort)
 # swapTest2 = sortingAlgoTimingNearSorted(500, heapsort)
-# # fig, ax = plot.subplots()
+# fig, ax = plot.subplots()
 # plot.xlabel("Swaps")
 # plot.ylabel("Time (s)")
 # plot.plot(swapTest0[2], swapTest0[1], label = "Quicksort")
 # plot.plot(swapTest1[2], swapTest1[1], label = "Mergesort")
 # plot.plot(swapTest2[2], swapTest2[1], label = "Heapsort")
 # legend = plot.legend(loc="upper center")
-# # ax.plot(swapTest1[1], swapTest1[2])
-# # ax.plot(swapTest2[1], swapTest2[2])
 # plot.title("Sorting Algorithm Time Depending on Swaps in a Near Sorted List")
 # plot.show()
 
@@ -348,28 +319,20 @@ def sortingAlgoTimingNearSorted(m, func):
 # plot.plot(bottomUpTestList, lengthTest0[1], label = "Top Down Mergesort")
 # plot.plot(bottomUpTestList, lengthTest1[1], label = "Bottom Up Mergesort")
 # legend = plot.legend(loc="upper center")
-# ax.plot(swapTest1[1], swapTest1[2])
-# ax.plot(swapTest2[1], swapTest2[2])
 # plot.title("Sorting Algorithm Time Depending on List Length")
 # plot.show()
-#L = create_random_list(100, 200000)
-#BU_mergesort(L)
-#print(L)
-#for x in range(1, len(L)):
-#    if L[x] < L[x - 1]: print("broken")
+
 
 # ---------------- EXPERIMENT 8 CODE -----------------
 # lengthTest0 = sortingAlgoTiming(100, insertion_sort, small_list_lengths)
 # lengthTest1 = sortingAlgoTiming(100, quicksort, small_list_lengths)
 # lengthTest2 = sortingAlgoTiming(100, mergesort, small_list_lengths)
-# # fig, ax = plot.subplots()
+# fig, ax = plot.subplots()
 # plot.xlabel("Length of List")
 # plot.ylabel("Time (s)")
 # plot.plot(small_list_lengths, lengthTest0[1], label = "Insertion Sort")
 # plot.plot(small_list_lengths, lengthTest1[1], label = "Quicksort")
 # plot.plot(small_list_lengths, lengthTest2[1], label = "Mergesort")
 # legend = plot.legend(loc="upper center")
-# # ax.plot(swapTest1[1], swapTest1[2])
-# # ax.plot(swapTest2[1], swapTest2[2])
 # plot.title("Sorting Algorithm Time Depending on List Length")
 # plot.show()
