@@ -64,7 +64,7 @@ def DFS(G, node1, node2):
 def BFS2(G, node1, node2):
     Q = deque([node1])
     pathList = []
-    appendCount = 0
+    breakVar = False
     marked = {node1 : True}
     for node in G.adj:
         if node != node1:
@@ -79,26 +79,56 @@ def BFS2(G, node1, node2):
         for node in G.adj[current_node]:
             if node == node2:
                 pathList.append(node2)
-                return pathList
+                breakVar = True
+                break 
             if not marked[node]:
                 print("Marked node: " + str(node))
                 Q.append(node)
                 marked[node] = True
-            else :
-                num_of_marks += 1
-                print("Number of marked nodes: " + str(num_of_marks))
-        if num_of_marks == num_of_adj_nodes :
-            pathList.pop()
+        if breakVar :
+            break
+            # else :
+            #     num_of_marks += 1
+            #     print("Number of marked nodes: " + str(num_of_marks))
+        # if num_of_marks == num_of_adj_nodes :
+        #     pathList.pop()
+        # print(pathList)
+    if pathList[len(pathList) - 1] != node2 :
+        return []
+    for i in range(1, len(pathList) - 2) :
+        print(pathList[i])
+        if (pathList[i - 1] not in G.adjacent_nodes(pathList[i])) or (pathList[i+1] not in G.adjacent_nodes(pathList[i])) :
+            print(pathList[i])
+            pathList.pop(i)
 
-    return []
+    return pathList
 
-g = Graph(6)
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 3)
-g.add_edge(2, 3)
-g.add_edge(2, 4)
-g.add_edge(3, 5)
-g.add_edge(3, 4)
-g.add_edge(4, 2)
-print(BFS2(g, 0, 5))
+
+# g = Graph(6)
+# g.add_edge(0, 1)
+# g.add_edge(0, 2)
+# g.add_edge(1, 3)
+# g.add_edge(2, 3)
+# g.add_edge(2, 4)
+# g.add_edge(3, 5)
+# g.add_edge(3, 4)
+# g.add_edge(4, 2)
+# print(BFS2(g, 0, 5))
+
+
+#uncomplete
+def BFS3(G, node1, node2):
+    Q = deque([node1])
+    marked = {node1 : True}
+    for node in G.adj:
+        if node != node1:
+            marked[node] = False
+    while len(Q) != 0:
+        current_node = Q.popleft()
+        for node in G.adj[current_node]:
+            if node == node2:
+                return True
+            if not marked[node]:
+                Q.append(node)
+                marked[node] = True
+    return False
