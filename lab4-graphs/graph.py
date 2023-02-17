@@ -74,31 +74,26 @@ def BFS2(G, node1, node2):
         pathList.append(current_node)
         num_of_adj_nodes = len(G.adjacent_nodes(current_node))
         num_of_marks = 0 
-        print("Current node: " + str(current_node))
-        print("Number of adjacent nodes to current_node: " + str(num_of_adj_nodes))
+        # print("Current node: " + str(current_node))
+        # print("Number of adjacent nodes to current_node: " + str(num_of_adj_nodes))
         for node in G.adj[current_node]:
             if node == node2:
                 pathList.append(node2)
                 breakVar = True
                 break 
             if not marked[node]:
-                print("Marked node: " + str(node))
+                # print("Marked node: " + str(node))
                 Q.append(node)
                 marked[node] = True
         if breakVar :
             break
-            # else :
-            #     num_of_marks += 1
-            #     print("Number of marked nodes: " + str(num_of_marks))
-        # if num_of_marks == num_of_adj_nodes :
-        #     pathList.pop()
         # print(pathList)
     if pathList[len(pathList) - 1] != node2 :
         return []
     for i in range(1, len(pathList) - 2) :
-        print(pathList[i])
+        # print(pathList[i])
         if (pathList[i - 1] not in G.adjacent_nodes(pathList[i])) or (pathList[i+1] not in G.adjacent_nodes(pathList[i])) :
-            print(pathList[i])
+            # print(pathList[i])
             pathList.pop(i)
 
     return pathList
