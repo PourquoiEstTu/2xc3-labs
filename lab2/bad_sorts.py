@@ -44,18 +44,6 @@ def insert(L, i):
         else:
             return
 
-def insert_sort_experiment(n, m) : 
-    for _ in range(n) :
-        times = []
-        L = create_random_list(m, m)
-        start = timeit.default_timer()
-        insertion_sort(L)
-        end = timeit.default_timer()
-        total = end - start
-    return total/n
-
-#print("Test 1: " + str(insert_sort_experiment(1000, 1000)))
-#print("Test 2: " + str(insert_sort_experiment(100000, 100000)))
 
 # This is the optimization/improvement we saw in lecture
 def insertion_sort2(L):
@@ -90,11 +78,6 @@ def bubble_sort2(L) :
     for i in range(len(L)) :
         value_i = L[0]
         for j in range(len(L) - 1) :
-            #print(L)
-            #print(value_i)
-            # print(value_i > L[j+1])
-            # print(j == len(L) - 2)
-            # print(j == len(L) - 1)
             if value_i > L[j+1] :
                 L[j] = L[j+1]
             else :
@@ -103,30 +86,6 @@ def bubble_sort2(L) :
             if j == len(L) - 2 :
                 L[len(L) - 1] = value_i
 
-# rand_list_original = create_random_list(20, 30)
-# rand_list_to_be_sorted = rand_list_original.copy()
-# bubblesort2(rand_list_to_be_sorted)
-# print("Sorted rand list:")
-# print(rand_list_to_be_sorted)
-# print("Original rand list:")
-# print(rand_list_original)
-
-
-# testing function for traditional
-def bubble_sort1(l,n):
-    times = []
-    for _ in range(n):
-        L = create_random_list(l, l)
-        start = timeit.default_timer()
-        bubble_sort(L)
-        end = timeit.default_timer() 
-        total = end-start
-        times.append(total)
-    return (total/n, times)
-
-#print("Test 1:" + str(bubble_sort1(100,100)[0]))
-#print("Test 2:" + str(bubble_sort1(1000,1000)[0]))
-#print("Test 3:" + str(bubble_sort1(10000,10000)[0]))
 
 # ******************* Selection sort code *******************
 
@@ -165,9 +124,6 @@ def find_max_min_index(L, n):
 # generic testing function that can test any sort and 
 #  returns a tuple with both the list needed for the graph
 #  (times) and the total time (total)
-
-# USE THIS FUNCTION FOR TESTING AND GET RID OF THE OTHER 
-#  ONES LATER
 list_lengths = [1, 15, 100, 500, 1000, 2500, 5000, 7500, 10000]
 def sortingAlgoTiming(n, func):
     times = []
