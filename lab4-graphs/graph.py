@@ -65,6 +65,7 @@ def DFS(G, node1, node2):
 
 #Depth first search path return
 def DFS2(G, node1, node2):
+    if G.adj[node2] == []: return []
     S = [node1]
     marked = {}
     path = []
@@ -98,6 +99,20 @@ def DFS2(G, node1, node2):
             found = False
     #print(marked)
     return []
+
+#DFS to find all paths from node1, potentially works
+def DFS3(G, node1):
+    pre = {}
+    keys = []
+    for elm in G.adj.keys():
+        if not (elm == node1):
+            keys.append(elm)
+    for node in keys: #for each node other than node1
+        x = DFS2(G, node1, node)
+        #print(x)
+        if not len(x) == 0:
+            pre[node] = len(x) - 1
+    return pre
 
 #BFS path return implementation
 def BFS2(G, node1, node2):
@@ -138,6 +153,36 @@ def BFS2(G, node1, node2):
     return pathList
 
 
+#BFS to find all paths from node1, potentially works
+def BFS3(G, node1):
+    pre = {}
+    keys = []
+    for elm in G.adj.keys():
+        if not (elm == node1):
+            keys.append(elm)
+    for node in keys: #for each node other than node1
+        x = BFS2(G, node1, node)
+        #print(x)
+        if not len(x) == 0:
+            pre[node] = len(x) - 1
+    return pre
+
+def has_cycle(G):
+    #for each node3 in G
+    #for each adjacent nodes in node
+    return
+
+def is_connected(G):
+    path = {}
+    for elm in G.adj.keys():
+        if not (DFS3(G, elm) == path):
+            return True
+    return False
+
+def create_random_graph(i, j):
+    return
+
+#Testings
 g = Graph(6)
 g.add_edge(0, 1)
 g.add_edge(0, 2)
@@ -147,33 +192,36 @@ g.add_edge(2, 4)
 g.add_edge(3, 5)
 g.add_edge(3, 4)
 g.add_edge(4, 2)
-print(BFS2(g, 0, 5))
 print(DFS2(g, 0, 5))
+print(BFS2(g, 0, 5))
 
 o = Graph(6)
 o.add_edge(0, 1)
 o.add_edge(0, 2)
 o.add_edge(0, 3)
 o.add_edge(2, 4)
-o.add_edge(2, 5)
+#o.add_edge(2, 5)
 o.add_edge(3, 5)
 print(BFS2(o, 0, 0))
 print(DFS2(o, 0, 0))
+print("testing")
+print(DFS3(o, 0))
+print(BFS3(o, 0))
 
 
-#uncomplete
-def BFS3(G, node1, node2):
-    Q = deque([node1])
-    marked = {node1 : True}
-    for node in G.adj:
-        if node != node1:
-            marked[node] = False
-    while len(Q) != 0:
-        current_node = Q.popleft()
-        for node in G.adj[current_node]:
-            if node == node2:
-                return True
-            if not marked[node]:
-                Q.append(node)
-                marked[node] = True
-    return False
+print("new test")
+oof = Graph(7)
+oof.add_edge(0, 2)
+oof.add_edge(0, 3)
+oof.add_edge(3, 4)
+oof.add_edge(2, 4)
+oof.add_edge(4, 6)
+oof.add_edge(3, 5)
+print(DFS3(oof, 0))
+print(BFS3(oof, 0))
+
+man = Graph(19)
+man.add_edge(0, 2)
+print(is_connected(man))
+
+print(DFS2(man, 0, 0))
