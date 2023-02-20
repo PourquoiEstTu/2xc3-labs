@@ -112,18 +112,46 @@ def BFS2(G, node1, node2):
 
 
 #uncomplete
-def BFS3(G, node1, node2):
-    Q = deque([node1])
-    marked = {node1 : True}
+def BFS3(G, targetNode):
+    pred_dict = {}
+    count = 0
+    for i in G.adj :
+        count += 1
+    edgeTo = [-1] * count
+    Q = deque([targetNode])
+    marked = {targetNode : True}
     for node in G.adj:
-        if node != node1:
+        if node != targetNode:
             marked[node] = False
     while len(Q) != 0:
         current_node = Q.popleft()
         for node in G.adj[current_node]:
-            if node == node2:
-                return True
             if not marked[node]:
+                # print(edgeTo)
+                edgeTo[node] = current_node
                 Q.append(node)
                 marked[node] = True
-    return False
+    for i in range(len(edgeTo)) :
+        if (edgeTo[i] != (-1) ) :
+            pred_dict[i] = edgeTo[i]
+    return pred_dict
+
+g = Graph(7)
+g.add_edge(1, 2)
+g.add_edge(1, 3)
+g.add_edge(2, 4)
+g.add_edge(3, 4)
+g.add_edge(3, 5)
+g.add_edge(4, 5)
+g.add_edge(4, 6)
+print("Final edgeTo list:" + str(BFS3(g, 1)))
+
+# Test code for when dfs wasn't working right
+# g = Graph(6)
+# g.add_edge(0,2)
+# g.add_edge(0,1)
+# g.add_edge(0,3)
+# g.add_edge(2,4)
+# g.add_edge(2,3)
+# g.add_edge(3,5)
+# print(DFS(g, 0, 0))
