@@ -324,3 +324,11 @@ def create_random_graph(i, j):
 # print(is_connected(man))
 
 # print(DFS2(man, 0, 0))
+
+
+
+#--------------------------- EXPERIMENT 1 ---------------------------
+def exp1(edges, num_of_graphs) :
+    for i in range(num_of_graphs) :
+        G = create_random_graph(100, )
+    pass
