@@ -491,7 +491,7 @@ def create_random_graph(i, j):
     
 #----------------- Approximation experiment 2  -----------------
 # (nodes are the independent var, num of edges kept constant)
-nodes = [1, 5, 10, 15, 20, 25,]
+nodes = [5, 8, 15,]# 20,]
 def pt2exp2(list_of_nodes, num_of_graphs) :
     MVC_sum = 0
     MVC_sum_per_edge = []
@@ -502,8 +502,8 @@ def pt2exp2(list_of_nodes, num_of_graphs) :
     approx3_sum = 0
     approx3_sum_per_edge = []
     for node in list_of_nodes :
-        for _ in range(num_of_graphs) :
-            G = create_random_graph(node, 15)
+        for i in range(num_of_graphs) :
+            G = create_random_graph(node, 10)
             MVC_sum += len(MVC(G))
             approx1_sum += len(approx1(G))
             approx2_sum += len(approx2(G))
@@ -518,13 +518,13 @@ def pt2exp2(list_of_nodes, num_of_graphs) :
         approx3_sum = 0
     return (list_of_nodes, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
 
-test2 = pt2exp1(nodes, 1000)
+test2 = pt2exp2(nodes, 100)
 plot.xlabel("Number of nodes")
-plot.ylabel("Sum of the sizes of Vertex Covers for 1000 graphs")
-plot.plot(test1[0], test1[1], label="MVC Sum")
-plot.plot(test1[0], test1[2], label="approx1 Sum")
-plot.plot(test1[0], test1[3], label="approx2 Sum")
-plot.plot(test1[0], test1[4], label="approx3 Sum")
+plot.ylabel("Sum of the sizes of Vertex Covers for 100 graphs")
+plot.plot(test2[0], test2[1], label="MVC Sum")
+plot.plot(test2[0], test2[2], label="approx1 Sum")
+plot.plot(test2[0], test2[3], label="approx2 Sum")
+plot.plot(test2[0], test2[4], label="approx3 Sum")
 legend = plot.legend(loc="upper left")
 plot.title("Sum of Sizes of Vertex Covers Depending on the Number of Nodes")
 plot.show()
