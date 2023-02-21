@@ -1,6 +1,8 @@
 from collections import deque
 import random
 import copy
+import matplotlib.pyplot as plot
+
 #Undirected graph using an adjacency list
 class Graph:
 
@@ -130,8 +132,8 @@ def BFS2(G, node1, node2):
     while len(Q) != 0:
         current_node = Q.popleft()
         pathList.append(current_node)
-        num_of_adj_nodes = len(G.adjacent_nodes(current_node))
-        num_of_marks = 0 
+        # num_of_adj_nodes = len(G.adjacent_nodes(current_node))
+        # num_of_marks = 0 
         # print("Current node: " + str(current_node))
         # print("Number of adjacent nodes to current_node: " + str(num_of_adj_nodes))
         for node in G.adj[current_node]:
@@ -301,7 +303,7 @@ def approx1(G):
         for z in Gc.adj[max]: #remove all connections to max
             Gc.adj[z].remove(max)
         Gc.adj[max] = [] #remove all connections from max
-    print(C)
+    # print(C)
     return C
 
 def approx2(G):
@@ -330,7 +332,7 @@ def approx3(G):
             for q in Gc.adj[v]: #remove all connections to v
                 Gc.adj[q].remove(v)
             Gc.adj[v] = [] #remove all connections from v
-    print(C)
+    # print(C)
     return C
 
 # # test code for BFS3
@@ -362,9 +364,9 @@ def create_random_graph(i, j):
         x = random.randint(0, i)
         y = random.randint(0, i)
         if not (x, y) in L and x != y:
-            print("adding")
-            print(x)
-            print(y)
+            # print("adding")
+            # print(x)
+            # print(y)
             G.add_edge(x, y)
             L.append((x, y))
             t += 1
@@ -417,7 +419,27 @@ def create_random_graph(i, j):
 
 
 #--------------------------- EXPERIMENT 1 ---------------------------
-def exp1(edges, num_of_graphs) :
-    for i in range(num_of_graphs) :
-        G = create_random_graph(100, )
-    pass
+edges = []
+for i in range(3, 500, 10) :
+    edges.append(i)
+def exp1(list_of_edges, num_of_graphs) :
+    num_of_cycles = 0
+    cycles_per_edge = []
+    for edge in list_of_edges :
+        for i in range(num_of_graphs) :
+            G = create_random_graph(150, edge)
+            if has_cycle(G) :
+                num_of_cycles += 1
+        cycles_per_edge.append(num_of_cycles // num_of_graphs)
+        num_of_cycles = 0
+    return (list_of_edges, cycles_per_edge)
+
+
+test = exp1(edges, 100)
+plot.xlabel("Number of Edges")
+plot.ylabel("Probability of Cycle Occurring")
+plot.plot(test[0], test[1])
+# legend = plot.legend(loc="upper center")
+plot.title("Probabilty of Cycles Occurring in Graphs with Different Numbers of Edges")
+plot.show()
+    
