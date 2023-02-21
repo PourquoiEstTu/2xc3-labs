@@ -518,7 +518,7 @@ def pt2exp2(list_of_nodes, num_of_graphs) :
         approx3_sum = 0
     return (list_of_nodes, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
 
-test2 = pt2exp2(nodes, 100)
+test2 = pt2exp2(nodes, 500)
 plot.xlabel("Number of nodes")
 plot.ylabel("Sum of the sizes of Vertex Covers for 100 graphs")
 plot.plot(test2[0], test2[1], label="MVC Sum")
