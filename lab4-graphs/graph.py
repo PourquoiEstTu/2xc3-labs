@@ -1,5 +1,6 @@
 from collections import deque
-
+import random
+import copy
 #Undirected graph using an adjacency list
 class Graph:
 
@@ -257,6 +258,81 @@ def BFS3(G, targetNode):
             pred_dict[i] = edgeTo[i]
     return pred_dict
 
+#Use the methods below to determine minimum vertex covers
+def add_to_each(sets, element):
+    copy = sets.copy()
+    for set in copy:
+        set.append(element)
+    return copy
+
+def power_set(set):
+    if set == []:
+        return [[]]
+    return power_set(set[1:]) + add_to_each(power_set(set[1:]), set[0])
+
+def is_vertex_cover(G, C):
+    for start in G.adj:
+        for end in G.adj[start]:
+            if not(start in C or end in C):
+                return False
+    return True
+
+def MVC(G):
+    nodes = [i for i in range(G.number_of_nodes())]
+    subsets = power_set(nodes)
+    min_cover = nodes
+    for subset in subsets:
+        if is_vertex_cover(G, subset):
+            if len(subset) < len(min_cover):
+                min_cover = subset
+    return min_cover
+
+# Approx algorithms
+def approx1(G):
+    C = []
+    Gc = Graph(G.number_of_nodes())
+    Gc.adj = copy.deepcopy(G.adj) #copy graph
+    while not is_vertex_cover(Gc, C): #until vertex cover is found
+        max = 0
+        for x in Gc.adj.keys(): #find max vertex in graph
+            if len(Gc.adj[x]) > len(Gc.adj[max]):
+                max = x
+        C.append(max) #add max vetex to C
+        for z in Gc.adj[max]: #remove all connections to max
+            Gc.adj[z].remove(max)
+        Gc.adj[max] = [] #remove all connections from max
+    print(C)
+    return C
+
+def approx2(G):
+    C = []
+    while not is_vertex_cover(G, C): #until vertex cover is found
+        ranNum = random.randint(0, G.number_of_nodes() - 1) #random vertex from graph
+        if not ranNum in C: #add to C if not already in C
+            C.append(ranNum)
+    print(C)
+    return C
+
+def approx3(G):
+    C = []
+    mark = True
+    Gc = Graph(G.number_of_nodes())
+    Gc.adj = copy.deepcopy(G.adj)
+    while not is_vertex_cover(Gc, C): #until vertex cover is found
+        u = random.randint(0, Gc.number_of_nodes() - 1) #get random vertex
+        if not (Gc.adj[u] == []): #if it has adjacent nodes, choose a random one
+            v = random.choice(Gc.adj[u])
+            C.append(u)
+            C.append(v) #add u and v to C
+            for z in Gc.adj[u]: #remove all connectsion to u
+                Gc.adj[z].remove(u)
+            Gc.adj[u] = [] #remove all connections from u
+            for q in Gc.adj[v]: #remove all connections to v
+                Gc.adj[q].remove(v)
+            Gc.adj[v] = [] #remove all connections from v
+    print(C)
+    return C
+
 # # test code for BFS3
 # #  generates graph in the lab description
 # g = Graph(7)
@@ -279,7 +355,20 @@ def BFS3(G, targetNode):
 # g.add_edge(3,5)
 # print(DFS(g, 0, 0))
 def create_random_graph(i, j):
-    return
+    G = Graph(i + 1)
+    L = []
+    t = 0
+    while(t < j):
+        x = random.randint(0, i)
+        y = random.randint(0, i)
+        if not (x, y) in L and x != y:
+            print("adding")
+            print(x)
+            print(y)
+            G.add_edge(x, y)
+            L.append((x, y))
+            t += 1
+    return G
 
 # #Testings
 # g = Graph(6)
