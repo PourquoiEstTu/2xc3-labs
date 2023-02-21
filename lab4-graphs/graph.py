@@ -25,8 +25,8 @@ class Graph:
             self.adj[node1].append(node2)
             self.adj[node2].append(node1)
 
-    def number_of_nodes():
-        return len()
+    def number_of_nodes(self):
+        return len(self.adj)
 
 
 #Breadth First Search
@@ -312,7 +312,7 @@ def approx2(G):
         ranNum = random.randint(0, G.number_of_nodes() - 1) #random vertex from graph
         if not ranNum in C: #add to C if not already in C
             C.append(ranNum)
-    print(C)
+    # print(C)
     return C
 
 def approx3(G):
@@ -418,28 +418,113 @@ def create_random_graph(i, j):
 
 
 
+# PART 1
 #--------------------------- EXPERIMENT 1 ---------------------------
-edges = []
-for i in range(3, 500, 10) :
-    edges.append(i)
-def exp1(list_of_edges, num_of_graphs) :
-    num_of_cycles = 0
-    cycles_per_edge = []
-    for edge in list_of_edges :
-        for i in range(num_of_graphs) :
-            G = create_random_graph(150, edge)
-            if has_cycle(G) :
-                num_of_cycles += 1
-        cycles_per_edge.append(num_of_cycles // num_of_graphs)
-        num_of_cycles = 0
-    return (list_of_edges, cycles_per_edge)
+# edges = []
+# for i in range(1, 250, 5) :
+#     edges.append(i)
+# def exp1(list_of_edges, num_of_graphs) :
+#     num_of_cycles = 0
+#     cycles_per_edge = []
+#     for edge in list_of_edges :
+#         for i in range(num_of_graphs) :
+#             G = create_random_graph(100, edge)
+#             if has_cycle(G) :
+#                 num_of_cycles += 1
+#         cycles_per_edge.append(num_of_cycles / num_of_graphs)
+#         num_of_cycles = 0
+#     return (list_of_edges, cycles_per_edge)
 
 
-test = exp1(edges, 100)
-plot.xlabel("Number of Edges")
-plot.ylabel("Probability of Cycle Occurring")
-plot.plot(test[0], test[1])
-# legend = plot.legend(loc="upper center")
-plot.title("Probabilty of Cycles Occurring in Graphs with Different Numbers of Edges")
-plot.show()
+# test = exp1(edges, 100)
+# plot.xlabel("Number of Edges")
+# plot.ylabel("Probability of Cycle Occurring")
+# plot.plot(test[0], test[1])
+# # legend = plot.legend(loc="upper center")
+# plot.title("Probabilty of Cycles Occurring in Graphs with Different Numbers of Edges")
+# plot.show()
     
+
+# PART 2
+
+#----------------- Approximation experiment 1  -----------------
+# (edges are the independent var, num of nodes kept constant)
+
+# edges1 = [1, 5, 10, 15, 20, 25, 30,]
+# def pt2exp1(list_of_edges, num_of_graphs) :
+#     MVC_sum = 0
+#     MVC_sum_per_edge = []
+#     approx1_sum = 0
+#     approx1_sum_per_edge = []
+#     approx2_sum = 0
+#     approx2_sum_per_edge = []
+#     approx3_sum = 0
+#     approx3_sum_per_edge = []
+#     for edge in list_of_edges :
+#         for i in range(num_of_graphs) :
+#             G = create_random_graph(8, edge)
+#             MVC_sum += len(MVC(G))
+#             approx1_sum += len(approx1(G))
+#             approx2_sum += len(approx2(G))
+#             approx3_sum += len(approx3(G))
+#         MVC_sum_per_edge.append(MVC_sum)
+#         approx1_sum_per_edge.append(approx1_sum)
+#         approx2_sum_per_edge.append(approx2_sum)
+#         approx3_sum_per_edge.append(approx3_sum)
+#         MVC_sum = 0
+#         approx1_sum = 0
+#         approx2_sum = 0
+#         approx3_sum = 0
+#     return (list_of_edges, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
+
+
+# test1 = pt2exp1(edges1, 1000)
+# plot.xlabel("Number of edges")
+# plot.ylabel("Sum of the sizes of Vertex Covers for 1000 graphs")
+# plot.plot(test1[0], test1[1], label="MVC Sum")
+# plot.plot(test1[0], test1[2], label="approx1 Sum")
+# plot.plot(test1[0], test1[3], label="approx2 Sum")
+# plot.plot(test1[0], test1[4], label="approx3 Sum")
+# legend = plot.legend(loc="upper left")
+# plot.title("Sum of Sizes of Vertex Covers Depending on the Number of Edges")
+# plot.show()
+    
+#----------------- Approximation experiment 2  -----------------
+# (nodes are the independent var, num of edges kept constant)
+nodes = [1, 5, 10, 15, 20, 25,]
+def pt2exp2(list_of_nodes, num_of_graphs) :
+    MVC_sum = 0
+    MVC_sum_per_edge = []
+    approx1_sum = 0
+    approx1_sum_per_edge = []
+    approx2_sum = 0
+    approx2_sum_per_edge = []
+    approx3_sum = 0
+    approx3_sum_per_edge = []
+    for node in list_of_nodes :
+        for _ in range(num_of_graphs) :
+            G = create_random_graph(node, 15)
+            MVC_sum += len(MVC(G))
+            approx1_sum += len(approx1(G))
+            approx2_sum += len(approx2(G))
+            approx3_sum += len(approx3(G))
+        MVC_sum_per_edge.append(MVC_sum)
+        approx1_sum_per_edge.append(approx1_sum)
+        approx2_sum_per_edge.append(approx2_sum)
+        approx3_sum_per_edge.append(approx3_sum)
+        MVC_sum = 0
+        approx1_sum = 0
+        approx2_sum = 0
+        approx3_sum = 0
+    return (list_of_nodes, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
+
+test2 = pt2exp1(nodes, 1000)
+plot.xlabel("Number of nodes")
+plot.ylabel("Sum of the sizes of Vertex Covers for 1000 graphs")
+plot.plot(test1[0], test1[1], label="MVC Sum")
+plot.plot(test1[0], test1[2], label="approx1 Sum")
+plot.plot(test1[0], test1[3], label="approx2 Sum")
+plot.plot(test1[0], test1[4], label="approx3 Sum")
+legend = plot.legend(loc="upper left")
+plot.title("Sum of Sizes of Vertex Covers Depending on the Number of Nodes")
+plot.show()
