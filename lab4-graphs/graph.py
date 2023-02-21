@@ -116,6 +116,9 @@ def DFS3(G, node1):
 
 #BFS path return implementation
 def BFS2(G, node1, node2):
+    # not sure if below is correct
+    # if node1 == node2 :
+    #     return [node1]
     Q = deque([node1])
     pathList = []
     breakVar = False
@@ -144,11 +147,11 @@ def BFS2(G, node1, node2):
         # print(pathList)
     if pathList[len(pathList) - 1] != node2 :
         return []
-    for i in range(1, len(pathList) - 2) :
-        # print(pathList[i])
-        if (pathList[i - 1] not in G.adjacent_nodes(pathList[i])) or (pathList[i+1] not in G.adjacent_nodes(pathList[i])) :
-            # print(pathList[i])
-            pathList.pop(i)
+    # for i in range(1, len(pathList) - 2) :
+    #     # print(pathList[i])
+    #     if (pathList[i - 1] not in G.adjacent_nodes(pathList[i])) or (pathList[i+1] not in G.adjacent_nodes(pathList[i])) :
+    #         # print(pathList[i])
+    #         pathList.pop(i)
 
     return pathList
 
@@ -167,10 +170,60 @@ def BFS2(G, node1, node2):
 #             pre[node] = len(x) - 1
 #     return pre
 
+#Depth First Search
+def editedDFS(G, node1) :
+    S = [(node1, -1)]
+    marked = {}
+    for i in G.adj :
+        marked[i] = False
+    while len(S) != 0:
+        tuple = S.pop()
+        current_node0 = tuple[0]
+        current_node1 = tuple[1]
+        # print("current_node: " + str(current_node))
+        # print("colour of current_node: " + str(marked[current_node]))
+        for node in G.adj[current_node0] :
+            if not marked[node] :
+                S.append((node, current_node0))
+                marked[node] = True
+                    # print("adjacent node: " + str(node))
+                    # print("adjacent node mark: " + str(marked[node]))
+            elif node != current_node1 :
+                return True
+    #print(marked)
+    return False
+
 def has_cycle(G):
-    #for each node3 in G
-    #for each adjacent nodes in node
-    return
+    for i in G.adj :
+        if editedDFS(G, 1) :
+            return True
+    return False
+# test code for has_cycle
+#  generates graph in the lab description
+# g = Graph(7)
+# g.add_edge(1, 2)
+# g.add_edge(1, 3)
+# g.add_edge(2, 4)
+# g.add_edge(3, 4)
+# g.add_edge(3, 5)
+# g.add_edge(4, 5)
+# g.add_edge(4, 6)
+# print("Final edgeTo list:" + str(BFS2(g, 1, 1)))
+# print(has_cycle(g))
+# print(DFS(g, 1, 1))
+
+# g1 = Graph(7)
+# g1.add_edge(0, 1)
+# g1.add_edge(0, 2)
+# g1.add_edge(0, 5)
+# g1.add_edge(1, 2)
+# g1.add_edge(2, 3)
+# g1.add_edge(2, 4)
+# g1.add_edge(3, 4)
+# g1.add_edge(3, 5)
+# g1.add_edge(3, 6)
+# # print("test paths: " + str(BFS2(g1, 0, 0)))
+# print(has_cycle(g1))
 
 def is_connected(G):
     path = {}
@@ -204,17 +257,17 @@ def BFS3(G, targetNode):
             pred_dict[i] = edgeTo[i]
     return pred_dict
 
-# test code for BFS3
-#  generates graph in the lab description
-g = Graph(7)
-g.add_edge(1, 2)
-g.add_edge(1, 3)
-g.add_edge(2, 4)
-g.add_edge(3, 4)
-g.add_edge(3, 5)
-g.add_edge(4, 5)
-g.add_edge(4, 6)
-print("Final edgeTo list:" + str(BFS3(g, 1)))
+# # test code for BFS3
+# #  generates graph in the lab description
+# g = Graph(7)
+# g.add_edge(1, 2)
+# g.add_edge(1, 3)
+# g.add_edge(2, 4)
+# g.add_edge(3, 4)
+# g.add_edge(3, 5)
+# g.add_edge(4, 5)
+# g.add_edge(4, 6)
+# print("Final edgeTo list:" + str(BFS3(g, 1)))
 
 # Test code for when dfs wasn't working right
 # g = Graph(6)
@@ -228,46 +281,46 @@ print("Final edgeTo list:" + str(BFS3(g, 1)))
 def create_random_graph(i, j):
     return
 
-#Testings
-g = Graph(6)
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 3)
-g.add_edge(2, 3)
-g.add_edge(2, 4)
-g.add_edge(3, 5)
-g.add_edge(3, 4)
-g.add_edge(4, 2)
-print(DFS2(g, 0, 5))
-print(BFS2(g, 0, 5))
+# #Testings
+# g = Graph(6)
+# g.add_edge(0, 1)
+# g.add_edge(0, 2)
+# g.add_edge(1, 3)
+# g.add_edge(2, 3)
+# g.add_edge(2, 4)
+# g.add_edge(3, 5)
+# g.add_edge(3, 4)
+# g.add_edge(4, 2)
+# print(DFS2(g, 0, 5))
+# print(BFS2(g, 0, 5))
 
-o = Graph(6)
-o.add_edge(0, 1)
-o.add_edge(0, 2)
-o.add_edge(0, 3)
-o.add_edge(2, 4)
-#o.add_edge(2, 5)
-o.add_edge(3, 5)
-print(BFS2(o, 0, 0))
-print(DFS2(o, 0, 0))
-print("testing")
-print(DFS3(o, 0))
-print(BFS3(o, 0))
+# o = Graph(6)
+# o.add_edge(0, 1)
+# o.add_edge(0, 2)
+# o.add_edge(0, 3)
+# o.add_edge(2, 4)
+# #o.add_edge(2, 5)
+# o.add_edge(3, 5)
+# print(BFS2(o, 0, 0))
+# print(DFS2(o, 0, 0))
+# print("testing")
+# print(DFS3(o, 0))
+# print(BFS3(o, 0))
 
 
-print("new test")
-oof = Graph(7)
-oof.add_edge(0, 2)
-oof.add_edge(0, 3)
-oof.add_edge(3, 4)
-oof.add_edge(2, 4)
-oof.add_edge(4, 6)
-oof.add_edge(3, 5)
-print(DFS3(oof, 0))
-print(BFS3(oof, 0))
+# print("new test")
+# oof = Graph(7)
+# oof.add_edge(0, 2)
+# oof.add_edge(0, 3)
+# oof.add_edge(3, 4)
+# oof.add_edge(2, 4)
+# oof.add_edge(4, 6)
+# oof.add_edge(3, 5)
+# print(DFS3(oof, 0))
+# print(BFS3(oof, 0))
 
-man = Graph(19)
-man.add_edge(0, 2)
-print(is_connected(man))
+# man = Graph(19)
+# man.add_edge(0, 2)
+# print(is_connected(man))
 
-print(DFS2(man, 0, 0))
+# print(DFS2(man, 0, 0))
