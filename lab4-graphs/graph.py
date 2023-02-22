@@ -491,40 +491,166 @@ def create_random_graph(i, j):
     
 #----------------- Approximation experiment 2  -----------------
 # (nodes are the independent var, num of edges kept constant)
-nodes = [5, 8, 15,]# 20,]
-def pt2exp2(list_of_nodes, num_of_graphs) :
+# nodes = [5, 8, 15,]
+# def pt2exp2(list_of_nodes, num_of_graphs) :
+#     MVC_sum = 0
+#     MVC_sum_per_edge = []
+#     approx1_sum = 0
+#     approx1_sum_per_edge = []
+#     approx2_sum = 0
+#     approx2_sum_per_edge = []
+#     approx3_sum = 0
+#     approx3_sum_per_edge = []
+#     for node in list_of_nodes :
+#         for i in range(num_of_graphs) :
+#             G = create_random_graph(node, 10)
+#             MVC_sum += len(MVC(G))
+#             approx1_sum += len(approx1(G))
+#             approx2_sum += len(approx2(G))
+#             approx3_sum += len(approx3(G))
+#         MVC_sum_per_edge.append(MVC_sum)
+#         approx1_sum_per_edge.append(approx1_sum)
+#         approx2_sum_per_edge.append(approx2_sum)
+#         approx3_sum_per_edge.append(approx3_sum)
+#         MVC_sum = 0
+#         approx1_sum = 0
+#         approx2_sum = 0
+#         approx3_sum = 0
+#     return (list_of_nodes, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
+
+# test2 = pt2exp2(nodes, 500)
+# plot.xlabel("Number of nodes")
+# plot.ylabel("Sum of the sizes of Vertex Covers for 100 graphs")
+# plot.plot(test2[0], test2[1], label="MVC Sum")
+# plot.plot(test2[0], test2[2], label="approx1 Sum")
+# plot.plot(test2[0], test2[3], label="approx2 Sum")
+# plot.plot(test2[0], test2[4], label="approx3 Sum")
+# legend = plot.legend(loc="upper left")
+# plot.title("Sum of Sizes of Vertex Covers Depending on the Number of Nodes")
+# plot.show()
+
+#----------------- Approximation experiment 3  -----------------
+#(edges are the independent var, num of nodes kept constant)
+def pt2exp3(num_of_graphs) :
+    G = Graph(8)
+
     MVC_sum = 0
     MVC_sum_per_edge = []
     approx1_sum = 0
     approx1_sum_per_edge = []
-    approx2_sum = 0
-    approx2_sum_per_edge = []
-    approx3_sum = 0
-    approx3_sum_per_edge = []
-    for node in list_of_nodes :
-        for i in range(num_of_graphs) :
-            G = create_random_graph(node, 10)
-            MVC_sum += len(MVC(G))
-            approx1_sum += len(approx1(G))
-            approx2_sum += len(approx2(G))
-            approx3_sum += len(approx3(G))
-        MVC_sum_per_edge.append(MVC_sum)
-        approx1_sum_per_edge.append(approx1_sum)
-        approx2_sum_per_edge.append(approx2_sum)
-        approx3_sum_per_edge.append(approx3_sum)
-        MVC_sum = 0
-        approx1_sum = 0
-        approx2_sum = 0
-        approx3_sum = 0
-    return (list_of_nodes, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
 
-test2 = pt2exp2(nodes, 500)
-plot.xlabel("Number of nodes")
-plot.ylabel("Sum of the sizes of Vertex Covers for 100 graphs")
-plot.plot(test2[0], test2[1], label="MVC Sum")
-plot.plot(test2[0], test2[2], label="approx1 Sum")
-plot.plot(test2[0], test2[3], label="approx2 Sum")
-plot.plot(test2[0], test2[4], label="approx3 Sum")
+    #graphs with no edges
+    for i in range(num_of_graphs) :
+        MVC_sum += len(MVC(G))
+        approx1_sum += len(approx1(G))
+    MVC_sum_per_edge.append(MVC_sum)
+    approx1_sum_per_edge.append(approx1_sum)
+    MVC_sum = 0
+    approx1_sum = 0
+    
+    #graphs with one edge
+    for i in range(num_of_graphs) :
+        rand1 = random.randint(0, G.number_of_nodes() - 1) 
+        rand2 = random.randint(0, G.number_of_nodes() - 1) 
+        # print(rand1)
+        # print(rand2)
+        G.add_edge(rand1, rand2)
+        MVC_sum += len(MVC(G))
+        approx1_sum += len(approx1(G))
+    approx1_sum_per_edge.append(approx1_sum)
+    approx1_sum = 0
+    MVC_sum_per_edge.append(MVC_sum)
+    MVC_sum = 0
+
+    #graphs with two edges
+    for i in range(num_of_graphs) :
+        rand1 = random.randint(0, G.number_of_nodes() - 1) 
+        rand2 = random.randint(0, G.number_of_nodes() - 1) 
+        rand3 = random.randint(0, G.number_of_nodes() - 1) 
+        rand4 = random.randint(0, G.number_of_nodes() - 1) 
+        G.add_edge(rand1, rand2)
+        G.add_edge(rand3, rand4)
+        MVC_sum += len(MVC(G))
+        approx1_sum += len(approx1(G))
+    approx1_sum_per_edge.append(approx1_sum)
+    approx1_sum = 0
+    MVC_sum_per_edge.append(MVC_sum)
+    MVC_sum = 0
+
+    #graphs with 3 edges
+    for i in range(num_of_graphs) :
+        rand1 = random.randint(0, G.number_of_nodes() - 1) 
+        rand2 = random.randint(0, G.number_of_nodes() - 1) 
+        rand3 = random.randint(0, G.number_of_nodes() - 1) 
+        rand4 = random.randint(0, G.number_of_nodes() - 1) 
+        rand5 = random.randint(0, G.number_of_nodes() - 1) 
+        rand6 = random.randint(0, G.number_of_nodes() - 1) 
+        G.add_edge(rand1, rand2)
+        G.add_edge(rand3, rand4)
+        G.add_edge(rand5, rand6)
+        MVC_sum += len(MVC(G))
+        approx1_sum += len(approx1(G))
+        print("MVC_sum: " + str(MVC_sum))
+        print("approx1_sum: " + str(approx1_sum))
+    approx1_sum_per_edge.append(approx1_sum)
+    approx1_sum = 0
+    MVC_sum_per_edge.append(MVC_sum)
+    MVC_sum = 0
+
+    #graphs with 4 edges
+    for i in range(num_of_graphs) :
+        rand1 = random.randint(0, G.number_of_nodes() - 1) 
+        rand2 = random.randint(0, G.number_of_nodes() - 1) 
+        rand3 = random.randint(0, G.number_of_nodes() - 1) 
+        rand4 = random.randint(0, G.number_of_nodes() - 1) 
+        rand5 = random.randint(0, G.number_of_nodes() - 1) 
+        rand6 = random.randint(0, G.number_of_nodes() - 1) 
+        rand7 = random.randint(0, G.number_of_nodes() - 1) 
+        rand8 = random.randint(0, G.number_of_nodes() - 1) 
+        G.add_edge(rand1, rand2)
+        G.add_edge(rand3, rand4)
+        G.add_edge(rand5, rand6)
+        G.add_edge(rand7, rand8)
+        MVC_sum += len(MVC(G))
+        approx1_sum += len(approx1(G))
+    approx1_sum_per_edge.append(approx1_sum)
+    approx1_sum = 0
+    MVC_sum_per_edge.append(MVC_sum)
+    MVC_sum = 0
+
+    #graphs with 5 edges
+    for i in range(num_of_graphs) :
+        rand1 = random.randint(0, G.number_of_nodes() - 1) 
+        rand2 = random.randint(0, G.number_of_nodes() - 1) 
+        rand3 = random.randint(0, G.number_of_nodes() - 1) 
+        rand4 = random.randint(0, G.number_of_nodes() - 1) 
+        rand5 = random.randint(0, G.number_of_nodes() - 1) 
+        rand6 = random.randint(0, G.number_of_nodes() - 1) 
+        rand7 = random.randint(0, G.number_of_nodes() - 1) 
+        rand8 = random.randint(0, G.number_of_nodes() - 1) 
+        rand9 = random.randint(0, G.number_of_nodes() - 1) 
+        rand10 = random.randint(0, G.number_of_nodes() - 1) 
+        G.add_edge(rand1, rand2)
+        G.add_edge(rand3, rand4)
+        G.add_edge(rand5, rand6)
+        G.add_edge(rand7, rand8)
+        G.add_edge(rand9, rand10)
+        MVC_sum += len(MVC(G))
+        approx1_sum += len(approx1(G))
+    approx1_sum_per_edge.append(approx1_sum)
+    approx1_sum = 0
+    MVC_sum_per_edge.append(MVC_sum)
+    MVC_sum = 0
+    return ([0, 1, 2, 3, 4,5], approx1_sum_per_edge, MVC_sum_per_edge)
+
+test3 = pt2exp3(1000)
+plot.xlabel("Number of Edges")
+plot.ylabel("Sum of the Sizes of Approximate Vertex Covers for 1000 graphs")
+plot.plot(test3[0], test3[2], label="MVC Sum")
+plot.plot(test3[0], test3[1], label="approx1 Sum")
+# plot.plot(test2[0], test2[2], label="approx1 Sum")
+# plot.plot(test2[0], test2[3], label="approx2 Sum")
+# plot.plot(test2[0], test2[4], label="approx3 Sum")
 legend = plot.legend(loc="upper left")
-plot.title("Sum of Sizes of Vertex Covers Depending on the Number of Nodes")
+plot.title("Sum of Sizes approx1 for small graphs and Differing Numbers of Edges")
 plot.show()
