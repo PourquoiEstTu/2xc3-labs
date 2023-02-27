@@ -532,258 +532,226 @@ def create_random_graph(i, j):
 
 #----------------- Approximation experiment 3  -----------------
 #(edges are the independent var, num of nodes kept constant)
-def pt2exp3() :
-    G = Graph(7)
-    graph_num = []
-    graphs_generated = 0
-    count = 0
-    nodes = []
-    for i in G.adj :
-        nodes.append(i)
+# def pt2exp3() :
+#     G = Graph(7)
+#     graph_num = []
+#     graphs_generated = 0
+#     count = 0
+#     nodes = []
+#     for i in G.adj :
+#         nodes.append(i)
     
-    edges = combinations(nodes, 2)
+#     edges = combinations(nodes, 2)
 
-    MVC_sum = 0
-    MVC_sum_per_edge = []
-    approx1_sum = 0
-    approx1_sum_per_edge = []
-    approx2_sum = 0
-    approx2_sum_per_edge = []
-    approx3_sum = 0
-    approx3_sum_per_edge = []
+#     MVC_sum = 0
+#     MVC_sum_per_edge = []
+#     approx1_sum = 0
+#     approx1_sum_per_edge = []
+#     approx2_sum = 0
+#     approx2_sum_per_edge = []
+#     approx3_sum = 0
+#     approx3_sum_per_edge = []
 
-    #graphs with no edges
-    MVC_sum += len(MVC(G))
-    approx1_sum += len(approx1(G))
-    approx2_sum += len(approx2(G))
-    approx3_sum += len(approx3(G))
-    MVC_sum_per_edge.append(MVC_sum)
-    approx1_sum_per_edge.append(approx1_sum)
-    approx2_sum_per_edge.append(approx2_sum)
-    approx3_sum_per_edge.append(approx3_sum)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    count += 1
-    graph_num.append(count)
+#     #graphs with no edges
+#     MVC_sum += len(MVC(G))
+#     approx1_sum += len(approx1(G))
+#     approx2_sum += len(approx2(G))
+#     approx3_sum += len(approx3(G))
+#     MVC_sum_per_edge.append(MVC_sum)
+#     approx1_sum_per_edge.append(approx1_sum)
+#     approx2_sum_per_edge.append(approx2_sum)
+#     approx3_sum_per_edge.append(approx3_sum)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     count += 1
+#     graph_num.append(count)
     
-    #graphs with one edge
-    for i in edges :
-        G.add_edge(i[0], i[1])
-        MVC_sum += len(MVC(G))
-        approx1_sum += len(approx1(G))
-        approx2_sum += len(approx2(G))
-        approx3_sum += len(approx3(G))
-        graphs_generated += 1
-        # print("one edge: " +str(graphs_generated))
-    count += 1
-    graph_num.append(count)
-    MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    graphs_generated = 0
+#     #graphs with one edge
+#     for i in edges :
+#         G.add_edge(i[0], i[1])
+#         MVC_sum += len(MVC(G))
+#         approx1_sum += len(approx1(G))
+#         approx2_sum += len(approx2(G))
+#         approx3_sum += len(approx3(G))
+#         graphs_generated += 1
+#         # print("one edge: " +str(graphs_generated))
+#     count += 1
+#     graph_num.append(count)
+#     MVC_sum_per_edge.append(MVC_sum/graphs_generated)
+#     approx1_sum_per_edge.append(approx1_sum/graphs_generated)
+#     approx2_sum_per_edge.append(approx2_sum/graphs_generated)
+#     approx3_sum_per_edge.append(approx3_sum/graphs_generated)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     graphs_generated = 0
 
-    #graphs with two edges
-    edges = combinations(nodes, 2)
-    edge_pairs = combinations(edges, 2)
-    for i in edge_pairs :
-        G.add_edge(i[0][0], i[0][1])
-        G.add_edge(i[1][0], i[1][1])
-        MVC_sum += len(MVC(G))
-        approx1_sum += len(approx1(G))
-        approx2_sum += len(approx2(G))
-        approx3_sum += len(approx3(G))
-        graphs_generated += 1
-        # print("two edge: " +str(graphs_generated))
-    count += 1
-    graph_num.append(count)
-    MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    graphs_generated = 0
+#     #graphs with two edges
+#     edges = combinations(nodes, 2)
+#     edge_pairs = combinations(edges, 2)
+#     for i in edge_pairs :
+#         G.add_edge(i[0][0], i[0][1])
+#         G.add_edge(i[1][0], i[1][1])
+#         MVC_sum += len(MVC(G))
+#         approx1_sum += len(approx1(G))
+#         approx2_sum += len(approx2(G))
+#         approx3_sum += len(approx3(G))
+#         graphs_generated += 1
+#         # print("two edge: " +str(graphs_generated))
+#     count += 1
+#     graph_num.append(count)
+#     MVC_sum_per_edge.append(MVC_sum/graphs_generated)
+#     approx1_sum_per_edge.append(approx1_sum/graphs_generated)
+#     approx2_sum_per_edge.append(approx2_sum/graphs_generated)
+#     approx3_sum_per_edge.append(approx3_sum/graphs_generated)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     graphs_generated = 0
 
-    edges = combinations(nodes, 2)
-    edge_triples = combinations(edges, 3)
-    #graphs with 3 edges
-    for i in edge_triples :
-        G.add_edge(i[0][0], i[0][1])
-        G.add_edge(i[1][0], i[1][1])
-        G.add_edge(i[2][0], i[2][1])
-        MVC_sum += len(MVC(G))
-        approx1_sum += len(approx1(G))
-        approx2_sum += len(approx2(G))
-        approx3_sum += len(approx3(G))
-        graphs_generated += 1
-    count += 1
-    graph_num.append(count)
-    MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    graphs_generated = 0
+#     edges = combinations(nodes, 2)
+#     edge_triples = combinations(edges, 3)
+#     #graphs with 3 edges
+#     for i in edge_triples :
+#         G.add_edge(i[0][0], i[0][1])
+#         G.add_edge(i[1][0], i[1][1])
+#         G.add_edge(i[2][0], i[2][1])
+#         MVC_sum += len(MVC(G))
+#         approx1_sum += len(approx1(G))
+#         approx2_sum += len(approx2(G))
+#         approx3_sum += len(approx3(G))
+#         graphs_generated += 1
+#     count += 1
+#     graph_num.append(count)
+#     MVC_sum_per_edge.append(MVC_sum/graphs_generated)
+#     approx1_sum_per_edge.append(approx1_sum/graphs_generated)
+#     approx2_sum_per_edge.append(approx2_sum/graphs_generated)
+#     approx3_sum_per_edge.append(approx3_sum/graphs_generated)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     graphs_generated = 0
 
-    #graphs with 4 edges
-    edges = combinations(nodes, 2)
-    edge_quads = combinations(edges, 4)
-    for i in edge_quads :
-        G.add_edge(i[0][0], i[0][1])
-        G.add_edge(i[1][0], i[1][1])
-        G.add_edge(i[2][0], i[2][1])
-        G.add_edge(i[3][0], i[3][1])
-        MVC_sum += len(MVC(G))
-        approx1_sum += len(approx1(G))
-        approx2_sum += len(approx2(G))
-        approx3_sum += len(approx3(G))
-        graphs_generated += 1
-    count += 1
-    graph_num.append(count)
-    MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    graphs_generated = 0
+#     #graphs with 4 edges
+#     edges = combinations(nodes, 2)
+#     edge_quads = combinations(edges, 4)
+#     for i in edge_quads :
+#         G.add_edge(i[0][0], i[0][1])
+#         G.add_edge(i[1][0], i[1][1])
+#         G.add_edge(i[2][0], i[2][1])
+#         G.add_edge(i[3][0], i[3][1])
+#         MVC_sum += len(MVC(G))
+#         approx1_sum += len(approx1(G))
+#         approx2_sum += len(approx2(G))
+#         approx3_sum += len(approx3(G))
+#         graphs_generated += 1
+#     count += 1
+#     graph_num.append(count)
+#     MVC_sum_per_edge.append(MVC_sum/graphs_generated)
+#     approx1_sum_per_edge.append(approx1_sum/graphs_generated)
+#     approx2_sum_per_edge.append(approx2_sum/graphs_generated)
+#     approx3_sum_per_edge.append(approx3_sum/graphs_generated)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     graphs_generated = 0
 
-    #graphs with 5 edges
-    edges = combinations(nodes, 2)
-    edge_quads = combinations(edges, 5)
-    for i in edge_quads :
-        G.add_edge(i[0][0], i[0][1])
-        G.add_edge(i[1][0], i[1][1])
-        G.add_edge(i[2][0], i[2][1])
-        G.add_edge(i[3][0], i[3][1])
-        G.add_edge(i[4][0], i[4][1])
-        MVC_sum += len(MVC(G))
-        approx1_sum += len(approx1(G))
-        approx2_sum += len(approx2(G))
-        approx3_sum += len(approx3(G))
-        graphs_generated += 1
-    count += 1
-    graph_num.append(count)
-    MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    graphs_generated = 0
+#     #graphs with 5 edges
+#     edges = combinations(nodes, 2)
+#     edge_quads = combinations(edges, 5)
+#     for i in edge_quads :
+#         G.add_edge(i[0][0], i[0][1])
+#         G.add_edge(i[1][0], i[1][1])
+#         G.add_edge(i[2][0], i[2][1])
+#         G.add_edge(i[3][0], i[3][1])
+#         G.add_edge(i[4][0], i[4][1])
+#         MVC_sum += len(MVC(G))
+#         approx1_sum += len(approx1(G))
+#         approx2_sum += len(approx2(G))
+#         approx3_sum += len(approx3(G))
+#         graphs_generated += 1
+#     count += 1
+#     graph_num.append(count)
+#     MVC_sum_per_edge.append(MVC_sum/graphs_generated)
+#     approx1_sum_per_edge.append(approx1_sum/graphs_generated)
+#     approx2_sum_per_edge.append(approx2_sum/graphs_generated)
+#     approx3_sum_per_edge.append(approx3_sum/graphs_generated)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     graphs_generated = 0
 
-    #graphs with 6 edges 
-    edges = combinations(nodes, 2)
-    edge_quads = combinations(edges, 6)
-    for i in edge_quads :
-        G.add_edge(i[0][0], i[0][1])
-        G.add_edge(i[1][0], i[1][1])
-        G.add_edge(i[2][0], i[2][1])
-        G.add_edge(i[3][0], i[3][1])
-        G.add_edge(i[4][0], i[4][1])
-        G.add_edge(i[5][0], i[5][1])
-        MVC_sum += len(MVC(G))
-        approx1_sum += len(approx1(G))
-        approx2_sum += len(approx2(G))
-        approx3_sum += len(approx3(G))
-        graphs_generated += 1
-    count += 1
-    graph_num.append(count)
-    MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    graphs_generated = 0
+#     #graphs with 6 edges 
+#     edges = combinations(nodes, 2)
+#     edge_quads = combinations(edges, 6)
+#     for i in edge_quads :
+#         G.add_edge(i[0][0], i[0][1])
+#         G.add_edge(i[1][0], i[1][1])
+#         G.add_edge(i[2][0], i[2][1])
+#         G.add_edge(i[3][0], i[3][1])
+#         G.add_edge(i[4][0], i[4][1])
+#         G.add_edge(i[5][0], i[5][1])
+#         MVC_sum += len(MVC(G))
+#         approx1_sum += len(approx1(G))
+#         approx2_sum += len(approx2(G))
+#         approx3_sum += len(approx3(G))
+#         graphs_generated += 1
+#     count += 1
+#     graph_num.append(count)
+#     MVC_sum_per_edge.append(MVC_sum/graphs_generated)
+#     approx1_sum_per_edge.append(approx1_sum/graphs_generated)
+#     approx2_sum_per_edge.append(approx2_sum/graphs_generated)
+#     approx3_sum_per_edge.append(approx3_sum/graphs_generated)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     graphs_generated = 0
 
-    #graphs with 7 edges 
-    edges = combinations(nodes, 2)
-    edge_quads = combinations(edges, 7)
-    for i in edge_quads :
-        G.add_edge(i[0][0], i[0][1])
-        G.add_edge(i[1][0], i[1][1])
-        G.add_edge(i[2][0], i[2][1])
-        G.add_edge(i[3][0], i[3][1])
-        G.add_edge(i[4][0], i[4][1])
-        G.add_edge(i[5][0], i[5][1])
-        G.add_edge(i[6][0], i[6][1])
-        MVC_sum += len(MVC(G))
-        approx1_sum += len(approx1(G))
-        approx2_sum += len(approx2(G))
-        approx3_sum += len(approx3(G))
-        graphs_generated += 1
-    count += 1
-    graph_num.append(count)
-    MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    MVC_sum = 0
-    approx1_sum = 0
-    approx2_sum = 0
-    approx3_sum = 0
-    graphs_generated = 0
+#     #graphs with 7 edges 
+#     edges = combinations(nodes, 2)
+#     edge_quads = combinations(edges, 7)
+#     for i in edge_quads :
+#         G.add_edge(i[0][0], i[0][1])
+#         G.add_edge(i[1][0], i[1][1])
+#         G.add_edge(i[2][0], i[2][1])
+#         G.add_edge(i[3][0], i[3][1])
+#         G.add_edge(i[4][0], i[4][1])
+#         G.add_edge(i[5][0], i[5][1])
+#         G.add_edge(i[6][0], i[6][1])
+#         MVC_sum += len(MVC(G))
+#         approx1_sum += len(approx1(G))
+#         approx2_sum += len(approx2(G))
+#         approx3_sum += len(approx3(G))
+#         graphs_generated += 1
+#     count += 1
+#     graph_num.append(count)
+#     MVC_sum_per_edge.append(MVC_sum/graphs_generated)
+#     approx1_sum_per_edge.append(approx1_sum/graphs_generated)
+#     approx2_sum_per_edge.append(approx2_sum/graphs_generated)
+#     approx3_sum_per_edge.append(approx3_sum/graphs_generated)
+#     MVC_sum = 0
+#     approx1_sum = 0
+#     approx2_sum = 0
+#     approx3_sum = 0
+#     graphs_generated = 0
 
-    #graph with 8 edges 
-    # edges = combinations(nodes, 2)
-    # edge_quads = combinations(edges, 8)
-    # for i in edge_quads :
-    #     G.add_edge(i[0][0], i[0][1])
-    #     G.add_edge(i[1][0], i[1][1])
-    #     G.add_edge(i[2][0], i[2][1])
-    #     G.add_edge(i[3][0], i[3][1])
-    #     G.add_edge(i[4][0], i[4][1])
-    #     G.add_edge(i[5][0], i[5][1])
-    #     G.add_edge(i[6][0], i[6][1])
-    #     G.add_edge(i[7][0], i[7][1])
-    #     MVC_sum += len(MVC(G))
-    #     approx1_sum += len(approx1(G))
-    #     approx2_sum += len(approx2(G))
-    #     approx3_sum += len(approx3(G))
-    #     graphs_generated += 1
-    # count += 1
-    # graph_num.append(count)
-    # MVC_sum_per_edge.append(MVC_sum/graphs_generated)
-    # approx1_sum_per_edge.append(approx1_sum/graphs_generated)
-    # approx2_sum_per_edge.append(approx2_sum/graphs_generated)
-    # approx3_sum_per_edge.append(approx3_sum/graphs_generated)
-    # MVC_sum = 0
-    # approx1_sum = 0
-    # approx2_sum = 0
-    # approx3_sum = 0
-    # graphs_generated = 0
+#     return (graph_num, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
 
-    return (graph_num, MVC_sum_per_edge, approx1_sum_per_edge, approx2_sum_per_edge, approx3_sum_per_edge)
-
-test3 = pt2exp3()
-plot.xlabel("Number of Edges")
-plot.ylabel("Sum of the Sizes of Vertex Covers Divided by number of Graphs Generated")
-plot.plot(test3[0], test3[4], label="Average approx3 Sum")
-plot.plot(test3[0], test3[3], label="Average approx2 Sum")
-plot.plot(test3[0], test3[2], label="Average approx1 Sum")
-plot.plot(test3[0], test3[1], label="Average MVC Sum")
-# plot.plot(test2[0], test2[2], label="approx1 Sum")
-# plot.plot(test2[0], test2[3], label="approx2 Sum")
-# plot.plot(test2[0], test2[4], label="approx3 Sum")
-legend = plot.legend(loc="upper left")
-plot.title("Sum of Sizes of Vertex Covers for all possible graphs of size 8")
-plot.show()
+# test3 = pt2exp3()
+# plot.xlabel("Number of Edges")
+# plot.ylabel("Sum of the Sizes of Vertex Covers Divided by number of Graphs Generated")
+# plot.plot(test3[0], test3[4], label="Average approx3 Sum")
+# plot.plot(test3[0], test3[3], label="Average approx2 Sum")
+# plot.plot(test3[0], test3[2], label="Average approx1 Sum")
+# plot.plot(test3[0], test3[1], label="Average MVC Sum")
+# legend = plot.legend(loc="upper left")
+# plot.title("Sum of Sizes of Vertex Covers for all possible graphs of size 7")
+# plot.show()
