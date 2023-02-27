@@ -445,6 +445,28 @@ def create_random_graph(i, j):
 # plot.title("Probabilty of Cycles Occurring in Graphs with Different Numbers of Edges")
 # plot.show()
     
+#--------------------------- EXPERIMENT 2 ------------------------------
+
+#def experimentTwo(f, E, times):
+#    L = []
+#    z = 0
+#    for edge in E:
+#        for x in range(0, times):
+#            exp2Graph = create_random_graph(f, edge)
+#            if is_connected(exp2Graph):
+#                z += 1
+#        L.append(z/times)
+#        z = 0
+#    return L
+
+#fixedNumberOfNodes = 100
+#numberOfEdges = [10, 50, 100, 150, 200, 300, 400]
+#expirmentTwoTest = experimentTwo(fixedNumberOfNodes, numberOfEdges, 10)
+#plot.xlabel("Number of Edges")
+#plot.ylabel("Probability Of Connected Graphs")
+#plot.plot(numberOfEdges, expirmentTwoTest)
+#plot.title("Probability of Graph Being Connected with Different Number of Edges")
+#plot.show()
 
 # PART 2
 
@@ -755,3 +777,53 @@ def create_random_graph(i, j):
 # legend = plot.legend(loc="upper left")
 # plot.title("Sum of Sizes of Vertex Covers for all possible graphs of size 7")
 # plot.show()
+
+#============== CODE FOR THE INDEPENDENT SET PROBLEM ===================
+
+# code for finding Max Indep Set
+def MIS(G):
+    void = []
+    L = []
+    for x in range(0, G.number_of_nodes()): #grab a vertex x
+        for z in range(0, G.number_of_nodes()): #grab all vertex s.t x is not adjacent to those
+            if not (z in G.adj[x]):
+                L.append(z)
+        while(connectionsExists(G, L)): #while there exists a vertex in list that contains an edge to another vertex in the list
+            max = L[0]
+            for elm in L: #find the vertex with the max amount of conflicting edges and remove it
+                if (amountConnected(G, elm, L) > amountConnected(G, max, L)): max = elm
+            L.remove(max)
+        L = []
+        void.append(L) #store list and repeat on next vertex
+    top = []
+    #print(void)
+    for y in void:
+        if len(y) > len(top): top = y
+    return top #return the largets MIS found
+    
+# helper function for MIS
+def amountConnected(G, v, L):
+    counter = 0
+    for x in G.adj[v]:
+        if x in L: counter += 1
+    return counter
+
+# helper function for MIS
+def connectionsExists(G, L):
+    for z in L: #for each vertex
+        for q in L: #for each vertex
+            if (q in G.adj[z]): #check if any vertex in the list has q adjacent to it
+                return True
+    return False
+
+# Finding out relationship with MIS and MVCs
+def MIS_MVC_test(n):
+    G = create_random_graph(n - 1, n//2)
+    print("Graph with " + str(n) + " nodes and the " + str(n//2) + " edges with a adjacency dictionary of ")
+    print(G.adj)
+    print("")
+    print("Has a MVC of " + str(MVC(G)) + " and has a MIS of " + str(MIS(G)))
+    print("When you sum the size of both lists you get: " + str(len(MVC(G) + MIS(G))))
+    return
+
+MIS_MVC_test(6)
