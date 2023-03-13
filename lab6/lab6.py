@@ -52,9 +52,11 @@ class RBNode:
 
     def rotate_right(self):
         #TODO
+        return
 
     def rotate_left(self):
         #TODO
+        return
 
 
 
@@ -105,7 +107,9 @@ class RBTree:
             node.make_black()
         while node != None and node.parent != None and node.parent.is_red(): 
             #TODO
+            return #remove, just here to not error
         self.root.make_black()
+        
                     
         
     def __str__(self):
