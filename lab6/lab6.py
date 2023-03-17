@@ -51,12 +51,23 @@ class RBNode:
          return "(" + str(self.value) + "," + self.colour + ")"
 
     def rotate_right(self):
-        #TODO
+        #do
         return
 
     def rotate_left(self):
-        #TODO
-        return
+        if self.right == None :
+            return
+        right_child = self.right
+        self.right = right_child.left
+        if right_child.left != None :
+            right_child.left.parent == self.right
+        right_child.parent = self.parent
+        if self == self.parent.left :
+            self.parent.left = right_child
+        else :
+            self.parent.right = right_child
+        right_child.left = self
+        self.parent = right_child
 
 
 
