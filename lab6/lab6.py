@@ -174,22 +174,6 @@ class RBTree:
         #You may alter code in this method if you wish, it's merely a guide.
         if node.parent == None:
             node.make_black()
-        # if node.parent.parent == None and node.is_red() and node.get_brother.is_red() :
-        #     node.make_black()
-        #     node.get_brother.make_black()
-        # print(self.get_height==0)
-        # print(self)
-        # print(node)
-        # if self.get_height() == 2 :
-        #     if node == node.parent.right and node.parent.left == None :
-        #         colour = node.colour
-        #         node.colour = node.parent.colour
-        #         node.parent.colour = colour
-        #         node.parent.rotate_left() 
-        #         self.root = node
-        #     elif node.parent.left != None and node.parent.right != None :
-        #         node.parent.left.make_black()
-        #         node.parent.right.make_black()
         while node != None and node.parent != None and node.parent.is_red(): 
             #case of uncle being black
             if node.uncle_is_black() :
@@ -199,34 +183,26 @@ class RBTree:
                     self.rotate_right(node.gparent())
                 #left right case 
                 elif (node.parent == node.gparent().left) and (node == node.parent.right) :
-                    # node.parent.rotate_left()
-                    # node.gparent().rotate_right()
-                    # colour = node.parent.colour
-                    # node.parent.colour = node.gparent().colour
-                    # node.gparent().colour = colour
-
-                    node.left = node.rotate_left()
-                    node.left.parent = node 
-                    node = node.rotate_right()
-                    node.right.make_red()
+                    self.rotate_left(node.parent)
+                    #left left case is reused here
+                    # print(node.gparent())
+                    # print(node.parent)
+                    # node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
+                    # self.rotate_right(node.gparent())
+                    node = node.left
+                    continue
                 #right right case
                 elif (node.parent == node.gparent().right) and (node == node.parent.right) :
                     node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
                     self.rotate_left(node.gparent())
                 #right left case
                 elif (node.parent == node.gparent().right) and (node == node.parent.left) :
-                    # node.parent.rotate_right()
-                    # node.gparent().rotate_left()
-                    # #swap colour of grandparent with parent
-                    # colour = node.parent.colour
-                    # node.parent.colour = node.gparent().colour
-                    # node.gparent().colour = colour
-
-                    node.right = node.rotate_right()
-                    node.right.parent = node
-                    node = self.rotate_left()
-                    node.make_black()
-                    node.left.make_red()
+                    self.rotate_right(node.parent)
+                    #right right case is resued here 
+                    # node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
+                    # self.rotate_left(node.gparent())
+                    node = node.right
+                    continue
                 node = node.parent
             #case of uncle being red
             else :
@@ -253,14 +229,22 @@ class RBTree:
         return "[" + self.__str_helper(node.left) + " <- " + str(node) + " -> " + self.__str_helper(node.right) + "]"
 
 
+#test code
 tree = RBTree()
-tree.insert(5)
-# tree.insert(4)
-# tree.insert(3)
-tree.insert(10)
-tree.insert(11)
+tree.insert(50)
+tree.insert(25)
+tree.insert(12)
+tree.insert(100)
+tree.insert(37)
+tree.insert(43)
+tree.insert(40)
+tree.insert(150)
+tree.insert(125)
+tree.insert(41)
 # print(tree.get_height())
-# tree.insert(12)
-# tree.insert(9)
-# tree.insert(8)
+
+#test for left right and right left
+# tree.insert(10)
+# tree.insert(5)
+# tree.insert(7)
 print(tree)
