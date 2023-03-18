@@ -129,6 +129,7 @@ class RBTree:
             node.parent.right = y 
         y.left = node 
         node.parent = y
+        return y
     
     def rotate_right(self, node) :
         if node.left == None :
@@ -146,6 +147,7 @@ class RBTree:
             node.parent.left = y
         y.right = node 
         node.parent = y
+        return y
 
     def insert(self, value):
         if self.is_empty():
@@ -170,49 +172,111 @@ class RBTree:
             else:
                 self.__insert(node.right, value)
 
+    # def insert(self, value) :
+    #     node = RBNode(value)
+    #     y = None
+    #     x = self.root
+    #     while x != None :
+    #         y = x 
+    #         if node.value < x.value :
+    #             x = x.left 
+    #         else :
+    #             x = x.right 
+    #     node.parent = y
+    #     if y == None :
+    #         self.root = node 
+    #     elif node.value < y.value :
+    #         y.left = node 
+    #     else :
+    #         y.right = node 
+    #     node.left = None 
+    #     node.right = None 
+    #     node.make_red() 
+    #     # print(node)
+    #     # print(node.parent)
+    #     self.fix(node)
+
     def fix(self, node):
         #You may alter code in this method if you wish, it's merely a guide.
         if node.parent == None:
             node.make_black()
+        print(node)
+        print(node.parent.colour)
         while node != None and node.parent != None and node.parent.is_red(): 
-            #case of uncle being black
-            if node.uncle_is_black() :
-                #left left case
-                if (node.parent == node.gparent().left) and (node == node.parent.left) : 
-                    node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
+        # while node.parent.is_red() :
+            if node.parent == node.gparent().left :
+                y = node.gparent().right
+                print(y)
+                if y.is_red() :
+                    node.parent.make_black()
+                    y.make_black()
+                    node.gparent().make_red()
+                elif node == node.gparent().right :
+                    node = node.parent
+                    self.rotate_left(node)
+                    node.parent.make_black()
+                    node.gparent().make_red()
                     self.rotate_right(node.gparent())
-                #left right case 
-                elif (node.parent == node.gparent().left) and (node == node.parent.right) :
-                    self.rotate_left(node.parent)
-                    #left left case is reused here
-                    # print(node.gparent())
-                    # print(node.parent)
-                    # node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
-                    # self.rotate_right(node.gparent())
-                    node = node.left
-                    continue
-                #right right case
-                elif (node.parent == node.gparent().right) and (node == node.parent.right) :
-                    node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
-                    self.rotate_left(node.gparent())
-                #right left case
-                elif (node.parent == node.gparent().right) and (node == node.parent.left) :
-                    self.rotate_right(node.parent)
-                    #right right case is resued here 
-                    # node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
-                    # self.rotate_left(node.gparent())
-                    node = node.right
-                    continue
-                node = node.parent
-            #case of uncle being red
             else :
-                node.parent.make_black()
-                node.get_uncle().make_black()
-                node.gparent().make_red()
-                node = node.gparent()
+                y = node.gparent().left
+                print(y)
+                if y.is_red() :
+                    node.parent.make_black()
+                    y.make_black()
+                    node.gparent().make_red()
+                elif node == node.gparent().left :
+                    node = node.parent
+                    self.rotate_right(node)
+                    node.parent.make_black()
+                    node.gparent().make_red()
+                    self.rotate_left(node.gparent())
         self.root.make_black()
+
+            #case of uncle being black
+            # if node.uncle_is_black() :
+            #     #left left case
+            #     if (node.parent == node.gparent().left) and (node == node.parent.left) : 
+            #         temp1 = node.gparent()
+            #         temp2 = node.parent
+            #         self.rotate_right(node.gparent())
+            #         temp1.colour, temp2.colour = temp2.colour, temp1.colour
+            #     #left right case 
+            #     elif (node.parent == node.gparent().left) and (node == node.parent.right) :
+            #         temp = node
+            #         self.rotate_left(node.parent)
+            #         #left left case is reused here
+            #         # print(node.gparent())
+            #         # print(node.parent)
+            #         # node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
+            #         # self.rotate_right(node.gparent())
+            #         node = node.left
+            #         continue
+            #     #right right case
+            #     elif (node.parent == node.gparent().right) and (node == node.parent.right) :
+            #         temp1 = node.gparent()
+            #         temp2 = node.parent
+            #         self.rotate_left(node.gparent())
+            #         temp1.colour, temp2.colour = temp2.colour, temp1.colour
+            #     #right left case
+            #     elif (node.parent == node.gparent().right) and (node == node.parent.left) :
+            #         temp = node
+            #         self.rotate_right(node.parent)
+            #         #right right case is resued here 
+            #         # node.gparent().colour, node.parent.colour = node.parent.colour, node.gparent().colour
+            #         # self.rotate_left(node.gparent())
+            #         # print(node)
+            #         node = node.right
+            #         continue
+                # node = node.parent
+            #case of uncle being red
+            # else :
+            #     node.parent.make_black()
+            #     node.get_uncle().make_black()
+            #     node.gparent().make_red()
+            #     node = node.gparent()
+        # self.root.make_black()
         
-                    
+    # def left_left_case() : 
         
     def __str__(self):
         if self.is_empty():
@@ -233,18 +297,18 @@ class RBTree:
 tree = RBTree()
 tree.insert(50)
 tree.insert(25)
+print(tree)
 tree.insert(12)
 tree.insert(100)
 tree.insert(37)
 tree.insert(43)
 tree.insert(40)
-tree.insert(150)
-tree.insert(125)
-tree.insert(41)
+# tree.insert(150)
+# tree.insert(125)
+# tree.insert(41)
 # print(tree.get_height())
 
 #test for left right and right left
+# tree.insert(20)
 # tree.insert(10)
-# tree.insert(5)
-# tree.insert(7)
-print(tree)
+# tree.insert(15)
