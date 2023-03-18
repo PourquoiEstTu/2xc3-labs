@@ -68,7 +68,7 @@ class RBNode:
             null_parent = True 
         y.right = self
         self.parent = y
-        return null_parent
+        return (null_parent, y)
 
     def rotate_left(self):
         null_parent = False
@@ -88,7 +88,7 @@ class RBNode:
             null_parent = True
         y.left = self 
         self.parent = y
-        return null_parent
+        return (null_parent, y)
 
     def gparent(self) :
         return self.parent.parent
@@ -112,6 +112,40 @@ class RBTree:
         if node == None:
             return 0
         return 1 + max(self.__get_height(node.left), self.__get_height(node.right))
+
+    def rotate_left(self, node) :
+        if node.right == None :
+            return
+        y = node.right 
+        node.right = y.left
+        if y.left != None :
+            y.left.parent = node 
+        y.parent = node.parent
+        if node.parent == None :
+            node.root = y
+        elif node == node.parent.left :
+            node.parent.left = y
+        else :
+            node.parent.right = y 
+        y.left = node 
+        node.parent = y
+    
+    def rotate_right(self, node) :
+        if node.left == None :
+            return
+        y = node.left 
+        node.left = y.right 
+        if y.right != None :
+            y.right.parent = node 
+        y.parent = node.parent 
+        if node.parent == None :
+            self.root = y
+        elif node == node.parent.right :
+            node.parent.right = y
+        else : 
+            node.parent.left = y
+        y.right = node 
+        node.parent = y
 
     def insert(self, value):
         if self.is_empty():
