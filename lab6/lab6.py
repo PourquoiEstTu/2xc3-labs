@@ -1,3 +1,5 @@
+import random
+
 class RBNode:
 
     def __init__(self, value):
@@ -209,12 +211,12 @@ class RBTree:
                 elif (node.parent == node.gparent().right) and (node == node.parent.left) :
                     temp = node
                     x = self.rotate_right(node.parent)
-                    print(x)
+                    # print(x)
                     #right right case is resued here 
                     # temp1 = node.gparent()
                     # temp2 = node.parent
                     y = self.rotate_left(x.parent)
-                    print(y)
+                    # print(y)
                     y.left.colour, y.colour = y.colour, y.left.colour
                     # temp1.colour, temp2.colour = temp2.colour, temp1.colour
                     # node = temp2.right
@@ -246,23 +248,127 @@ class RBTree:
 
 
 # test code
-tree = RBTree()
-tree.insert(50)
-tree.insert(25)
-tree.insert(12)
-tree.insert(100)
-tree.insert(37)
-tree.insert(43)
-print(tree)
-tree.insert(150)
-print(tree)
-tree.insert(125)
-print(tree)
-tree.insert(41)
-print(tree)
+# tree = RBTree()
+# tree.insert(50)
+# tree.insert(25)
+# tree.insert(12)
+# tree.insert(100)
+# tree.insert(37)
+# tree.insert(43)
+# print(tree)
+# tree.insert(150)
+# print(tree)
+# tree.insert(125)
+# print(tree)
+# tree.insert(41)
+# print(tree)
+# tree.insert(38)
+# print(tree)
 # print(tree.get_height())
 
 #test for left right and right left
 # tree.insert(20)
 # tree.insert(10)
 # tree.insert(15)
+
+class Node :
+    def __init__(self, value) :
+        self.value = value 
+        self.left = None
+        self.right = None
+        self.parent = None
+    
+    def is_leaf(self) :
+        return self.left == None and self.right == None 
+    
+    def is_left_child(self):
+        return self == self.parent.left
+
+    def is_right_child(self):
+        return not self.is_left_child()
+
+    def __str__(self):
+        return "(" + str(self.value) + ")"
+
+    def __repr__(self):
+         return "(" + str(self.value) + ")"
+
+class BST :
+    def __init__(self) :
+        self.root = None 
+    
+    def is_empty(self) :
+        return self.root == None
+    
+    def get_height(self):
+        if self.is_empty():
+            return 0
+        return self.__get_height(self.root)
+
+    def __get_height(self, node):
+        if node == None:
+            return 0
+        return 1 + max(self.__get_height(node.left), self.__get_height(node.right))
+
+    def insert(self, value):
+        if self.is_empty():
+            self.root = Node(value)
+        else:
+            self.__insert(self.root, value)
+
+    def __insert(self, node, value):
+        if value < node.value:
+            if node.left == None:
+                node.left = Node(value)
+                node.left.parent = node
+            else:
+                self.__insert(node.left, value)
+        else:
+            if node.right == None:
+                node.right = Node(value)
+                node.right.parent = node
+            else:
+                self.__insert(node.right, value) 
+
+    def __str__(self):
+        if self.is_empty():
+            return "[]"
+        return "[" + self.__str_helper(self.root) + "]"
+
+    def __str_helper(self, node):
+        if node.is_leaf():
+            return "[" + str(node) + "]"
+        if node.left == None:
+            return "[" + str(node) + " -> " + self.__str_helper(node.right) + "]"
+        if node.right == None:
+            return "[" +  self.__str_helper(node.left) + " <- " + str(node) + "]"
+        return "[" + self.__str_helper(node.left) + " <- " + str(node) + " -> " + self.__str_helper(node.right) + "]"
+
+#------------------------------ EXPERIMENT 1 ------------------------------
+
+def create_random_list(length, max_value) :
+    return [random.randint(0, max_value) for _ in range(length)]
+
+# generate random red-black tree
+def random_rbt(list_length, max_value) :
+    tree = RBTree()
+    l = create_random_list(list_length, max_value)
+    for i in l :
+        # print(i)
+        tree.insert(i)
+    return tree
+
+# tree = random_rbt(10, 100)
+# print(tree)
+
+# generate random binary search tree
+def random_bst(list_length, max_value) :
+    tree = BST() 
+    l = create_random_list(list_length, max_value)
+    for i in l :
+        print(i)
+        tree.insert(i)
+    return tree
+
+tree = random_bst(10, 100)
+print(tree)
