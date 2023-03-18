@@ -1,4 +1,6 @@
 import random
+import matplotlib.pyplot as plot
+import timeit
 
 class RBNode:
 
@@ -150,6 +152,27 @@ class RBTree:
         y.right = node 
         node.parent = y
         return y
+
+    #NOT ASSIGNMENT RELEVANT
+    # def find(self, value) :
+    #     if self.is_empty() :
+    #         return False 
+    #     else :
+    #         self.__find(self.root, value)
+
+    # def __find(self, node, value) :
+    #     if value < node.value :
+    #         if node.left == None :
+    #             return False 
+    #         else :
+    #             self.__find(node.left, value)
+    #     elif value > node.value :
+    #         if node.right == None :
+    #             return False 
+    #         else :
+    #             self.__find(node.right, value)
+    #     else :
+    #         return True
 
     def insert(self, value):
         if self.is_empty():
@@ -310,6 +333,26 @@ class BST :
             return 0
         return 1 + max(self.__get_height(node.left), self.__get_height(node.right))
 
+    # def find(self, value) :
+    #     if self.is_empty() :
+    #         return False 
+    #     else :
+    #         self.__find(self.root, value)
+
+    # def __find(self, node, value) :
+    #     if value < node.value :
+    #         if node.left == None :
+    #             return False 
+    #         else :
+    #             self.__find(node.left, value)
+    #     elif value > node.value :
+    #         if node.right == None :
+    #             return False 
+    #         else :
+    #             self.__find(node.right, value)
+    #     else :
+    #         return True
+
     def insert(self, value):
         if self.is_empty():
             self.root = Node(value)
@@ -357,7 +400,7 @@ def random_rbt(l) :
         tree.insert(i)
     return tree
 
-# tree = random_rbt(10, 100)
+# tree = random_rbt(create_random_list(10000, 10000))
 # print(tree)
 
 # generate binary search tree
@@ -371,43 +414,80 @@ def random_bst(l) :
 # sanity check
 # tree= BST()
 # tree1 = RBTree()
-# l = create_random_list(10, 100)
+# l = create_random_list(20, 9999)
 # for i in l :
 #     print(i)
-#     tree.insert(i)
+#     # tree.insert(i)
 #     tree1.insert(i)
-# print(tree)
+# # print(tree)
 # print(tree1)
+
+
+# NOT PART OF ASSIGNMENT
+# def time() :
+#     avg = 0
+#     for _ in range(10) :
+#         l = create_random_list(100000, 10000)
+#         index = random.randint(0, 100000) 
+#         item = l[index]
+#         bst = random_bst(l)
+#         rbt = random_rbt(l)
+#         start1 = timeit.default_timer()
+#         rbt.find(item)
+#         end1 = timeit.default_timer()
+#         rbt_time = end1 - start1
+
+#         start2 = timeit.default_timer()
+#         bst.find(item)
+#         end2 = timeit.default_timer()
+#         bst_time = end2 - start2
+#         avg += bst_time - rbt_time
+#     return avg/10
+
 
 # calculate the average height difference between 
 #  red black trees and binary search trees
 def average_height_diff(list_length, max_val, runs) :
-    # a list of tuples, first element of tuple is 
-    #  the height of the bst, second is height of 
-    #  the rbt
-    height = []
-    #on average, bst's should have larger heights, so 
-    # each element of the list will be bst_height - rbt_height
-    height_diff = []
+    bst_height = 0
+    rbt_height = 0
     for _ in range(runs) :
         l = create_random_list(list_length, max_val)
-        bst = random_bst(l)
-        rbt = random_rbt(l)
-        bst_height = bst.get_height()
-        rbt_height = rbt.get_height()
-        height.append((bst_height, rbt_height))
-        height_diff.append(bst_height - rbt_height)
+        bst_height += random_bst(l).get_height()
+        rbt_height += random_rbt(l).get_height()
 
-    avg = 0
-    for i in height_diff :
-        avg += i 
-    avg = avg/len(height_diff)
-    return (height, height_diff, avg)
+    bst_height /= runs
+    rbt_height /= runs
+    return (bst_height - rbt_height)
 
-#HUUUUUUUH
-# tuple = average_height_diff(10000, 10000, 100)
-tuple = average_height_diff(10000, 1000, 100)
-# tuple = average_height_diff(10000, 100, 100)
+# tuple = average_height_diff(10000, 100000, 100)
+# print(tuple)
+# print("\n")
+# tuple1 = average_height_diff(10000, 10000, 100)
+# print(tuple1)
+# print("\n")
+# tuple2 = average_height_diff(10000, 1000, 100)
+# print(tuple2)
+# print("\n")
+# tuple4 = average_height_diff(10000, 500, 100)
+# print(tuple4)
+# print("\n")
+# tuple6 = average_height_diff(10000, 400, 100)
+# print(tuple6)
+# print("\n")
+# tuple7 = average_height_diff(10000, 300, 100)
+# print(tuple7)
+# print("\n")
+# tuple5 = average_height_diff(10000, 200, 100)
+# print(tuple5)
+# print("\n")
+# tuple3 = average_height_diff(10000, 100, 100)
+# print(tuple3)
+# print("\n")
+
+
+# NOT ASSIGNMENT RELEVANT (i think)
+# tuple = average_height_diff(100000, 10000, 10)
+# tuple = average_height_diff(100000, 1000, 10)
 # tuple = average_height_diff(100, 100, 1000)
 # tuple = average_height_diff(100, 10, 1000)
 # tuple = average_height_diff(100, 50, 1000)
@@ -416,8 +496,53 @@ tuple = average_height_diff(10000, 1000, 100)
 # tuple = average_height_diff(1000, 2000, 100)
 # tuple = average_height_diff(1000, 10000, 100)
 # tuple = average_height_diff(1000, 200, 100)
-print(tuple[0])
-print("\n")
-print(tuple[1])
-print("\n")
-print(tuple[2])
+
+#------------------------------ EXPERIMENT 2 ------------------------------
+def swap(L, i, j):
+    L[i], L[j] = L[j], L[i]
+
+def create_near_sorted_list(length, max_value, swaps):
+    L = create_random_list(length, max_value)
+    L.sort()
+    for _ in range(swaps):
+        r1 = random.randint(0, length - 1)
+        r2 = random.randint(0, length - 1)
+        swap(L, r1, r2)
+    return L
+
+swap_list = [0, 1, 10, 25, 50, 100, 150, 250, 325, 500, 625, 750, 875, 1000,]
+def experiment(list_length, max_value, swap_list, runs) :
+    bst_height = 0
+    rbt_height = 0
+    avg = 0
+    avg_diff = []
+    for i in swap_list :
+        for _ in range(runs) :
+            l = create_near_sorted_list(list_length, max_value, i)
+            bst_height += random_bst(l).get_height()
+            rbt_height += random_rbt(l).get_height()
+        bst_height /= runs
+        rbt_height /= runs
+        avg_diff.append(bst_height - rbt_height)
+        bst_height = 0
+        rbt_height = 0
+    
+    return (swap_list, avg_diff)
+
+
+# test0 = experiment(500, 10000, swap_list, 100)
+# test1 = experiment(500, 1000, swap_list, 100)
+# test2 = experiment(500, 500, swap_list, 100)
+# test3 = experiment(500, 250, swap_list, 100)
+# test4 = experiment(500, 100, swap_list, 100)
+# fig, ax = plot.subplots()
+# plot.xlabel("Number of Swaps")
+# plot.ylabel("Height")
+# plot.plot(test0[0], test0[1], label = "Max Value of 10 000")
+# plot.plot(test1[0], test1[1], label = "Max Value of 1000")
+# plot.plot(test2[0], test2[1], label = "Max Value of 500")
+# plot.plot(test3[0], test3[1], label = "Max Value of 250")
+# plot.plot(test4[0], test4[1], label = "Max Value of 100")
+# legend = plot.legend(loc="upper right")
+# plot.title("Difference in Height of Depending on Swaps to a Sorted List")
+# plot.show()
