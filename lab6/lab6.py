@@ -349,10 +349,9 @@ class BST :
 def create_random_list(length, max_value) :
     return [random.randint(0, max_value) for _ in range(length)]
 
-# generate random red-black tree
-def random_rbt(list_length, max_value) :
+# generate red-black tree
+def random_rbt(l) :
     tree = RBTree()
-    l = create_random_list(list_length, max_value)
     for i in l :
         # print(i)
         tree.insert(i)
@@ -361,12 +360,11 @@ def random_rbt(list_length, max_value) :
 # tree = random_rbt(10, 100)
 # print(tree)
 
-# generate random binary search tree
-def random_bst(list_length, max_value) :
+# generate binary search tree
+def random_bst(l) :
     tree = BST() 
-    l = create_random_list(list_length, max_value)
     for i in l :
-        print(i)
+        # print(i)
         tree.insert(i)
     return tree
 
@@ -392,8 +390,9 @@ def average_height_diff(list_length, max_val, runs) :
     # each element of the list will be bst_height - rbt_height
     height_diff = []
     for _ in range(runs) :
-        bst = random_bst(list_length, max_val) 
-        rbt = random_rbt(list_length, max_val)
+        l = create_random_list(list_length, max_val)
+        bst = random_bst(l)
+        rbt = random_rbt(l)
         bst_height = bst.get_height()
         rbt_height = rbt.get_height()
         height.append((bst_height, rbt_height))
@@ -405,5 +404,20 @@ def average_height_diff(list_length, max_val, runs) :
     avg = avg/len(height_diff)
     return (height, height_diff, avg)
 
+#HUUUUUUUH
 # tuple = average_height_diff(10000, 10000, 100)
-# print(tuple)
+tuple = average_height_diff(10000, 1000, 100)
+# tuple = average_height_diff(10000, 100, 100)
+# tuple = average_height_diff(100, 100, 1000)
+# tuple = average_height_diff(100, 10, 1000)
+# tuple = average_height_diff(100, 50, 1000)
+# tuple = average_height_diff(100, 300, 1000)
+# tuple = average_height_diff(1000, 1000, 100)
+# tuple = average_height_diff(1000, 2000, 100)
+# tuple = average_height_diff(1000, 10000, 100)
+# tuple = average_height_diff(1000, 200, 100)
+print(tuple[0])
+print("\n")
+print(tuple[1])
+print("\n")
+print(tuple[2])
