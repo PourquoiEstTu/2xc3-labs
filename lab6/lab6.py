@@ -51,76 +51,44 @@ class RBNode:
          return "(" + str(self.value) + "," + self.colour + ")"
 
     def rotate_right(self):
-<<<<<<< HEAD
-        # null_parent = False
+        null_parent = False
         if self.left == None :
             return
-        left_child = self.left 
-        right_child = left_child.right
-        left_child.right = self 
-        self.left = right_child
-        self.parent = left_child
-        if right_child != None :
-            right_child.parent = self
-        return left_child
-        # if left_child.right != None :
-        #     left_child.right.parent = self
-        # left_child.parent = self.parent
-        # #REMEMBER TO ALSO DEAL WITH THIS IN THE RBTree CLASS
-        # if self.parent != None :
-        #     if self == self.parent.left :
-        #         self.parent.left = left_child
-        #     else :
-        #         self.parent.right = left_child
-        # # else :
-        # #     null_parent = True
-        # left_child.right = self
-        # self.parent = left_child
-        # return null_parent
-=======
-        #do
-        return
->>>>>>> parent of 365f1c5... Probably correct rotate_{right,left}, hasnt been tested yet
+        y = self.left 
+        self.left = y.right 
+        if y.right != None :
+            y.right.parent = self
+        y.parent = self.parent 
+        if self.parent != None :
+            if self == self.parent.right :
+                self.parent.right = y
+            else : 
+                self.parent.left = y
+        else :
+            null_parent = True 
+        y.right = self
+        self.parent = y
+        return null_parent
 
     def rotate_left(self):
-        # null_parent = False
+        null_parent = False
         if self.right == None :
             return
-        right_child = self.right
-<<<<<<< HEAD
-        # print(right_child)
-        left_child = right_child.left
-=======
-        self.right = right_child.left
-        if right_child.left != None :
-            right_child.left.parent == self.right
-        right_child.parent = self.parent
-        if self == self.parent.left :
-            self.parent.left = right_child
+        y = self.right 
+        self.right = y.left
+        if y.left != None :
+            y.left.parent = self 
+        y.parent = self.parent
+        if self.parent != None :
+            if self == self.parent.left :
+                self.parent.left = y
+            else :
+                self.parent.right = y 
         else :
-            self.parent.right = right_child
->>>>>>> parent of 365f1c5... Probably correct rotate_{right,left}, hasnt been tested yet
-        right_child.left = self
-        self.right = left_child 
-        self.parent = right_child
-        if left_child != None :
-            left_child.parent = self
-        return right_child
-        # if right_child.left != None :
-        #     right_child.left.parent = self
-        # right_child.parent = self.parent
-        # #REMEMBER TO ALSO DEAL WITH THIS IN THE RBTree CLASS
-        # if self.parent != None :
-        #     if self == self.parent.left :
-        #         self.parent.left = right_child
-        #     else :
-        #         self.parent.right = right_child
-        # # else :
-        # #     null_parent = True
-        # # print(right_child)
-        # right_child.left = self
-        # self.parent = right_child
-        # return null_parent
+            null_parent = True
+        y.left = self 
+        self.parent = y
+        return null_parent
 
     def gparent(self) :
         return self.parent.parent
