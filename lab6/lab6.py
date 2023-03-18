@@ -51,6 +51,7 @@ class RBNode:
          return "(" + str(self.value) + "," + self.colour + ")"
 
     def rotate_right(self):
+<<<<<<< HEAD
         # null_parent = False
         if self.left == None :
             return
@@ -76,14 +77,29 @@ class RBNode:
         # left_child.right = self
         # self.parent = left_child
         # return null_parent
+=======
+        #do
+        return
+>>>>>>> parent of 365f1c5... Probably correct rotate_{right,left}, hasnt been tested yet
 
     def rotate_left(self):
         # null_parent = False
         if self.right == None :
             return
         right_child = self.right
+<<<<<<< HEAD
         # print(right_child)
         left_child = right_child.left
+=======
+        self.right = right_child.left
+        if right_child.left != None :
+            right_child.left.parent == self.right
+        right_child.parent = self.parent
+        if self == self.parent.left :
+            self.parent.left = right_child
+        else :
+            self.parent.right = right_child
+>>>>>>> parent of 365f1c5... Probably correct rotate_{right,left}, hasnt been tested yet
         right_child.left = self
         self.right = left_child 
         self.parent = right_child
