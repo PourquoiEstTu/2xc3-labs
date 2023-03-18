@@ -206,44 +206,24 @@ class RBTree:
             if node.uncle_is_black() :
                 #left left case
                 if (node.parent == node.gparent().left) and (node == node.parent.left) : 
-                    # temp1 = node.gparent()
-                    # temp2 = node.parent
                     y = self.rotate_right(node.gparent())
                     y.right.colour, y.colour = y.colour, y.right.colour
-                    # temp1.colour, temp2.colour = temp2.colour, temp1.colour
                 #left right case 
                 elif (node.parent == node.gparent().left) and (node == node.parent.right) :
                     temp = node
                     x = self.rotate_left(node.parent)
-                    #left left case is reused here
-                    # temp1 = node.gparent()
-                    # temp2 = node.parent
                     y = self.rotate_right(x.parent)
                     y.right.colour, y.colour = y.colour, y.right.colour
-                    # temp1.colour, temp2.colour = temp2.colour, temp1.colour
-                    # node = temp2.left
-                    # continue
                 #right right case
                 elif (node.parent == node.gparent().right) and (node == node.parent.right) :
-                    # temp1 = node.gparent()
-                    # temp2 = node.parent
                     y = self.rotate_left(node.gparent())
-                    # temp1.colour, temp2.colour = temp2.colour, temp1.colour
                     y.left.colour, y.colour = y.colour, y.left.colour
                 #right left case
                 elif (node.parent == node.gparent().right) and (node == node.parent.left) :
                     temp = node
                     x = self.rotate_right(node.parent)
-                    # print(x)
-                    #right right case is resued here 
-                    # temp1 = node.gparent()
-                    # temp2 = node.parent
                     y = self.rotate_left(x.parent)
-                    # print(y)
                     y.left.colour, y.colour = y.colour, y.left.colour
-                    # temp1.colour, temp2.colour = temp2.colour, temp1.colour
-                    # node = temp2.right
-                    # continue
                 node = node.parent
             # case of uncle being red
             else :
