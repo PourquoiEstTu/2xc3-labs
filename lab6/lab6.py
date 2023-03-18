@@ -370,5 +370,40 @@ def random_bst(list_length, max_value) :
         tree.insert(i)
     return tree
 
-tree = random_bst(10, 100)
-print(tree)
+# sanity check
+# tree= BST()
+# tree1 = RBTree()
+# l = create_random_list(10, 100)
+# for i in l :
+#     print(i)
+#     tree.insert(i)
+#     tree1.insert(i)
+# print(tree)
+# print(tree1)
+
+# calculate the average height difference between 
+#  red black trees and binary search trees
+def average_height_diff(list_length, max_val, runs) :
+    # a list of tuples, first element of tuple is 
+    #  the height of the bst, second is height of 
+    #  the rbt
+    height = []
+    #on average, bst's should have larger heights, so 
+    # each element of the list will be bst_height - rbt_height
+    height_diff = []
+    for _ in range(runs) :
+        bst = random_bst(list_length, max_val) 
+        rbt = random_rbt(list_length, max_val)
+        bst_height = bst.get_height()
+        rbt_height = rbt.get_height()
+        height.append((bst_height, rbt_height))
+        height_diff.append(bst_height - rbt_height)
+
+    avg = 0
+    for i in height_diff :
+        avg += i 
+    avg = avg/len(height_diff)
+    return (height, height_diff, avg)
+
+# tuple = average_height_diff(10000, 10000, 100)
+# print(tuple)
