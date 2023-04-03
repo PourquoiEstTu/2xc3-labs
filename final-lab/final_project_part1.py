@@ -146,6 +146,28 @@ def dijkstra_approx(G, source, k) :
                     relaxes[neighbour] -= 1
     return dist
 
+def bellman_ford_approx(G, source, k) :
+    pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
+    dist = {} #Distance dictionary
+    nodes = list(G.adj.keys())
+    relaxes = {}
+
+    #Initialize distances
+    for node in nodes:
+        dist[node] = float("inf")
+        relaxes[node] = k
+    dist[source] = 0
+
+    #Meat of the algorithm
+    for _ in range(G.number_of_nodes()):
+        for node in nodes:
+            for neighbour in G.adj[node]:
+                    if dist[neighbour] > dist[node] + G.w(node, neighbour):
+                        if relaxes[neighbour] > 0 :
+                            dist[neighbour] = dist[node] + G.w(node, neighbour)
+                            pred[neighbour] = node
+                            relaxes[neighbour] -= 1
+    return dist
 G = DirectedWeightedGraph()
 G.add_node(0)
 G.add_node(1)
@@ -161,3 +183,4 @@ G.add_edge(1, 4, 5)
 G.add_edge(4, 5, 20)
 G.add_edge(3, 5, 10)
 print(dijkstra_approx(G, 0, 2))
+print(bellman_ford_approx(G, 0, 2))
