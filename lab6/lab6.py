@@ -371,6 +371,42 @@ class BST :
             return "[" +  self.__str_helper(node.left) + " <- " + str(node) + "]"
         return "[" + self.__str_helper(node.left) + " <- " + str(node) + " -> " + self.__str_helper(node.right) + "]"
 
+class XC3Tree:
+    def __init__(self, deg):
+        self.degree = deg
+        self.children = []
+        for x in range(0, deg):
+            self.addNode()
+        self.root = None
+    
+    def addNode(self):
+        if (len(self.children) + 1 > 2):
+            value = len(self.children) + 1 - 2 
+        else:
+            value = 0
+        self.children.append(XC3Tree(value))
+
+    def getHeight(self):
+        max = 0
+        if self.children == []:
+            return 0
+        else: 
+            max = 1
+        if self.degree >= 3:
+            for x in self.children:
+                if x.getHeight() + 1 >= max:
+                    max = x.getHeight() + 1
+        return max
+    
+    def getDegree(self):
+        return self.degree
+
+    def numberOfNodes(self):
+        number = 1
+        for x in self.children:
+            number = number + x.numberOfNodes()
+        return number
+
 #------------------------------ EXPERIMENT 1 ------------------------------
 
 def create_random_list(length, max_value) :
@@ -530,3 +566,31 @@ def experiment(list_length, max_value, swap_list, runs) :
 # legend = plot.legend(loc="upper right")
 # plot.title("Difference in Height of Depending on Swaps to a Sorted List")
 # plot.show()
+
+#------------------------------ EXPERIMENT 3 ------------------------------
+degrees0to25 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+heights = []
+temp = XC3Tree(5)
+#for x in degrees0to25:
+#    heights.append(XC3Tree(x).getHeight())
+#plot.xlabel("Degree")
+#plot.ylabel("Height")
+#plot.plot(degrees0to25, heights)
+#plot.title("XC3 Trees degrees and their heights")
+#plot.show()
+#print(temp.children)
+#print(temp.getHeight())
+#print(temp.numberOfNodes())
+
+#------------------------------ EXPERIMENT 4 ------------------------------
+numNodes = []
+#for x in degrees0to25:
+#    numNodes.append(XC3Tree(x).numberOfNodes())
+#print(numNodes)
+#print(degrees0to25)
+#print(heights)
+#plot.plot(degrees0to25, numNodes)
+#plot.xlabel("Degree")
+#plot.ylabel("Number of Nodes")
+#plot.title("XC3 Trees degrees and the number of nodes")
+#plot.show()
