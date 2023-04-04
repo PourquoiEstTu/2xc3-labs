@@ -1,5 +1,6 @@
 import min_heap
 import random
+import matplotlib.pyplot as plot
 
 class DirectedWeightedGraph:
 
@@ -168,19 +169,58 @@ def bellman_ford_approx(G, source, k) :
                             pred[neighbour] = node
                             relaxes[neighbour] -= 1
     return dist
-G = DirectedWeightedGraph()
-G.add_node(0)
-G.add_node(1)
-G.add_node(2)
-G.add_node(4)
-G.add_node(5)
-G.add_node(3)
-G.add_edge(0, 1, 10)
-G.add_edge(0, 2, 5)
-G.add_edge(0, 3, 20)
-G.add_edge(2, 3, 10)
-G.add_edge(1, 4, 5)
-G.add_edge(4, 5, 20)
-G.add_edge(3, 5, 10)
-print(dijkstra_approx(G, 0, 2))
-print(bellman_ford_approx(G, 0, 2))
+# G = DirectedWeightedGraph()
+# G.add_node(0)
+# G.add_node(1)
+# G.add_node(2)
+# G.add_node(4)
+# G.add_node(5)
+# G.add_node(3)
+# G.add_edge(0, 1, 10)
+# G.add_edge(0, 2, 5)
+# G.add_edge(0, 3, 20)
+# G.add_edge(2, 3, 10)
+# G.add_edge(1, 4, 5)
+# G.add_edge(4, 5, 20)
+# G.add_edge(3, 5, 10)
+# print(dijkstra_approx(G, 0, 2))
+# print(bellman_ford_approx(G, 0, 2))
+
+# EXPERIMENT SUITE 1
+
+#EXPERIMENT 1 - AVERAGE DISTANCE WHEN K IS VARIED
+# (track which function gives the shortest or longest distance on average)
+#vary k, keep num of nodes, weights of edges, and density constant
+
+k_vals = [0, 1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15]
+
+def exp1(k_vals:list, size:int, runs:int) :
+    avg_dist_size = [[], [], [], []]
+    avg_dijkstra = 0
+    avg_dijkstra_approx = 0
+    avg_bellman_ford = 0
+    avg_bellman_ford_approx = 0
+    for k in k_vals : 
+        for _ in range(runs) :
+            G = create_random_complete_graph(size, 100)
+            avg_dijkstra = total_dist(dijkstra(G, 0))
+            avg_dijkstra_approx = total_dist(dijkstra_approx(G, 0, k))
+            avg_bellman_ford = total_dist(bellman_ford(G, 0))
+            avg_bellman_ford_approx = total_dist(bellman_ford_approx(G, 0, k))
+        avg_dist_size[0].append(avg_dijkstra)
+        avg_dist_size[1].append(avg_dijkstra_approx)
+        avg_dist_size[2].append(avg_bellman_ford)
+        avg_dist_size[3].append(avg_bellman_ford_approx)
+    return (avg_dist_size, k_vals)
+
+# test1 = t2exp1(edges1, 1000)
+test = exp1(k_vals, 100, 1)
+plot.xlabel("k value")
+plot.ylabel("Distance of all nodes from source")
+plot.plot(test[1], test[0][0], label="Dijkstra Distance")
+plot.plot(test[1], test[0][1], label="Dijkstra Approx Distance")
+plot.plot(test[1], test[0][2], label="Bellman-Ford Distance")
+plot.plot(test[1], test[0][3], label="Bellman-Ford Approx Distance")
+legend = plot.legend(loc="upper right")
+plot.title("Shortest Path Distances for Graphs of 100 Nodes")
+plot.show()
