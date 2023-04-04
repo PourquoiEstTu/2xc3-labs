@@ -109,5 +109,3 @@ class Element:
 
 nodes1 = [Element("A", 5), Element("B", 1), Element("C", 10), Element("D", 2), Element("E", -3)]
 nodes2 = [Element(1, 1), Element(2, 1), Element(3, 10), Element(4, 2), Element(5, -3)]
-
-
