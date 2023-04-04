@@ -81,7 +81,7 @@ def bellman_ford(G, source):
 def total_dist(dist):
     total = 0
     for key in dist.keys():
-        total += dist[key]
+        total += dist[key] 
     return total
 
 def create_random_complete_graph(n,upper):
@@ -186,7 +186,7 @@ def bellman_ford_approx(G, source, k) :
 # print(dijkstra_approx(G, 0, 2))
 # print(bellman_ford_approx(G, 0, 2))
 
-# EXPERIMENT SUITE 1
+#-------------------------- EXPERIMENT SUITE 1 --------------------------
 
 #EXPERIMENT 1 - AVERAGE DISTANCE WHEN K IS VARIED
 # (track which function gives the shortest or longest distance on average)
@@ -214,13 +214,103 @@ def exp1(k_vals:list, size:int, runs:int) :
     return (avg_dist_size, k_vals)
 
 # test1 = t2exp1(edges1, 1000)
-test = exp1(k_vals, 100, 1)
-plot.xlabel("k value")
+# test = exp1(k_vals, 100, 1)
+# plot.xlabel("k value")
+# plot.ylabel("Distance of all nodes from source")
+# plot.plot(test[1], test[0][0], label="Dijkstra Distance")
+# plot.plot(test[1], test[0][1], label="Dijkstra Approx Distance")
+# plot.plot(test[1], test[0][2], label="Bellman-Ford Distance")
+# plot.plot(test[1], test[0][3], label="Bellman-Ford Approx Distance")
+# legend = plot.legend(loc="upper right")
+# plot.title("Shortest Path Distances for Graphs of 100 Nodes")
+# plot.show()
+
+#EXPERIMENT 2 - AVERAGE DISTANCE WHEN size of graph is varied
+#vary number of nodes, fix k, weights of edges, and density 
+
+sizes = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+def exp2(sizes:list, k:int, runs:int) :
+    avg_dist_size = [[], [], [], []]
+    avg_dijkstra = 0
+    avg_dijkstra_approx = 0
+    avg_bellman_ford = 0
+    avg_bellman_ford_approx = 0
+    for s in sizes : 
+        for _ in range(runs) :
+            G = create_random_complete_graph(s, 100)
+            avg_dijkstra = total_dist(dijkstra(G, 0))
+            avg_dijkstra_approx = total_dist(dijkstra_approx(G, 0, k))
+            avg_bellman_ford = total_dist(bellman_ford(G, 0))
+            avg_bellman_ford_approx = total_dist(bellman_ford_approx(G, 0, k))
+        avg_dist_size[0].append(avg_dijkstra)
+        avg_dist_size[1].append(avg_dijkstra_approx)
+        avg_dist_size[2].append(avg_bellman_ford)
+        avg_dist_size[3].append(avg_bellman_ford_approx)
+    return (avg_dist_size, sizes)
+
+# test1 = exp2(sizes, 2, 10)
+# plot.xlabel("Number of Nodes in Graph")
+# plot.ylabel("Distance of all nodes from source")
+# plot.plot(test1[1], test1[0][0], label="Dijkstra Distance")
+# plot.plot(test1[1], test1[0][1], label="Dijkstra Approx Distance")
+# plot.plot(test1[1], test1[0][2], label="Bellman-Ford Distance")
+# plot.plot(test1[1], test1[0][3], label="Bellman-Ford Approx Distance")
+# legend = plot.legend(loc="upper left")
+# plot.title("Shortest Path Distances for Graphs of Differing Sizes")
+# plot.show()
+
+#EXPERIMENT 3 - AVERAGE DISTANCE WHEN size of graph is varied
+#vary number of edges, fix k, weights of edges, and number of nodes 
+
+#new create graph for varying edges
+def create_random_graph(n, edges, upper):
+    G = DirectedWeightedGraph()
+    for i in range(n):
+        G.add_node(i)
+    for _ in range(edges):
+        node1 = random.randint(0,n-1)
+        node2 = random.randint(0,n-1)
+        if node1 != node2 :
+            G.add_edge(node1, node2, random.randint(1,upper))
+        # print(node1)
+        # print(node2)
+    return G
+
+# edges = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+# edges = [50, 100, 150, 200, 250, 300, 350, 400, 450, 500]
+edges = [300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800,]
+def exp3(size:int, k:int, edges:list, runs:int) :
+    avg_dist_size = [[], [], [], []]
+    avg_dijkstra = 0
+    avg_dijkstra_approx = 0
+    avg_bellman_ford = 0
+    avg_bellman_ford_approx = 0
+    for e in edges : 
+        for _ in range(runs) :
+            G = create_random_graph(size, e, 100)
+            avg_dijkstra = total_dist(dijkstra(G, 0))
+            avg_dijkstra_approx = total_dist(dijkstra_approx(G, 0, k))
+            avg_bellman_ford = total_dist(bellman_ford(G, 0))
+            avg_bellman_ford_approx = total_dist(bellman_ford_approx(G, 0, k))
+        avg_dist_size[0].append(avg_dijkstra/runs)
+        avg_dist_size[1].append(avg_dijkstra_approx/runs)
+        avg_dist_size[2].append(avg_bellman_ford/runs)
+        avg_dist_size[3].append(avg_bellman_ford_approx/runs)
+    return (avg_dist_size, edges)
+
+# G = create_random_graph(100, 10, 30)
+# G = create_random_complete_graph(10, 30)
+# for i in G.adj : 
+#     print(G.adj[i])
+# print(G.adj.keys())
+# print(5 + G.adj[0])
+test2 = exp3(100, 5, edges, 50)
+plot.xlabel("Number of Edges in Graph")
 plot.ylabel("Distance of all nodes from source")
-plot.plot(test[1], test[0][0], label="Dijkstra Distance")
-plot.plot(test[1], test[0][1], label="Dijkstra Approx Distance")
-plot.plot(test[1], test[0][2], label="Bellman-Ford Distance")
-plot.plot(test[1], test[0][3], label="Bellman-Ford Approx Distance")
-legend = plot.legend(loc="upper right")
-plot.title("Shortest Path Distances for Graphs of 100 Nodes")
+plot.plot(test2[1], test2[0][0], label="Dijkstra Distance")
+plot.plot(test2[1], test2[0][1], label="Dijkstra Approx Distance")
+plot.plot(test2[1], test2[0][2], label="Bellman-Ford Distance")
+plot.plot(test2[1], test2[0][3], label="Bellman-Ford Approx Distance")
+legend = plot.legend(loc="upper center")
+plot.title("Shortest Path Distances for Graphs of Differing Sizes")
 plot.show()
