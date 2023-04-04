@@ -1,5 +1,7 @@
 import min_heap
 import random
+import math
+import timeit
 import matplotlib.pyplot as plot
 
 class DirectedWeightedGraph:
@@ -173,13 +175,29 @@ def bellman_ford_approx(G, source, k) :
 # G.add_node(0)
 # G.add_node(1)
 # G.add_node(2)
+# G.add_node(3)
 # G.add_node(4)
 # G.add_node(5)
-# G.add_node(3)
 # G.add_edge(0, 1, 10)
 # G.add_edge(0, 2, 5)
 # G.add_edge(0, 3, 20)
 # G.add_edge(2, 3, 10)
+# G.add_edge(2, 1, 1)
+# G.add_edge(1, 3, 1)
+# G.add_edge(0, 1, 10)
+# G.add_edge(1, 0, 10)
+# G.add_edge(1, 2, 7)
+# G.add_edge(2, 1, 7)
+# G.add_edge(0, 3, -5)
+# G.add_edge(3, 0, -5)
+# G.add_edge(3, 1, 5)
+# G.add_edge(1, 3, 5)
+# G.add_edge(3, 2, 1)
+# G.add_edge(2, 3, 1)
+# G.add_edge(2, 4, 20)
+# G.add_edge(4, 2, 20)
+# print(init_d(G))
+# print(mystery(G))
 # G.add_edge(1, 4, 5)
 # G.add_edge(4, 5, 20)
 # G.add_edge(3, 5, 10)
@@ -304,13 +322,41 @@ def exp3(size:int, k:int, edges:list, runs:int) :
 #     print(G.adj[i])
 # print(G.adj.keys())
 # print(5 + G.adj[0])
-test2 = exp3(100, 5, edges, 50)
-plot.xlabel("Number of Edges in Graph")
-plot.ylabel("Distance of all nodes from source")
-plot.plot(test2[1], test2[0][0], label="Dijkstra Distance")
-plot.plot(test2[1], test2[0][1], label="Dijkstra Approx Distance")
-plot.plot(test2[1], test2[0][2], label="Bellman-Ford Distance")
-plot.plot(test2[1], test2[0][3], label="Bellman-Ford Approx Distance")
-legend = plot.legend(loc="upper center")
-plot.title("Shortest Path Distances for Graphs of Differing Sizes")
-plot.show()
+# test2 = exp3(100, 5, edges, 50)
+# plot.xlabel("Number of Edges in Graph")
+# plot.ylabel("Distance of all nodes from source")
+# plot.plot(test2[1], test2[0][0], label="Dijkstra Distance")
+# plot.plot(test2[1], test2[0][1], label="Dijkstra Approx Distance")
+# plot.plot(test2[1], test2[0][2], label="Bellman-Ford Distance")
+# plot.plot(test2[1], test2[0][3], label="Bellman-Ford Approx Distance")
+# legend = plot.legend(loc="upper center")
+# plot.title("Shortest Path Distances for Graphs of Differing Sizes")
+# plot.show()
+
+#-------------------------- MYSTERY TEST --------------------------
+
+# for i in range(1, 150) :
+#     sizes.append(i)
+sizes = [1, 3, 9, 27, 81, 243, 365,]# 548,]
+def mysteryTest(sizes:list, upper:int, runs:int) :
+    time = 0
+    time_list = []
+    for s in sizes :
+        for _ in range(runs) :
+            G = create_random_complete_graph(s, upper)
+            start = timeit.default_timer()
+            mystery(G)
+            end = timeit.default_timer()
+            time += end - start
+        time_list.append(math.log(time/runs, 4))
+    for i in range(len(sizes)) :
+        sizes[i] = math.log(sizes[i], 3)
+    return (time_list, sizes)
+
+# ahhhhh = mysteryTest(sizes, 100, 1)
+# plot.xlabel("log of Sizes")
+# plot.ylabel("log of Time (s)")
+# plot.plot(ahhhhh[1], ahhhhh[0])
+# # legend = plot.legend(loc="upper center")
+# plot.title("Number of nodes in a graph vs. time it takes to run")
+# plot.show()
