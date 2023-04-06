@@ -6,12 +6,9 @@ import timeit
 import csv
 
 class WeightedGraph:
-    def __init__(self, n):
+    def __init__(self) :
         self.adj = {}
         self.weights = {}
-
-    def has_edge(self, node1, node2):
-        return node2 in self.adj[node1]
 
     def add_edge(self, node1, node2, weight):
         if not self.has_edge(node1, node2):
@@ -20,8 +17,28 @@ class WeightedGraph:
         self.weights[(node1, node2)] = weight
         self.weights[(node2, node1)] = weight
 
-    def get_size(self):
+    def are_connected(self, node1, node2):
+        for neighbour in self.adj[node1]:
+            if neighbour == node2:
+                return True
+        return False
+
+    def add_node(self, node):
+        self.adj[node] = []
+
+    def w(self, node1, node2):
+        if self.are_connected(node1, node2):
+            return self.weights[(node1, node2)]
+
+    def number_of_nodes(self):
         return len(self.adj)
+
+    # functions from the graphs.py Graph() implementation from lecture
+    def has_edge(self, node1, node2):
+        return node2 in self.adj[node1]
+
+    def adjacent_nodes(self, node):
+        return self.adj[node]
 
 class DirectedWeightedGraph:
 
@@ -381,32 +398,42 @@ def mysteryTest(sizes:list, upper:int, runs:int) :
 # plot.show()
 
 #------------------------- PART 3 -------------------------
-london_stations = DirectedWeightedGraph()
-with open("london_stations.csv", "r") as fh : #fh = file_handler (remember this?) 
-    station_data = csv.DictReader(fh)
-    for row in station_data :
-        london_stations.add_node(row["id"])
-    # for row in station_data :
-    #     print(row["id"])
+# code for creating the graph from the csv files
+london_stations = WeightedGraph()
+fh = open("london_stations.csv", 'r')
+station_data = csv.DictReader(fh)
+station_data_list = []
+for row in station_data :
+    london_stations.add_node(row["id"])
+    station_data_list.append(row)
+fh.close()
 
-    with open("london_connections.csv", 'r') as fh2 :
-        connections = csv.DictReader(fh2)
-        for stations in connections :
-            coord1 = (0,0)
-            coord2 = (0,0)
-            for row in station_data :
-                if stations["station1"] == row["id"] :
-                    coord1 = (row["latitude"], row["longitude"])
-                if stations["station2"] == row["id"] :
-                    coord2 = (row["latitude"], row["longitude"])
-            london_stations.add_edge(stations["station1"], 
-                                        stations["station2"], 
-                                        math.sqrt((coord2[0] - coord1[0])^2 + 
-                                                  (coord2[1] - coord1[1])^2))
-            # print(stations["station1"])
-            # print(stations["station2"])
-            # print("\n")
-for i in london_stations.adj :
-    print(i, end=" ")
-    print(london_stations.adj[i])
-# print(dijkstra(london_stations, 11))
+fh2 = open("london_connections.csv", 'r')
+connections = csv.DictReader(fh2)
+for stations in connections :
+    coord1 = (0,0)
+    coord2 = (0,0) 
+    for row in station_data_list :
+        # print("huh2")
+        if stations["station1"] == row["id"] :
+            coord1 = (float(row["latitude"]), float(row["longitude"]))
+        if stations["station2"] == row["id"] :
+            coord2 = (float(row["latitude"]), float(row["longitude"]))
+        # print(coord1)
+        # print(coord2)
+    london_stations.add_edge(stations["station1"], 
+                                stations["station2"], 
+                                math.sqrt((coord2[0] - coord1[0])**2 + 
+                                        (coord2[1] - coord1[1])**2) * 1000)
+# the weight of each edge is the distance between each station, calculated
+#  using latitude and longitude. The final value is multiplied by 1000 to make
+#  it easier to read
+fh2.close()
+
+# prints the adjacency list of the graph
+#  and the weights for each edge
+# for i in london_stations.adj :
+#     print(i, end=" : ")
+#     print(london_stations.adj[i])
+#     for j in london_stations.adj[i] :
+#         print(london_stations.w(i, j))
