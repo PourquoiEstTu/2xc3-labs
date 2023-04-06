@@ -437,3 +437,6 @@ fh2.close()
 #     print(london_stations.adj[i])
 #     for j in london_stations.adj[i] :
 #         print(london_stations.w(i, j))
+
+def heuristic(graph:WeightedGraph, source, dest) :
+    pass
