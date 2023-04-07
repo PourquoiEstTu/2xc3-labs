@@ -124,7 +124,10 @@ class HeuristicGraph(WeightedGraph) :
     def __init__(self, heuristic) :
         self.adj = {}
         self.weights = {}
-        self.heuristic = heuristic
+        self._heuristic = heuristic
+    
+    def get_heuristic(self) :
+        return self._heuristic
 
 
 # class WeightedGraph:
