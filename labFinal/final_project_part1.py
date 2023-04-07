@@ -402,7 +402,8 @@ def mysteryTest(sizes:list, upper:int, runs:int) :
 london_stations = WeightedGraph()
 fh = open("london_stations.csv", 'r')
 station_data = csv.DictReader(fh)
-station_data_list = []
+station_data_list = [] # so that the data from the csv can be used after the 
+                       #  the file gets closed
 for row in station_data :
     london_stations.add_node(row["id"])
     station_data_list.append(row)
@@ -410,9 +411,15 @@ fh.close()
 
 fh2 = open("london_connections.csv", 'r')
 connections = csv.DictReader(fh2)
+
+# stations is a whole row/dict of the london_connections.csv file
 for stations in connections :
     coord1 = (0,0)
     coord2 = (0,0) 
+    
+    # searches london_stations.csv for the two stations of the
+    #  current iteration that are connected and gets their 
+    #  latitude + longitude
     for row in station_data_list :
         # print("huh2")
         if stations["station1"] == row["id"] :
@@ -421,14 +428,19 @@ for stations in connections :
             coord2 = (float(row["latitude"]), float(row["longitude"]))
         # print(coord1)
         # print(coord2)
+
+    # adds the connection b/w the two stations of the current iteration
+    # the weight of the edge is the distance b/w the two stations using the 
+    #  latitude and longitude as coordinates
     london_stations.add_edge(stations["station1"], 
                                 stations["station2"], 
                                 math.sqrt((coord2[0] - coord1[0])**2 + 
-                                        (coord2[1] - coord1[1])**2) * 1000)
-# the weight of each edge is the distance between each station, calculated
-#  using latitude and longitude. The final value is multiplied by 1000 to make
-#  it easier to read
+                                        (coord2[1] - coord1[1])**2) * 100)
+# the final value of the weight is multiplied by 100 to make the heuristic 
+#  function work better and let it have an acc impact on the algo
 fh2.close()
+
+#  distance = sqrt((x_2 - x_1)^2 + (y_2 - y_1)^2) (reference for me)
 
 # prints the adjacency list of the graph
 #  and the weights for each edge
@@ -438,5 +450,39 @@ fh2.close()
 #     for j in london_stations.adj[i] :
 #         print(london_stations.w(i, j))
 
-def heuristic(graph:WeightedGraph, source, dest) :
-    pass
+# given a graph and two points in that graph, the function calculates the 
+#  straight-line distance (more accurately displacement if yk about physics :smirk:) 
+#  b/w two stations
+def heuristic(graph:WeightedGraph, source:str, dest:str) :
+    src_coord = (0, 0)
+    dest_coord = (0, 0)
+
+    # searchs for source and dest id's
+    for row in station_data_list :
+        # print(row["id"])
+        if row["id"] == source :
+            src_coord = (row["latitude"], row["longitude"])
+        if row["id"] == dest :
+            dest_coord = (row["latitude"], row["longitude"])
+    
+    # just in case error checking
+    if src_coord == (0,0) :
+        return "The src id you inputted is not assocated with a station id"
+    if dest_coord == (0,0) :
+        return "The dest id you inputted is not assocated with a station id"
+    
+    # data in csv is text so have to convert before doing math
+    src_coord = (float(src_coord[0]), float(src_coord[1]))
+    dest_coord = (float(dest_coord[0]), float(dest_coord[1]))
+    distance = math.sqrt((dest_coord[0] - src_coord[0])**2 + 
+                            (dest_coord[1] - src_coord[1])**2)
+    
+    # feel free to edit the return value as needed, the only important part 
+    #  of it is that distance*100 is returned
+    return {(source, dest) : distance * 100}
+
+# When you're using this in A* the dest will always be fixed to the destination
+#  node you're trying to find the shortest path for
+# not sure about source node but gl!
+
+print(heuristic(london_stations,"279","13"))    
