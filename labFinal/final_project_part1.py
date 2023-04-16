@@ -2,7 +2,7 @@ import min_heap
 import random
 import math
 import timeit
-# import matplotlib.pyplot as plot
+import matplotlib.pyplot as plot
 import csv
 
 class WeightedGraph:
@@ -398,15 +398,70 @@ def mysteryTest(sizes:list, upper:int, runs:int) :
 # plot.title("Number of nodes in a graph vs. time it takes to run")
 # plot.show()
 
+#------------------------- PART 2 -------------------------
+def a_star(G, s, d, h):
+    if (s == d): 
+        return ({d:s}, [s])
+    pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
+    dist = {} #Distance dictionary
+    Q = min_heap.MinHeap([])
+    nodes = list(G.adj.keys())
+    checked = []
+
+    #Initialize priority queue/heap and distances
+    for node in nodes:
+        Q.insert(min_heap.Element(node, float("inf")))
+        dist[node] = float("inf")
+    Q.decrease_key(s, 0)
+
+    #Meat of the algorithm
+    while not Q.is_empty():
+        #print(Q)
+        current_element = Q.extract_min() #pop out element with least distance
+        current_node = current_element.value #get the 'value' of the current elm
+        if dist[current_node] == float("inf"): dist[current_node] = 0
+        #dist[current_node] = current_element.key #ignore
+        #checked.append(current_node)
+        if current_node == d: 
+            #checked2 = [d]
+            #x = d
+            #while (True):
+            #   checked2.append(pred[x])
+            #   if (pred[x] == s): break
+            #   else: x = pred[x]
+            #checked2.reverse()
+            return (pred, dist[d])
+        for neighbour in G.adj[current_node]: #for all adjacent nodes
+            #print(current_node)
+            #print(dist[current_node])
+            #print(G.w(current_node, neighbour))
+            #print(" ")
+            if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]: #if the distance is better 
+                #print(neighbour)
+                #print(dist[current_node])
+                #print(G.w(current_node, neighbour))
+                #print(h[neighbour])
+                #print(" ")
+                #if (dist[neighbour] == float("inf")): 
+                #    Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour) + h[neighbour])
+                #else:
+                Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour) + h[neighbour]) #change key to better value
+                dist[neighbour] = dist[current_node] + G.w(current_node, neighbour) #update list
+                pred[neighbour] = current_node #update pred
+    #print(checked)
+    #print(pred)
+    return (pred,dist[d]) #return pred, and no path since none found
+
 #------------------------- PART 3 -------------------------
 # code for creating the graph from the csv files
+lines = {} #used to store the lines for each station connection (used in part 3)
 london_stations = WeightedGraph()
 fh = open("london_stations.csv", 'r')
 station_data = csv.DictReader(fh)
 station_data_list = [] # so that the data from the csv can be used after the 
                        #  the file gets closed
 for row in station_data :
-    london_stations.add_node(row["id"])
+    london_stations.add_node(int(row["id"]))
     station_data_list.append(row)
 fh.close()
 
@@ -418,9 +473,13 @@ for stations in connections :
     coord1 = (0,0)
     coord2 = (0,0) 
     
+    lines[int(stations["station1"]), int(stations["station2"])] = int(stations["line"])
+    lines[int(stations["station2"]), int(stations["station1"])] = int(stations["line"])
+
     # searches london_stations.csv for the two stations of the
     #  current iteration that are connected and gets their 
     #  latitude + longitude
+
     for row in station_data_list :
         # print("huh2")
         if stations["station1"] == row["id"] :
@@ -433,8 +492,9 @@ for stations in connections :
     # adds the connection b/w the two stations of the current iteration
     # the weight of the edge is the distance b/w the two stations using the 
     #  latitude and longitude as coordinates
-    london_stations.add_edge(stations["station1"], 
-                                stations["station2"], 
+    #print(stations["station1"] + "  " +stations["station2"])
+    london_stations.add_edge(int(stations["station1"]), 
+                                int(stations["station2"]), 
                                 math.sqrt((coord2[0] - coord1[0])**2 + 
                                         (coord2[1] - coord1[1])**2) * 100)
 # the final value of the weight is multiplied by 100 to make the heuristic 
@@ -446,10 +506,10 @@ fh2.close()
 # prints the adjacency list of the graph
 #  and the weights for each edge
 # for i in london_stations.adj :
-#     print(i, end=" : ")
-#     print(london_stations.adj[i])
-#     for j in london_stations.adj[i] :
-#         print(london_stations.w(i, j))
+#    print(i, end=" : ")
+#    print(london_stations.adj[i])
+#    for j in london_stations.adj[i] :
+#        print(london_stations.w(i, j))
 
 # given a graph and two points in that graph, the function calculates the 
 #  straight-line distance (more accurately displacement if yk about physics :smirk:) 
@@ -480,10 +540,99 @@ def heuristic(graph:WeightedGraph, source:str, dest:str) :
     
     # feel free to edit the return value as needed, the only important part 
     #  of it is that distance*100 is returned
-    return {(source, dest) : distance * 100}
+    # return {(source, dest) : distance * 100}
+    return {int(source) : distance * 100}
 
 # When you're using this in A* the dest will always be fixed to the destination
 #  node you're trying to find the shortest path for
 # not sure about source node but gl!
 
-print(heuristic(london_stations,"279","13"))    
+#dijkstra algo to compare with a*
+def dijkstra_compare(G, s, d):
+    if (s == d): 
+        return ({d:s}, [s])
+    pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
+    dist = {} #Distance dictionary
+    Q = min_heap.MinHeap([])
+    nodes = list(G.adj.keys())
+    checked = []
+
+    #Initialize priority queue/heap and distances
+    for node in nodes:
+        Q.insert(min_heap.Element(node, float("inf")))
+        dist[node] = float("inf")
+    Q.decrease_key(s, 0)
+
+    #Meat of the algorithm
+    while not Q.is_empty():
+        current_element = Q.extract_min() #pop out element with least distance
+        current_node = current_element.value #get the 'value' of the current elm
+        if dist[current_node] == float("inf"): dist[current_node] = 0
+        dist[current_node] = current_element.key #don't ignore?
+        if current_node == d: 
+            return (pred, dist[d])
+        for neighbour in G.adj[current_node]: #for all adjacent nodes
+            if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]: #if the distance is better 
+                Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour)) #change key to better value
+                dist[neighbour] = dist[current_node] + G.w(current_node, neighbour) #update list
+                pred[neighbour] = current_node #update pred
+    #print(checked)
+    #print(pred)
+    return (pred,dist[d]) #return pred, and no path since none found
+
+
+def createDict(ld, d):
+    dict = {}
+    for i in london_stations.adj:
+        z = heuristic(ld,str(i),str(d))
+        dict.update(z)
+    return dict
+
+def amountOfLines(path:dict, d):
+    total = 0
+    past = []
+    z = d
+    if path == {} or path[d] == d: return 0
+    while z in path.keys():
+        #print(path[z])
+        if lines[path[z], z] not in past:
+            total +=1
+            past.append(lines[path[z], z])
+        z = path[z]
+    return total
+
+
+def part3():
+    g = 0
+    a_star_dict = []
+    dijkstra_dict = []
+    for i in london_stations.adj.keys() :
+        q = createDict(london_stations, i)
+        for p in london_stations.adj.keys():
+            start = timeit.default_timer()
+            o = a_star(london_stations, p, i, q)
+            end = timeit.default_timer()
+            start2 = timeit.default_timer()
+            k = dijkstra_compare(london_stations, p, i)
+            end2 = timeit.default_timer()
+            a_star_dict.append((end - start, amountOfLines(o[0], i)))
+            dijkstra_dict.append((end2 - start2))
+        #print("done") #print statements for progress, not necessary but nice to verify its running
+        #print(i) # ^^^^^^^
+    return (a_star_dict, dijkstra_dict)
+
+
+f = []
+for i in london_stations.adj.keys() :
+    for p in london_stations.adj.keys():
+        f.append((i, p))
+
+#this code will take a while to run, so be prepared to wait
+p3 = part3()
+
+#writing output to csv file
+with open("PathAnalysis.csv", "w", newline='') as file:
+    fo = csv.writer(file)
+    fo.writerow(["Starting Station", "End Station", "A* Algorithm Path Creation Time", "Dijkstra Algorithm Path Creation Time", "Number of Lines used in Path"])
+    for i in range(0, len(f)):
+        fo.writerow([f[i][0], f[i][1], (p3[0][i][0]), (p3[1][i]), (p3[0][i][1])])

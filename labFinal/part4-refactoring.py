@@ -6,7 +6,7 @@ import timeit
 import csv
 
 class Graph() :
-    def get_adj_nodes(node:int) :
+    def get_adj_nodes(node:int):
         pass
 
     def add_node(start:int, end:int, w:float) :
@@ -17,6 +17,50 @@ class Graph() :
 
     def w(node:int) :
         pass
+
+class WeightedGraph(Graph) :
+    def __init__(self) :
+        self.adj = {}
+        self.weights = {}
+
+    def get_adj_nodes(self, node):
+        return self.adj[node]
+
+    def add_node(self, node):
+        self.adj[node] = []
+
+    def add_edge(self, start, end, weight):
+        if not self.has_edge(start, end):
+            self.adj[start].append(end)
+            self.adj[end].append(start)
+        self.weights[(start, end)] = weight
+        self.weights[(end, start)] = weight
+
+    def get_num_of_nodes(self):
+        return len(self.adj)
+
+    def w(self, node1, node2):
+        if self.are_connected(node1, node2):
+            return self.weights[(node1, node2)]
+
+    # extra functions for convenience
+    def are_connected(self, node1, node2):
+        for neighbour in self.adj[node1]:
+            if neighbour == node2:
+                return True
+        return False
+
+    def has_edge(self, node1, node2):
+        return node2 in self.adj[node1]
+
+class HeuristicGraph(WeightedGraph) :
+    def __init__(self, heuristic) :
+        self.adj = {}
+        self.weights = {}
+        self._heuristic = heuristic
+    
+    def get_heuristic(self) :
+        return self._heuristic
 
 class SPAlgorithm() :
     def calc_sp(graph:Graph, source:int, dest:int) :
@@ -83,51 +127,43 @@ class Bellman_Ford(SPAlgorithm) :
 
 # Dhruv help!!!!
 class A_Star(SPAlgorithm) :
-    pass
+    def calc_sp(graph:Graph, s:int, d:int):
+        #adapter to fit the parameters to match a* parameters
+        if (isinstance(graph, HeuristicGraph)):
+            h = graph.get_heuristic()
+        else:
+            h = {}
+            for x in graph.adj.keys():
+                h[x] = 0
 
-class WeightedGraph(Graph) :
-    def __init__(self) :
-        self.adj = {}
-        self.weights = {}
+        #normal a* code
+        if (s == d): 
+            return 0
+        pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
+        dist = {} #Distance dictionary
+        Q = min_heap.MinHeap([])
+        nodes = list(graph.adj.keys())
 
-    def get_adj_nodes(self, node):
-        return self.adj[node]
+        #Initialize priority queue/heap and distances
+        for node in nodes:
+            Q.insert(min_heap.Element(node, float("inf")))
+            dist[node] = float("inf")
+        Q.decrease_key(s, 0)
 
-    def add_node(self, node):
-        self.adj[node] = []
+        #Meat of the algorithm
+        while not Q.is_empty():
+            current_element = Q.extract_min() 
+            current_node = current_element.value 
+            if dist[current_node] == float("inf"): dist[current_node] = 0
+            if current_node == d: 
+                return dist[d]
+            for neighbour in graph.adj[current_node]: #for all adjacent nodes
+                if dist[current_node] + graph.w(current_node, neighbour) < dist[neighbour]: #if the distance is better 
+                    Q.decrease_key(neighbour, dist[current_node] + graph.w(current_node, neighbour) + h[neighbour]) #change key to better value
+                    dist[neighbour] = dist[current_node] + graph.w(current_node, neighbour) #update list
+                    pred[neighbour] = current_node #update pred
+        return dist[d]
 
-    def add_edge(self, start, end, weight):
-        if not self.has_edge(start, end):
-            self.adj[start].append(end)
-            self.adj[end].append(start)
-        self.weights[(start, end)] = weight
-        self.weights[(end, start)] = weight
-
-    def get_num_of_nodes(self):
-        return len(self.adj)
-
-    def w(self, node1, node2):
-        if self.are_connected(node1, node2):
-            return self.weights[(node1, node2)]
-
-    # extra functions for convenience
-    def are_connected(self, node1, node2):
-        for neighbour in self.adj[node1]:
-            if neighbour == node2:
-                return True
-        return False
-
-    def has_edge(self, node1, node2):
-        return node2 in self.adj[node1]
-
-class HeuristicGraph(WeightedGraph) :
-    def __init__(self, heuristic) :
-        self.adj = {}
-        self.weights = {}
-        self._heuristic = heuristic
-    
-    def get_heuristic(self) :
-        return self._heuristic
 
 
 # class WeightedGraph:
