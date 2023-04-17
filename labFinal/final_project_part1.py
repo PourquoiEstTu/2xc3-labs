@@ -154,7 +154,7 @@ def init_d(G):
         d[i][i] = 0
     return d
 
-#--------------- PART 1 BEGINS :worry: ----------------
+#--------------- PART 1 ----------------
 
 # uhhhh prolly works? not much testing done 
 def dijkstra_approx(G, source, k) :
@@ -207,39 +207,6 @@ def bellman_ford_approx(G, source, k) :
                             pred[neighbour] = node
                             relaxes[neighbour] -= 1
     return dist
-G = DirectedWeightedGraph()
-G.add_node(0)
-G.add_node(1)
-G.add_node(2)
-G.add_node(3)
-# G.add_node(4)
-# G.add_node(5)
-G.add_edge(0, 1, 10)
-G.add_edge(0, 2, 5)
-G.add_edge(0, 3, 20)
-G.add_edge(2, 3, 10)
-G.add_edge(2, 1, 1)
-G.add_edge(1, 3, 1)
-# G.add_edge(0, 1, 10)
-# G.add_edge(1, 0, 10)
-# G.add_edge(1, 2, 7)
-# G.add_edge(2, 1, 7)
-# G.add_edge(0, 3, -5)
-# G.add_edge(3, 0, -5)
-# G.add_edge(3, 1, 5)
-# G.add_edge(1, 3, 5)
-# G.add_edge(3, 2, 1)
-# G.add_edge(2, 3, 1)
-# G.add_edge(2, 4, 20)
-# G.add_edge(4, 2, 20)
-# print(init_d(G))
-# print(mystery(G))
-# G.add_edge(1, 4, 5)
-# G.add_edge(4, 5, 20)
-# G.add_edge(3, 5, 10)
-print(dijkstra(G, 0))
-# print(dijkstra_approx(G, 0, 2))
-# print(bellman_ford_approx(G, 0, 2))
 
 #-------------------------- EXPERIMENT SUITE 1 --------------------------
 
@@ -401,8 +368,9 @@ def mysteryTest(sizes:list, upper:int, runs:int) :
 #------------------------- PART 2 -------------------------
 def a_star(G, s, d, h):
     if (s == d): 
-        return ({d:s}, [s])
-    pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
+        return ({d:s}, 0)
+    elif (G.adj.keys() == {}): return ()
+    pred = {} #Predecessor dictionary.
     dist = {} #Distance dictionary
     Q = min_heap.MinHeap([])
     nodes = list(G.adj.keys())
@@ -416,41 +384,19 @@ def a_star(G, s, d, h):
 
     #Meat of the algorithm
     while not Q.is_empty():
-        #print(Q)
         current_element = Q.extract_min() #pop out element with least distance
         current_node = current_element.value #get the 'value' of the current elm
         if dist[current_node] == float("inf"): dist[current_node] = 0
-        #dist[current_node] = current_element.key #ignore
-        #checked.append(current_node)
         if current_node == d: 
-            #checked2 = [d]
-            #x = d
-            #while (True):
-            #   checked2.append(pred[x])
-            #   if (pred[x] == s): break
-            #   else: x = pred[x]
-            #checked2.reverse()
             return (pred, dist[d])
         for neighbour in G.adj[current_node]: #for all adjacent nodes
-            #print(current_node)
-            #print(dist[current_node])
-            #print(G.w(current_node, neighbour))
-            #print(" ")
+            
             if dist[current_node] + G.w(current_node, neighbour) < dist[neighbour]: #if the distance is better 
-                #print(neighbour)
-                #print(dist[current_node])
-                #print(G.w(current_node, neighbour))
-                #print(h[neighbour])
-                #print(" ")
-                #if (dist[neighbour] == float("inf")): 
-                #    Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour) + h[neighbour])
-                #else:
+                
                 Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour) + h[neighbour]) #change key to better value
                 dist[neighbour] = dist[current_node] + G.w(current_node, neighbour) #update list
                 pred[neighbour] = current_node #update pred
-    #print(checked)
-    #print(pred)
-    return (pred,dist[d]) #return pred, and no path since none found
+    return (pred) #return pred, and no path since none found
 
 #------------------------- PART 3 -------------------------
 # code for creating the graph from the csv files
@@ -492,7 +438,6 @@ for stations in connections :
     # adds the connection b/w the two stations of the current iteration
     # the weight of the edge is the distance b/w the two stations using the 
     #  latitude and longitude as coordinates
-    #print(stations["station1"] + "  " +stations["station2"])
     london_stations.add_edge(int(stations["station1"]), 
                                 int(stations["station2"]), 
                                 math.sqrt((coord2[0] - coord1[0])**2 + 
@@ -500,8 +445,6 @@ for stations in connections :
 # the final value of the weight is multiplied by 100 to make the heuristic 
 #  function work better and let it have an acc impact on the algo
 fh2.close()
-
-#  distance = sqrt((x_2 - x_1)^2 + (y_2 - y_1)^2) (reference for me)
 
 # prints the adjacency list of the graph
 #  and the weights for each edge
@@ -540,16 +483,14 @@ def heuristic(graph:WeightedGraph, source:str, dest:str) :
     
     # feel free to edit the return value as needed, the only important part 
     #  of it is that distance*100 is returned
-    # return {(source, dest) : distance * 100}
     return {int(source) : distance * 100}
 
 # When you're using this in A* the dest will always be fixed to the destination
 #  node you're trying to find the shortest path for
-# not sure about source node but gl!
 
 #dijkstra algo to compare with a*
 def dijkstra_compare(G, s, d):
-    if (s == d): 
+    if (s == d or G.adj.keys() == {}): 
         return ({d:s}, [s])
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {} #Distance dictionary
@@ -576,9 +517,7 @@ def dijkstra_compare(G, s, d):
                 Q.decrease_key(neighbour, dist[current_node] + G.w(current_node, neighbour)) #change key to better value
                 dist[neighbour] = dist[current_node] + G.w(current_node, neighbour) #update list
                 pred[neighbour] = current_node #update pred
-    #print(checked)
-    #print(pred)
-    return (pred,dist[d]) #return pred, and no path since none found
+    return (pred) #return pred, and no path since none found
 
 
 def createDict(ld, d):
@@ -618,21 +557,23 @@ def part3():
             a_star_dict.append((end - start, amountOfLines(o[0], i)))
             dijkstra_dict.append((end2 - start2))
         #print("done") #print statements for progress, not necessary but nice to verify its running
-        #print(i) # ^^^^^^^
+        #print(i) # very useful ^^^^^^^
     return (a_star_dict, dijkstra_dict)
 
+#Printing Our Results
 
-f = []
-for i in london_stations.adj.keys() :
-    for p in london_stations.adj.keys():
-        f.append((i, p))
+#used in ordering the csv file output
+#f = []
+#for i in london_stations.adj.keys() :
+#    for p in london_stations.adj.keys():
+#        f.append((i, p))
 
-#this code will take a while to run, so be prepared to wait
-p3 = part3()
+#WARNING: This code will take a while to run, so be prepared to wait
+#p3 = part3()
 
-#writing output to csv file
-with open("PathAnalysis.csv", "w", newline='') as file:
-    fo = csv.writer(file)
-    fo.writerow(["Starting Station", "End Station", "A* Algorithm Path Creation Time", "Dijkstra Algorithm Path Creation Time", "Number of Lines used in Path"])
-    for i in range(0, len(f)):
-        fo.writerow([f[i][0], f[i][1], (p3[0][i][0]), (p3[1][i]), (p3[0][i][1])])
+#Writing output to csv file
+#with open("PathAnalysis.csv", "w", newline='') as file:
+#    fo = csv.writer(file)
+#    fo.writerow(["Starting Station", "End Station", "A* Algorithm Path Creation Time", "Dijkstra Algorithm Path Creation Time", "Number of Lines used in Path"])
+#    for i in range(0, len(f)):
+#        fo.writerow([f[i][0], f[i][1], (p3[0][i][0]), (p3[1][i]), (p3[0][i][1])])

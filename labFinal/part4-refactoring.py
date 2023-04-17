@@ -6,16 +6,19 @@ import timeit
 import csv
 
 class Graph() :
-    def get_adj_nodes(node:int):
+    def get_adj_nodes(self, node:int):
         pass
 
-    def add_node(start:int, end:int, w:float) :
+    def add_node(self, start:int) :
+        pass
+
+    def add_edge(self, start:int, end:int, weight:float):
         pass
     
-    def get_num_of_nodes() :
+    def get_num_of_nodes(self) :
         pass 
 
-    def w(node:int) :
+    def w(self, node:int) :
         pass
 
 class WeightedGraph(Graph) :
@@ -63,7 +66,7 @@ class HeuristicGraph(WeightedGraph) :
         return self._heuristic
 
 class SPAlgorithm() :
-    def calc_sp(graph:Graph, source:int, dest:int) :
+    def calc_sp(self, graph:Graph, source:int, dest:int) :
         pass
 
 class ShortPathFinder() :
@@ -81,7 +84,7 @@ class ShortPathFinder() :
         self.algorithm = algorithm
 
 class Dijkstra(SPAlgorithm) :
-    def calc_sp(graph:Graph, source:int, dest:int) :
+    def calc_sp(self, graph:Graph, source:int, dest:int) :
         pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
         dist = {} #Distance dictionary
         Q = min_heap.MinHeap([])
@@ -106,7 +109,7 @@ class Dijkstra(SPAlgorithm) :
         return dist[dest]
 
 class Bellman_Ford(SPAlgorithm) :
-    def calc_sp(graph:Graph, source:int, dest:int) :
+    def calc_sp(self, graph:Graph, source:int, dest:int) :
         pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
         dist = {} #Distance dictionary
         nodes = list(graph.adj.keys())
@@ -117,7 +120,7 @@ class Bellman_Ford(SPAlgorithm) :
         dist[source] = 0
 
         #Meat of the algorithm
-        for _ in range(graph.number_of_nodes()):
+        for _ in range(graph.get_num_of_nodes()):
             for node in nodes:
                 for neighbour in graph.adj[node]:
                     if dist[neighbour] > dist[node] + graph.w(node, neighbour):
@@ -125,9 +128,8 @@ class Bellman_Ford(SPAlgorithm) :
                         pred[neighbour] = node
         return dist[dest]
 
-# Dhruv help!!!!
 class A_Star(SPAlgorithm) :
-    def calc_sp(graph:Graph, s:int, d:int):
+    def calc_sp(self, graph:Graph, s:int, d:int):
         #adapter to fit the parameters to match a* parameters
         if (isinstance(graph, HeuristicGraph)):
             h = graph.get_heuristic()
@@ -137,9 +139,9 @@ class A_Star(SPAlgorithm) :
                 h[x] = 0
 
         #normal a* code
-        if (s == d): 
+        if (s == d or graph.adj.keys() == {}): 
             return 0
-        pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
+        pred = {} #Predecessor dictionary.
         dist = {} #Distance dictionary
         Q = min_heap.MinHeap([])
         nodes = list(graph.adj.keys())
@@ -163,7 +165,6 @@ class A_Star(SPAlgorithm) :
                     dist[neighbour] = dist[current_node] + graph.w(current_node, neighbour) #update list
                     pred[neighbour] = current_node #update pred
         return dist[d]
-
 
 
 # class WeightedGraph:
