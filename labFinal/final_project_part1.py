@@ -156,7 +156,6 @@ def init_d(G):
 
 #--------------- PART 1 ----------------
 
-# uhhhh prolly works? not much testing done 
 def dijkstra_approx(G, source, k) :
     pred = {} #Predecessor dictionary. Isn't returned, but here for your understanding
     dist = {} #Distance dictionary
